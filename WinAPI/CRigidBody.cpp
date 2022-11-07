@@ -4,7 +4,7 @@
 CRigidBody::CRigidBody()
 {
 	m_fAcceleartion = 0;
-	m_fGravity = 2.8f;
+	m_fGravity = 980.f;
 	m_bIsGravity = true;
 
 	m_fGravitySpeed = 0;
@@ -46,10 +46,16 @@ void CRigidBody::Update()
 	{		
 		if(!m_bOnGround)
 		{ 
-			m_fGravitySpeed += m_fGravity;
+			m_fGravitySpeed += m_fGravity * DT;
 			GetOwner()->SetPos(GetOwner()->GetPos() + Vector(0.f, 1.f) * m_fGravitySpeed * DT);
 		}
+		Logger::Debug(L"ม฿ทย: " + to_wstring(m_fGravitySpeed));
 	}
+}
+
+void CRigidBody::PowerToY(float y)
+{
+	m_fGravitySpeed -= y;
 }
 
 void CRigidBody::Render()

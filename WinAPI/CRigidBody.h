@@ -27,6 +27,8 @@ public:
 	void SetGravitySpeed(float speed);
 	void SetOnGround(bool onGround);
 
+	void PowerToY(float y);
+
 public:
 
 	void Init()		override;

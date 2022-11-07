@@ -111,18 +111,20 @@ void CPlayer::Update()
 	if (BUTTONDOWN(VK_SPACE))
 	{
 		//CreateMissile();
-		Jump(100.f);
+		//Jump(400.f);
+		m_pRigid->PowerToY(400.f);
 	}
 
-	if (m_bIsJump)
-	{
-		if (m_fJumpPower <= 0)
-		{
-			m_bIsJump = false;
-		}
-		m_fJumpPower -= 23.f * DT;
-		m_vecPos.y -= m_fJumpPower * DT;
-	}
+	//if (m_bIsJump)
+	//{
+	//	if (m_fJumpPower <= 0)
+	//	{
+	//		m_bIsJump = false;
+	//	}
+
+	//	//m_fJumpPower -= 90.f * DT;				// 점프력이 얼마나 줄어드는지? - 체공시간하고만 연관이 있나?
+	//	//m_vecPos.y -= m_fJumpPower * DT;
+	//}
 
 	AnimatorUpdate();
 }
@@ -186,8 +188,8 @@ void CPlayer::CreateMissile()
 
 void CPlayer::Jump(float fJumpPower)
 {
-	m_bIsJump = true;
-	m_fJumpPower = fJumpPower;
+	/*m_bIsJump = true;
+	m_fJumpPower = fJumpPower;*/
 }
 
 void CPlayer::OnCollisionEnter(CCollider* pOtherCollider)
@@ -202,6 +204,8 @@ void CPlayer::OnCollisionStay(CCollider* pOtherCollider)
 	{
 		m_pRigid->SetOnGround(true);
 		m_pRigid->SetGravitySpeed(0.f);
+		m_vecPos.y = pOtherCollider->GetOwner()->GetPos().y - (GetCollider()->GetScale().y / 2);
+		m_fJumpPower = 0;
 	}
 }
 
