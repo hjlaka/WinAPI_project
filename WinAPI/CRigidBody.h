@@ -14,9 +14,9 @@ private:
 
 	float m_fGravitySpeed;
 	float m_fGravity;
-	float m_fAcceleartion;
+	float m_fLaunchSpeed;
 	bool m_bIsGravity;
-	bool m_bOnGround;
+	UINT m_uiGroundCount;
 
 
 public:
@@ -25,7 +25,7 @@ public:
 
 	void SetIsGravity(bool isGravity);
 	void SetGravitySpeed(float speed);
-	void SetOnGround(bool onGround);
+	void SetGroundCount(UINT value);
 
 	void PowerToY(float y);
 

@@ -114,6 +114,7 @@ void CPlayer::Update()
 		//Jump(400.f);
 		m_pRigid->PowerToY(450.f);
 		m_iJumpCount++;
+		Logger::Debug(L"Jump!");
 	}
 
 	//if (m_bIsJump)
@@ -195,25 +196,26 @@ void CPlayer::Jump(float fJumpPower)
 
 void CPlayer::OnCollisionEnter(CCollider* pOtherCollider)
 {
-	m_iJumpCount = 0;
-	m_fJumpPower = 0;
+	if (pOtherCollider->GetObjName() == L"Ground")
+	{
+		m_iJumpCount = 0;
+		m_fJumpPower = 0;
 
+		m_pRigid->SetGravitySpeed(0);
+		m_pRigid->SetGroundCount(+1);
+	}
 }
 
 void CPlayer::OnCollisionStay(CCollider* pOtherCollider)
 {
-	if (pOtherCollider->GetObjName() == L"Ground")
-	{
-		m_pRigid->SetOnGround(true);
-		m_pRigid->SetGravitySpeed(0.f);
-		m_vecPos.y = pOtherCollider->GetOwner()->GetPos().y - (GetCollider()->GetScale().y / 2);
-	}
+	
+		//m_vecPos.y = pOtherCollider->GetOwner()->GetPos().y - (GetCollider()->GetScale().y / 2);
 }
 
 void CPlayer::OnCollisionExit(CCollider* pOtherCollider)
 {
 	if (pOtherCollider->GetObjName() == L"Ground")
 	{
-		m_pRigid->SetOnGround(false);
+		m_pRigid->SetGroundCount(-1);
 	}
 }

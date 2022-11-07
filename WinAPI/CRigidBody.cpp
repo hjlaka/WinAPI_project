@@ -3,12 +3,12 @@
 
 CRigidBody::CRigidBody()
 {
-	m_fAcceleartion = 0;
+	m_fLaunchSpeed = 0;
 	m_fGravity = 1280.f;
 	m_bIsGravity = true;
 
 	m_fGravitySpeed = 0;
-	m_bOnGround = false;
+	m_uiGroundCount = 0;
 }
 
 CRigidBody::~CRigidBody()
@@ -30,9 +30,9 @@ void CRigidBody::SetGravitySpeed(float speed)
 	m_fGravitySpeed = speed;
 }
 
-void CRigidBody::SetOnGround(bool onGround)
+void CRigidBody::SetGroundCount(UINT value)
 {
-	m_bOnGround = onGround;
+	m_uiGroundCount += value;
 }
 
 void CRigidBody::Init()
@@ -44,21 +44,24 @@ void CRigidBody::Update()
 
 	if (m_bIsGravity)
 	{		
-		if(!m_bOnGround)
-		{ 
+		if (m_uiGroundCount == 0)
+		{
 			if (m_fGravitySpeed < 1000.f)
 			{
 				m_fGravitySpeed += m_fGravity * DT;
 			}
-			GetOwner()->SetPos(GetOwner()->GetPos() + Vector(0.f, 1.f) * m_fGravitySpeed * DT);
-
 		}
+		else if (m_uiGroundCount < 0)
+			assert(m_uiGroundCount < 0);
+
+		GetOwner()->SetPos(GetOwner()->GetPos() + Vector(0.f, 1.f) * (m_fGravitySpeed) * DT);
 		Logger::Debug(L"ม฿ทย: " + to_wstring(m_fGravitySpeed));
 	}
 }
 
 void CRigidBody::PowerToY(float y)
 {
+	//m_fLaunchSpeed = -1.f * y;
 	m_fGravitySpeed = -1.f * y;
 }
 
