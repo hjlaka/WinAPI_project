@@ -40,8 +40,8 @@ CSceneTileTool::~CSceneTileTool()
 
 void CSceneTileTool::SetTile(UINT index, TypeTile type)
 {
-	Vector vecMousePos = MOUSEWORLDPOS;
-	float tilePosX = vecMousePos.x / CTile::TILESIZE;
+	Vector vecMousePos = MOUSEWORLDPOS;								// 마우스 위치를 받아온다.
+	float tilePosX = vecMousePos.x / CTile::TILESIZE;				// 마우스 위치를 타일 좌표로 변환한다. (월드 좌표를 타일 크기로 나눠 좌표 설정)
 	float tilePosY = vecMousePos.y / CTile::TILESIZE;
 
 	// 타일이 없는 위치일 경우 무시
@@ -49,16 +49,16 @@ void CSceneTileTool::SetTile(UINT index, TypeTile type)
 		tilePosY < 0.f || (int)m_iTileSizeY <= tilePosY)
 		return;
 
-	const list<CGameObject*>& listTile = GetLayerObject(Layer::Tile);
+	const list<CGameObject*>& listTile = GetLayerObject(Layer::Tile);			// 타일 레이어를 저장한 리스트를 가져온다.
 	for (CGameObject* pGameObject : listTile)
 	{
-		CTile* pTile = dynamic_cast<CTile*>(pGameObject);
-		if (pTile->GetTilePosX() != (int)tilePosX ||
+		CTile* pTile = dynamic_cast<CTile*>(pGameObject);					// 타일 레이어의 게임 오브젝트를 타일 형태로 바인딩한다.
+		if (pTile->GetTilePosX() != (int)tilePosX ||						// 각 타일이 지닌 좌표가 현재 내가 필요한 타일의 좌표와 일치하는지 확인한다.
 			pTile->GetTilePosY() != (int)tilePosY)
 			continue;
 
-		pTile->SetTileIndex(index);
-		pTile->SetType(type);
+		pTile->SetTileIndex(index);										// 타일에 이미지 인덱스 값을 부여한다.
+		pTile->SetType(type);											// 타일의 속성을 설정한다.
 		return;
 	}
 }
