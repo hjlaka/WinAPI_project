@@ -19,7 +19,7 @@
 CPlayer::CPlayer()
 {
 	m_vecPos = Vector(0, 0);
-	m_vecScale = Vector(100, 100);
+	m_vecScale = Vector(50, 50);
 	m_layer = Layer::Player;
 	m_strName = L"플레이어";
 
@@ -40,6 +40,7 @@ void CPlayer::Init()
 {
 	m_pIdleImage = RESOURCE->LoadImg(L"PlayerIdle", L"Image\\idle_skul.png");
 	m_pMoveImage = RESOURCE->LoadImg(L"PlayerMove", L"Image\\move_skul.png");
+	m_pAttackImage = RESOURCE->LoadImg(L"PlayerAttack", L"Image\\attackA_skul.png");
 
 	m_pAnimator = new CAnimator;
 	m_pAnimator->CreateAnimation(L"IdleUp", m_pIdleImage, Vector(25.f, 25.f), Vector(50.f, 50.f), Vector(96.f, 0.f), 0.5f, 4);
@@ -59,6 +60,9 @@ void CPlayer::Init()
 	m_pAnimator->CreateAnimation(L"MoveLeftDown",	m_pMoveImage, Vector(0.f, 0.f), Vector(80.f, 75.f), Vector(96.f, 0.f), 0.05f, 8);
 	m_pAnimator->CreateAnimation(L"MoveLeft",		m_pMoveImage, Vector(0.f, 0.f), Vector(80.f, 75.f), Vector(96.f, 0.f), 0.05f, 8);
 	m_pAnimator->CreateAnimation(L"MoveLeftUp",		m_pMoveImage, Vector(0.f, 0.f), Vector(80.f, 75.f), Vector(96.f, 0.f), 0.05f, 8);
+	
+	m_pAnimator->CreateAnimation(L"AttackA", m_pAttackImage, Vector(25.f, 25.f), Vector(50.f, 50.f), Vector(96.f, 0.f), 0.1f, 5);
+	
 	m_pAnimator->Play(L"IdleDown", false);
 	AddComponent(m_pAnimator);
 
@@ -73,39 +77,51 @@ void CPlayer::Init()
 void CPlayer::Update()
 {
 	m_bIsMove = false;
+	m_bIsAttack = false;
 
 	if (BUTTONSTAY(VK_LEFT))
 	{
-		m_vecPos.x -= m_fSpeed * DT;
+		m_pRigid->SetDirectionX(-1);
+		//m_vecPos.x -= m_fSpeed * DT;
 		m_bIsMove = true;
 		m_vecMoveDir.x = -1;
 	}
 	else if (BUTTONSTAY(VK_RIGHT))
 	{
-		m_vecPos.x += m_fSpeed * DT;
+		m_pRigid->SetDirectionX(+1);
+		//m_vecPos.x += m_fSpeed * DT;
 		m_bIsMove = true;
 		m_vecMoveDir.x = +1;
 	}
 	else
 	{
 		m_vecMoveDir.x = 0;
+		m_pRigid->SetDirectionX(0);
 	}
 
 	if (BUTTONSTAY(VK_UP))
 	{
-		m_vecPos.y -= m_fSpeed * DT;
+		m_pRigid->SetDirectionY(-1);
+		//m_vecPos.y -= m_fSpeed * DT;
 		m_bIsMove = true;
 		m_vecMoveDir.y = +1;
 	}
 	else if (BUTTONSTAY(VK_DOWN))
 	{
-		m_vecPos.y += m_fSpeed * DT;
+		m_pRigid->SetDirectionY(+1);
+		//m_vecPos.y += m_fSpeed * DT;
 		m_bIsMove = true;
 		m_vecMoveDir.y = -1;
 	}
 	else
 	{
 		m_vecMoveDir.y = 0;
+		m_pRigid->SetDirectionY(0);
+	}
+
+	if (BUTTONSTAY('X'))
+	{
+		m_bIsAttack = true;
 	}
 
 	if (BUTTONDOWN(VK_SPACE) && m_iJumpCount < 2)
@@ -145,6 +161,15 @@ void CPlayer::AnimatorUpdate()
 		m_vecLookDir = m_vecMoveDir;
 
 	wstring str = L"";
+
+	if (m_bIsAttack)
+	{
+		str += L"AttackA";
+		m_pAnimator->Play(str, false);
+		return;
+	}
+		
+
 
 	if (m_bIsMove)	str += L"Move";
 	else			str += L"Idle";
@@ -194,28 +219,78 @@ void CPlayer::Jump(float fJumpPower)
 	m_fJumpPower = fJumpPower;*/
 }
 
+void CPlayer::CollisionX()
+{
+	m_pRigid->SetSpeed(0);
+}
+
+void CPlayer::CollisionY()
+{
+	m_iJumpCount = 0;
+	m_fJumpPower = 0;
+
+	m_pRigid->SetGravitySpeed(0);
+	m_pRigid->SetGroundCount(+1);
+}
+
+void CPlayer::CollisionExitY()
+{
+	m_pRigid->SetGroundCount(-1);
+}
+
 void CPlayer::OnCollisionEnter(CCollider* pOtherCollider)
 {
-	if (pOtherCollider->GetObjName() == L"Ground")
+	/*if (pOtherCollider->GetObjName() == L"Ground")
 	{
 		m_iJumpCount = 0;
 		m_fJumpPower = 0;
 
 		m_pRigid->SetGravitySpeed(0);
 		m_pRigid->SetGroundCount(+1);
-	}
+	}*/
+	//if (pOtherCollider->GetPos().y < GetCollider()->GetPos().y + GetCollider()->GetScale().y / 2)			// 바닥보다 위에 있는 벽이라면...
+	//{
+	//	Logger::Debug(L"벽충돌");
+	//	if (m_vecMoveDir.x == 1)
+	//	{
+	//		m_vecPos.x = pOtherCollider->GetPos().x - (GetCollider()->GetPos().x + GetCollider()->GetScale().x / 2 - m_vecPos.x) - 10;
+	//		Logger::Debug(L"오른쪽으로 가다 충돌");
+	//	}
+	//	else if (m_vecMoveDir.x == -1)
+	//	{
+	//		m_vecPos.x += m_fSpeed * DT;
+	//		Logger::Debug(L"왼쪽으로 가다 충돌");
+	//	}
+	//}
+
+	
+	
 }
 
 void CPlayer::OnCollisionStay(CCollider* pOtherCollider)
 {
 	
+	/*if (pOtherCollider->GetPos().y < GetCollider()->GetPos().y + GetCollider()->GetScale().y / 2 - GetCollider()->GetScale().y / 2)			// 바닥보다 위에 있는 벽이라면...
+	{
+		Logger::Debug(L"벽충돌");
+		if (m_vecMoveDir.x == 1)
+		{
+			m_vecPos.x -= m_fSpeed * DT;
+			Logger::Debug(L"오른쪽으로 가다 충돌");
+		}
+		else if (m_vecMoveDir.x == -1)
+		{
+			m_vecPos.x += m_fSpeed * DT;
+			Logger::Debug(L"왼쪽으로 가다 충돌");
+		}
+	}*/
 		//m_vecPos.y = pOtherCollider->GetOwner()->GetPos().y - (GetCollider()->GetScale().y / 2);
 }
 
 void CPlayer::OnCollisionExit(CCollider* pOtherCollider)
 {
-	if (pOtherCollider->GetObjName() == L"Ground")
-	{
-		m_pRigid->SetGroundCount(-1);
-	}
+	//if (pOtherCollider->GetObjName() == L"Ground")
+	//{
+	//	m_pRigid->SetGroundCount(-1);
+	//}
 }

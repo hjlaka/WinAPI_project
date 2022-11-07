@@ -15,16 +15,24 @@ private:
 	CAnimator* m_pAnimator;
 	CImage* m_pIdleImage;
 	CImage* m_pMoveImage;
+	CImage* m_pAttackImage;
 
 	Vector m_vecMoveDir;
 	Vector m_vecLookDir;
 	bool m_bIsMove;
+	bool m_bIsAttack;
 	UINT m_iJumpCount;
 
 	float m_fSpeed = 200.0f;
 	float m_fJumpPower = 100.f;
 
 	CRigidBody* m_pRigid;
+
+public:
+
+	void CollisionX();
+	void CollisionY();
+	void CollisionExitY();
 
 private:
 	void Init() override;
@@ -35,6 +43,7 @@ private:
 	void AnimatorUpdate();
 	void CreateMissile();
 	void Jump(float fJumpPower);
+
 
 	void OnCollisionEnter(CCollider* pOtherCollider) override;
 	void OnCollisionStay(CCollider* pOtherCollider) override;

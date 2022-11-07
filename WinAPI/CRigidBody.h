@@ -16,7 +16,10 @@ private:
 	float m_fGravity;
 	float m_fLaunchSpeed;
 	bool m_bIsGravity;
-	UINT m_uiGroundCount;
+	int m_iGroundCount;
+
+	float m_fSpeed;
+	Vector m_vecDir;
 
 
 public:
@@ -26,6 +29,9 @@ public:
 	void SetIsGravity(bool isGravity);
 	void SetGravitySpeed(float speed);
 	void SetGroundCount(UINT value);
+	void SetDirectionX(int dirX);
+	void SetDirectionY(int dirY);
+	void SetSpeed(float spd);
 
 	void PowerToY(float y);
 
