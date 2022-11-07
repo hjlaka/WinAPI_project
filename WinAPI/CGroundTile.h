@@ -6,6 +6,8 @@ public:
 	CGroundTile();
 	virtual ~CGroundTile();
 
+	bool isUpDownCollision;
+
 private:
 	void Init() override;
 	void Update() override;
