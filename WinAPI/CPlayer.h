@@ -19,7 +19,7 @@ private:
 	Vector m_vecMoveDir;
 	Vector m_vecLookDir;
 	bool m_bIsMove;
-	bool m_bIsJump;
+	UINT m_iJumpCount;
 
 	float m_fSpeed = 200.0f;
 	float m_fJumpPower = 100.f;

@@ -29,7 +29,7 @@ CPlayer::CPlayer()
 	m_vecMoveDir = Vector(0, 0);
 	m_vecLookDir = Vector(0, -1);
 	m_bIsMove = false;
-	m_bIsJump = false;
+	m_iJumpCount = 0;
 }
 
 CPlayer::~CPlayer()
@@ -108,11 +108,12 @@ void CPlayer::Update()
 		m_vecMoveDir.y = 0;
 	}
 
-	if (BUTTONDOWN(VK_SPACE))
+	if (BUTTONDOWN(VK_SPACE) && m_iJumpCount < 2)
 	{
 		//CreateMissile();
 		//Jump(400.f);
-		m_pRigid->PowerToY(400.f);
+		m_pRigid->PowerToY(450.f);
+		m_iJumpCount++;
 	}
 
 	//if (m_bIsJump)
@@ -194,7 +195,8 @@ void CPlayer::Jump(float fJumpPower)
 
 void CPlayer::OnCollisionEnter(CCollider* pOtherCollider)
 {
-	
+	m_iJumpCount = 0;
+	m_fJumpPower = 0;
 
 }
 
@@ -205,7 +207,6 @@ void CPlayer::OnCollisionStay(CCollider* pOtherCollider)
 		m_pRigid->SetOnGround(true);
 		m_pRigid->SetGravitySpeed(0.f);
 		m_vecPos.y = pOtherCollider->GetOwner()->GetPos().y - (GetCollider()->GetScale().y / 2);
-		m_fJumpPower = 0;
 	}
 }
 
