@@ -7,6 +7,7 @@
 
 CGroundTile::CGroundTile()
 {
+	m_strName = L"Ground";
 }
 
 CGroundTile::~CGroundTile()
@@ -63,8 +64,10 @@ void CGroundTile::OnCollisionStay(CCollider* pOther)
 	
 	
 	// 중력 가속도의 크기와 똑같이 방향만 정 반대로 오브젝트를 밀어올려준다.
-	pOther->GetOwner()->SetPos(pOther->GetOwner()->GetPos() + Vector(0.f, -1.f) * 26.f * DT);
+	//pOther->GetOwner()->SetPos(pOther->GetOwner()->GetPos() + Vector(0.f, -1.f) * 26.f * DT);
 	// 닿은 개수 만큼 속력이 달라진다.
+
+	
 	
 }
 

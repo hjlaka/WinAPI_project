@@ -10,12 +10,22 @@ public:
 	CRigidBody();
 	virtual ~CRigidBody();
 
+private:
+
+	float m_fGravitySpeed;
+	float m_fGravity;
+	float m_fAcceleartion;
 	bool m_bIsGravity;
+	bool m_bOnGround;
+
+
+public:
 
 	bool GetIsGravity();
 
 	void SetIsGravity(bool isGravity);
-
+	void SetGravitySpeed(float speed);
+	void SetOnGround(bool onGround);
 
 public:
 

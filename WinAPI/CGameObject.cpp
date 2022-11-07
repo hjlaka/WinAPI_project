@@ -13,6 +13,7 @@ CGameObject::CGameObject()
 	m_bSafeToDelete = false;
 
 	m_pCollider = nullptr;
+	m_bIsRigidBody = false;
 }
 
 CGameObject::~CGameObject()
@@ -96,6 +97,11 @@ void CGameObject::ComponentRender()
 	{
 		pComponent->Render();
 	}
+}
+
+bool CGameObject::GetIsRigidBody()
+{
+	return m_bIsRigidBody;
 }
 
 CCollider* CGameObject::GetCollider()

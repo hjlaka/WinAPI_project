@@ -58,6 +58,14 @@ protected:
 
 	void ComponentRender();
 
+	// 중력 컴포넌트
+
+protected:
+	bool m_bIsRigidBody;
+
+public:
+	bool GetIsRigidBody();
+
 	// 충돌 컴포넌트
 private:
 	CCollider* m_pCollider;

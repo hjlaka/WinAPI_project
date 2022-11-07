@@ -29,6 +29,7 @@ CPlayer::CPlayer()
 	m_vecMoveDir = Vector(0, 0);
 	m_vecLookDir = Vector(0, -1);
 	m_bIsMove = false;
+	m_bIsJump = false;
 }
 
 CPlayer::~CPlayer()
@@ -41,7 +42,7 @@ void CPlayer::Init()
 	m_pMoveImage = RESOURCE->LoadImg(L"PlayerMove", L"Image\\move_skul.png");
 
 	m_pAnimator = new CAnimator;
-	m_pAnimator->CreateAnimation(L"IdleUp", m_pIdleImage, Vector(0.f, 0.f), Vector(85.f, 100.f), Vector(96.f, 0.f), 0.5f, 4);
+	m_pAnimator->CreateAnimation(L"IdleUp", m_pIdleImage, Vector(25.f, 25.f), Vector(50.f, 50.f), Vector(96.f, 0.f), 0.5f, 4);
 	m_pAnimator->CreateAnimation(L"IdleRightUp", m_pIdleImage, Vector(0.f, 0.f), Vector(85.f, 100.f), Vector(96.f, 0.f), 0.5f, 4);
 	m_pAnimator->CreateAnimation(L"IdleRight", m_pIdleImage, Vector(0.f, 0.f), Vector(85.f, 100.f), Vector(96.f, 0.f), 0.5f, 4);
 	m_pAnimator->CreateAnimation(L"IdleRightDown", m_pIdleImage, Vector(0.f, 0.f), Vector(85.f, 100.f), Vector(96.f, 0.f), 0.5f, 4);
@@ -61,10 +62,11 @@ void CPlayer::Init()
 	m_pAnimator->Play(L"IdleDown", false);
 	AddComponent(m_pAnimator);
 
-	AddCollider(ColliderType::Rect, Vector(90, 90), Vector(0, 0));
+	AddCollider(ColliderType::Rect, Vector(50, 50), Vector(0, 0));
 
-	CRigidBody* rigid = new CRigidBody;
-	AddComponent(rigid);
+	m_pRigid = new CRigidBody;
+	AddComponent(m_pRigid);
+	m_bIsRigidBody = true;
 	
 }
 
@@ -108,7 +110,18 @@ void CPlayer::Update()
 
 	if (BUTTONDOWN(VK_SPACE))
 	{
-		CreateMissile();
+		//CreateMissile();
+		Jump(100.f);
+	}
+
+	if (m_bIsJump)
+	{
+		if (m_fJumpPower <= 0)
+		{
+			m_bIsJump = false;
+		}
+		m_fJumpPower -= 23.f * DT;
+		m_vecPos.y -= m_fJumpPower * DT;
 	}
 
 	AnimatorUpdate();
@@ -171,14 +184,31 @@ void CPlayer::CreateMissile()
 	ADDOBJECT(pMissile4);
 }
 
+void CPlayer::Jump(float fJumpPower)
+{
+	m_bIsJump = true;
+	m_fJumpPower = fJumpPower;
+}
+
 void CPlayer::OnCollisionEnter(CCollider* pOtherCollider)
 {
+	
+
 }
 
 void CPlayer::OnCollisionStay(CCollider* pOtherCollider)
 {
+	if (pOtherCollider->GetObjName() == L"Ground")
+	{
+		m_pRigid->SetOnGround(true);
+		m_pRigid->SetGravitySpeed(0.f);
+	}
 }
 
 void CPlayer::OnCollisionExit(CCollider* pOtherCollider)
 {
+	if (pOtherCollider->GetObjName() == L"Ground")
+	{
+		m_pRigid->SetOnGround(false);
+	}
 }
