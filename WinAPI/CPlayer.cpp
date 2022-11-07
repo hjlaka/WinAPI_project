@@ -11,7 +11,10 @@
 #include "CImage.h"
 #include "CAnimator.h"
 
+#include "CRigidBody.h"
+
 #include "CMissile.h"
+
 
 CPlayer::CPlayer()
 {
@@ -34,31 +37,35 @@ CPlayer::~CPlayer()
 
 void CPlayer::Init()
 {
-	m_pIdleImage = RESOURCE->LoadImg(L"PlayerIdle", L"Image\\PlayerIdle.png");
-	m_pMoveImage = RESOURCE->LoadImg(L"PlayerMove", L"Image\\PlayerMove.png");
+	m_pIdleImage = RESOURCE->LoadImg(L"PlayerIdle", L"Image\\idle_skul.png");
+	m_pMoveImage = RESOURCE->LoadImg(L"PlayerMove", L"Image\\move_skul.png");
 
 	m_pAnimator = new CAnimator;
-	m_pAnimator->CreateAnimation(L"IdleUp", m_pIdleImage, Vector(8.f, 0.f), Vector(80.f, 70.f), Vector(80.f, 0.f), 0.1f, 7);
-	m_pAnimator->CreateAnimation(L"IdleRightUp", m_pIdleImage, Vector(8.f, 70.f), Vector(80.f, 70.f), Vector(80.f, 0.f), 0.1f, 7);
-	m_pAnimator->CreateAnimation(L"IdleRight", m_pIdleImage, Vector(8.f, 140.f), Vector(80.f, 70.f), Vector(80.f, 0.f), 0.1f, 7);
-	m_pAnimator->CreateAnimation(L"IdleRightDown", m_pIdleImage, Vector(8.f, 210.f), Vector(80.f, 70.f), Vector(80.f, 0.f), 0.1f, 7);
-	m_pAnimator->CreateAnimation(L"IdleDown", m_pIdleImage, Vector(8.f, 280.f), Vector(80.f, 70.f), Vector(80.f, 0.f), 0.1f, 7);
-	m_pAnimator->CreateAnimation(L"IdleLeftDown", m_pIdleImage, Vector(8.f, 350.f), Vector(80.f, 70.f), Vector(80.f, 0.f), 0.1f, 7);
-	m_pAnimator->CreateAnimation(L"IdleLeft", m_pIdleImage, Vector(8.f, 420.f), Vector(80.f, 70.f), Vector(80.f, 0.f), 0.1f, 7);
-	m_pAnimator->CreateAnimation(L"IdleLeftUp", m_pIdleImage, Vector(8.f, 490.f), Vector(80.f, 70.f), Vector(80.f, 0.f), 0.1f, 7);
+	m_pAnimator->CreateAnimation(L"IdleUp", m_pIdleImage, Vector(0.f, 0.f), Vector(85.f, 100.f), Vector(96.f, 0.f), 0.5f, 4);
+	m_pAnimator->CreateAnimation(L"IdleRightUp", m_pIdleImage, Vector(0.f, 0.f), Vector(85.f, 100.f), Vector(96.f, 0.f), 0.5f, 4);
+	m_pAnimator->CreateAnimation(L"IdleRight", m_pIdleImage, Vector(0.f, 0.f), Vector(85.f, 100.f), Vector(96.f, 0.f), 0.5f, 4);
+	m_pAnimator->CreateAnimation(L"IdleRightDown", m_pIdleImage, Vector(0.f, 0.f), Vector(85.f, 100.f), Vector(96.f, 0.f), 0.5f, 4);
+	m_pAnimator->CreateAnimation(L"IdleDown", m_pIdleImage, Vector(0.f, 0.f), Vector(85.f, 100.f), Vector(96.f, 0.f), 0.5f, 4);
+	m_pAnimator->CreateAnimation(L"IdleLeftDown", m_pIdleImage, Vector(0.f, 0.f), Vector(85.f, 100.f), Vector(96.f, 0.f), 0.5f, 4);
+	m_pAnimator->CreateAnimation(L"IdleLeft", m_pIdleImage, Vector(0.f, 0.f), Vector(85.f, 100.f), Vector(96.f, 0.f), 0.5f, 4);
+	m_pAnimator->CreateAnimation(L"IdleLeftUp", m_pIdleImage, Vector(0.f, 0.f), Vector(85.f, 100.f), Vector(96.f, 0.f), 0.5f, 4);
 
-	m_pAnimator->CreateAnimation(L"MoveUp", m_pMoveImage, Vector(0.f, 0.f), Vector(80.f, 75.f), Vector(84.f, 0.f), 0.05f, 16);
-	m_pAnimator->CreateAnimation(L"MoveRightUp", m_pMoveImage, Vector(0.f, 79.f), Vector(80.f, 75.f), Vector(84.f, 0.f), 0.05f, 16);
-	m_pAnimator->CreateAnimation(L"MoveRight", m_pMoveImage, Vector(0.f, 158.f), Vector(80.f, 75.f), Vector(84.f, 0.f), 0.05f, 16);
-	m_pAnimator->CreateAnimation(L"MoveRightDown", m_pMoveImage, Vector(0.f, 237.f), Vector(80.f, 75.f), Vector(84.f, 0.f), 0.05f, 16);
-	m_pAnimator->CreateAnimation(L"MoveDown", m_pMoveImage, Vector(0.f, 316.f), Vector(80.f, 75.f), Vector(84.f, 0.f), 0.05f, 16);
-	m_pAnimator->CreateAnimation(L"MoveLeftDown", m_pMoveImage, Vector(0.f, 395.f), Vector(80.f, 75.f), Vector(84.f, 0.f), 0.05f, 16);
-	m_pAnimator->CreateAnimation(L"MoveLeft", m_pMoveImage, Vector(0.f, 474.f), Vector(80.f, 75.f), Vector(84.f, 0.f), 0.05f, 16);
-	m_pAnimator->CreateAnimation(L"MoveLeftUp", m_pMoveImage, Vector(0.f, 553.f), Vector(80.f, 75.f), Vector(84.f, 0.f), 0.05f, 16);
+	m_pAnimator->CreateAnimation(L"MoveUp",			m_pMoveImage, Vector(0.f, 0.f), Vector(80.f, 75.f), Vector(96.f, 0.f), 0.05f, 8);
+	m_pAnimator->CreateAnimation(L"MoveRightUp",	m_pMoveImage, Vector(0.f, 0.f), Vector(80.f, 75.f), Vector(96.f, 0.f), 0.05f, 8);
+	m_pAnimator->CreateAnimation(L"MoveRight",		m_pMoveImage, Vector(0.f, 0.f), Vector(80.f, 75.f), Vector(96.f, 0.f), 0.05f, 8);
+	m_pAnimator->CreateAnimation(L"MoveRightDown",	m_pMoveImage, Vector(0.f, 0.f), Vector(80.f, 75.f), Vector(96.f, 0.f), 0.05f, 8);
+	m_pAnimator->CreateAnimation(L"MoveDown",		m_pMoveImage, Vector(0.f, 0.f), Vector(80.f, 75.f), Vector(96.f, 0.f), 0.05f, 8);
+	m_pAnimator->CreateAnimation(L"MoveLeftDown",	m_pMoveImage, Vector(0.f, 0.f), Vector(80.f, 75.f), Vector(96.f, 0.f), 0.05f, 8);
+	m_pAnimator->CreateAnimation(L"MoveLeft",		m_pMoveImage, Vector(0.f, 0.f), Vector(80.f, 75.f), Vector(96.f, 0.f), 0.05f, 8);
+	m_pAnimator->CreateAnimation(L"MoveLeftUp",		m_pMoveImage, Vector(0.f, 0.f), Vector(80.f, 75.f), Vector(96.f, 0.f), 0.05f, 8);
 	m_pAnimator->Play(L"IdleDown", false);
 	AddComponent(m_pAnimator);
 
 	AddCollider(ColliderType::Rect, Vector(90, 90), Vector(0, 0));
+
+	CRigidBody* rigid = new CRigidBody;
+	AddComponent(rigid);
+	
 }
 
 void CPlayer::Update()
