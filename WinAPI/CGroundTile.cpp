@@ -77,7 +77,8 @@ void CGroundTile::OnCollisionEnter(CCollider* pOther)
 
 			pPlayer->CollisionX();
 		}
-		else 
+		
+		if (diff.Normalized().y >= 0.67f)
 		{
 			Logger::Debug(L"상하충돌");
 			m_bIsUpDownCollision = true;

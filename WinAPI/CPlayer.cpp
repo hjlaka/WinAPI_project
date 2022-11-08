@@ -130,6 +130,11 @@ void CPlayer::Update()
 		m_bIsAttack = true;
 	}
 
+	if (BUTTONSTAY('R'))
+	{
+		m_vecPos = Vector(100, 100);
+	}
+
 	if (BUTTONDOWN(VK_SPACE) && m_iJumpCount < 2)
 	{
 		//CreateMissile();
@@ -159,6 +164,10 @@ void CPlayer::Render()
 	wstring groundCount = to_wstring(m_pRigid->GetGroundCount());
 	RENDERMESSAGE(groundCount);
 
+	RENDERMESSAGE(to_wstring(m_pRigid->m_arrDirSpeed[(int)Dir::UP]));
+	RENDERMESSAGE(to_wstring(m_pRigid->m_arrDirSpeed[(int)Dir::DOWN]));
+	RENDERMESSAGE(to_wstring(m_pRigid->m_arrDirSpeed[(int)Dir::RIGHT]));
+	RENDERMESSAGE(to_wstring(m_pRigid->m_arrDirSpeed[(int)Dir::LEFT]));
 }
 
 void CPlayer::Release()
@@ -251,6 +260,8 @@ void CPlayer::CollisionX()
 {
 	//m_pRigid->SetSpeed(0);
 	//m_pRigid->SetGroundCount(+1);
+
+	// 충돌시 충돌 방향 확인
 	if(m_vecMoveDir.x > 0)
 		m_pRigid->SetDirSpeed(Dir::RIGHT, 0);
 	else if(m_vecMoveDir.x < 0)
@@ -264,17 +275,19 @@ void CPlayer::CollisionY()
 
 	m_pRigid->SetGravitySpeed(0);
 	//m_pRigid->SetDirSpeed(Dir::DOWN, 0);
-	//m_pRigid->SetGroundCount(+1);
+	m_pRigid->SetGroundCount(+1);
 
 }
 
 void CPlayer::Collision()
 {
-	m_pRigid->SetGroundCount(+1);
+	/*m_pRigid->SetGroundCount(+1);*/
 }
 
 void CPlayer::CollisionExitY()
 {
+	
+	m_pRigid->SetGroundCount(-1);
 	//m_pRigid->SetGroundCount(-1);
 	/*if(m_pRigid->GetGroundCount() == 0)
 		m_pRigid->SetDirSpeed(Dir::DOWN, 1);*/
@@ -291,7 +304,7 @@ void CPlayer::CollisionExitX()
 
 void CPlayer::CollisionExit()
 {
-	m_pRigid->SetGroundCount(-1);
+	/*m_pRigid->SetGroundCount(-1);*/
 }
 
 void CPlayer::OnCollisionEnter(CCollider* pOtherCollider)
