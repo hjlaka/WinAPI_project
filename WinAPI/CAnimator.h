@@ -4,6 +4,8 @@
 class CAnimation;
 class CImage;
 
+typedef void(*CallbackFunc)(DWORD_PTR, DWORD_PTR);
+
 class CAnimator : public CComponent
 {
 public:
@@ -25,6 +27,8 @@ public:
 		Vector lt, Vector slice, Vector step, float duration, UINT count, bool repeat = true);
 	void RemoveAnimation(const wstring& aniName);				// 애니메이션 삭제
 	CAnimation* FindAnimation(const wstring& aniName);			// 애니메이션 탐색
+
+	void SetAnimationCallBack(const wstring& aniName, CallbackFunc pCallback, DWORD_PTR pParam1, DWORD_PTR pParam2);
 
 	void Play(const wstring& aniName, bool trigger = false);	// 애니메이션 재생
 	void Stop();												// 애니메이션 종료

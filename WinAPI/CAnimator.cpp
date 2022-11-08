@@ -71,6 +71,14 @@ CAnimation* CAnimator::FindAnimation(const wstring& aniName)
 		return m_mapAni[aniName];
 }
 
+void CAnimator::SetAnimationCallBack(const wstring& aniName, CallbackFunc pCallback, DWORD_PTR pParam1, DWORD_PTR pParam2)
+{
+	CAnimation* pAni = FindAnimation(aniName);
+	assert(nullptr != pAni && L"Animation no exist");		// 애니메이션이 없을 경우 경고
+
+	pAni->SetLastCallback(pCallback, pParam1, pParam2);
+}
+
 void CAnimator::Play(const wstring& aniName, bool trigger)
 {
 	// 현재 애니메이션이 플레이하고자 하는 애니메이션이며

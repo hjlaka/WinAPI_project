@@ -43,6 +43,7 @@ void CPlayer::Init()
 	m_pAttackImage = RESOURCE->LoadImg(L"PlayerAttack", L"Image\\attackA_skul.png");
 	m_pJumpImage = RESOURCE->LoadImg(L"PlayerJump", L"Image\\jump_skul.png");
 	m_pFallImage = RESOURCE->LoadImg(L"PlayerFall", L"Image\\fall_skul.png");
+	m_pFallRepeatImage = RESOURCE->LoadImg(L"PlayerFallRepeat", L"Image\\fallrepeat_skul.png");
 
 	m_pAnimator = new CAnimator;
 	m_pAnimator->CreateAnimation(L"IdleUp", m_pIdleImage, Vector(25.f, 25.f), Vector(50.f, 50.f), Vector(96.f, 0.f), 0.5f, 4);
@@ -64,10 +65,20 @@ void CPlayer::Init()
 	m_pAnimator->CreateAnimation(L"MoveLeftUp",		m_pMoveImage, Vector(0.f, 0.f), Vector(80.f, 75.f), Vector(96.f, 0.f), 0.05f, 8);
 	
 	m_pAnimator->CreateAnimation(L"AttackA", m_pAttackImage, Vector(25.f, 25.f), Vector(50.f, 50.f), Vector(96.f, 0.f), 0.1f, 5);
-	m_pAnimator->CreateAnimation(L"Jump", m_pJumpImage, Vector(20.f, 25.f), Vector(50.f, 50.f), Vector(96.f, 0.f), 0.1f, 2);
-	m_pAnimator->CreateAnimation(L"Fall", m_pFallImage, Vector(20.f, 25.f), Vector(50.f, 50.f), Vector(96.f, 0.f), 0.1f, 2);
+	m_pAnimator->CreateAnimation(L"Jump", m_pJumpImage, Vector(20.f, 25.f), Vector(50.f, 50.f), Vector(96.f, 0.f), 0.15f, 2);
+	m_pAnimator->CreateAnimation(L"Fall", m_pFallImage, Vector(20.f, 25.f), Vector(50.f, 50.f), Vector(96.f, 0.f), 0.15f, 2);
+	m_pAnimator->CreateAnimation(L"FallRepeat", m_pFallRepeatImage, Vector(20.f, 25.f), Vector(50.f, 50.f), Vector(96.f, 0.f), 0.15f, 3);
 
+	auto attackEnd = [](DWORD_PTR pMe, DWORD_PTR pParam2)
+	{
+		CPlayer* pPlayer = (CPlayer*)pMe;
 
+		//플레이어의 공격 상태를 해제한다.
+
+		pPlayer->m_bIsAttack = false;
+	};
+
+	m_pAnimator->SetAnimationCallBack(L"AttackA", attackEnd, (DWORD_PTR)this, 0);
 	
 	m_pAnimator->Play(L"IdleDown", false);
 	AddComponent(m_pAnimator);
@@ -83,7 +94,7 @@ void CPlayer::Init()
 void CPlayer::Update()
 {
 	m_bIsMove = false;
-	m_bIsAttack = false;
+	//m_bIsAttack = false;
 
 	if (BUTTONSTAY(VK_LEFT))
 	{
@@ -167,6 +178,7 @@ void CPlayer::Render()
 	RENDERMESSAGE(to_wstring(m_pRigid->m_arrDirSpeed[(int)Dir::DOWN]));
 	RENDERMESSAGE(to_wstring(m_pRigid->m_arrDirSpeed[(int)Dir::RIGHT]));
 	RENDERMESSAGE(to_wstring(m_pRigid->m_arrDirSpeed[(int)Dir::LEFT]));
+	RENDERMESSAGE(to_wstring(m_bIsAttack));
 
 
 	RENDERMESSAGE(to_wstring(GetCollider()->GetPos().y));
@@ -195,6 +207,12 @@ void CPlayer::AnimatorUpdate()
 			m_pAnimator->Play(str, false);
 			return;
 		}
+		if (m_pRigid->GetGravitySpeed() < 0)
+		{
+			str += L"Jump";
+			m_pAnimator->Play(str, false);
+			return;
+		}
 		else
 		{
 			str += L"Fall";
@@ -203,7 +221,6 @@ void CPlayer::AnimatorUpdate()
 		}
 	}
 	
-
 
 	if (m_bIsAttack)
 	{

@@ -15,6 +15,10 @@ CAnimation::CAnimation()
 	m_iCurFrame = 0;
 	m_fAccTime = 0;
 	m_bRepeat = true;
+
+	m_pCallback = nullptr;
+	m_pParam1 = 0;
+	m_pParam2 = 0;
 }
 
 CAnimation::~CAnimation()
@@ -24,6 +28,13 @@ CAnimation::~CAnimation()
 const wstring& CAnimation::GetName()
 {
 	return m_strName;
+}
+
+void CAnimation::SetLastCallback(CallbackFunc pCallback, DWORD_PTR pParam1, DWORD_PTR pParam2)
+{
+	m_pCallback = pCallback;
+	m_pParam1 = pParam1;
+	m_pParam2 = pParam2;
 }
 
 void CAnimation::SetName(const wstring& name)
@@ -81,6 +92,10 @@ void CAnimation::Update()
 			// 반복 애니메이션이라면 처음부터, 아니라면 마지막을 다시 재생
 			if (m_bRepeat)	m_iCurFrame = 0;
 			else			m_iCurFrame--;
+
+			// 마지막 프레임에 재생할 콜백 함수가 있다면 실행
+			if (nullptr != m_pCallback)
+				m_pCallback(m_pParam1, m_pParam2);
 		}
 	}
 }

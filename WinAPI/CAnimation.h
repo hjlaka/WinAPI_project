@@ -10,6 +10,8 @@ struct AniFrame
 	float	duration;
 };
 
+typedef void(*CallbackFunc)(DWORD_PTR, DWORD_PTR);
+
 class CAnimation
 {
 	friend CAnimator;
@@ -27,8 +29,14 @@ private:
 	float				m_fAccTime;		// 현재 플레이중인 프레임의 축적시간
 	bool				m_bRepeat;		// 애니메이션의 반복 여부
 
+	CallbackFunc		m_pCallback;		// 애니메이션 마지막에 들어갈 함수
+	DWORD_PTR			m_pParam1;
+	DWORD_PTR			m_pParam2;
+
 public:
 	const wstring& GetName();
+
+	void SetLastCallback(CallbackFunc pCallback, DWORD_PTR pParam1, DWORD_PTR pParam2);
 
 private:
 	void SetName(const wstring& name);
