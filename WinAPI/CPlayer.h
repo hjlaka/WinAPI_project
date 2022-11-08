@@ -32,7 +32,10 @@ public:
 
 	void CollisionX();
 	void CollisionY();
+	void Collision();
 	void CollisionExitY();
+	void CollisionExitX();
+	void CollisionExit();
 
 private:
 	void Init() override;

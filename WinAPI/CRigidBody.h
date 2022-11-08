@@ -20,15 +20,17 @@ private:
 
 	float m_fSpeed;
 	Vector m_vecDir;
+	float m_fDirSpeed[];
 
 
 public:
 
 	bool GetIsGravity();
+	int GetGroundCount();
 
 	void SetIsGravity(bool isGravity);
 	void SetGravitySpeed(float speed);
-	void SetGroundCount(UINT value);
+	void SetGroundCount(int value);
 	void SetDirectionX(int dirX);
 	void SetDirectionY(int dirY);
 	void SetSpeed(float spd);

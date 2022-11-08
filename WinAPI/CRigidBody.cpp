@@ -21,6 +21,11 @@ bool CRigidBody::GetIsGravity()
 	return m_bIsGravity;
 }
 
+int CRigidBody::GetGroundCount()
+{
+	return m_iGroundCount;
+}
+
 void CRigidBody::SetIsGravity(bool isGravity)
 {
 	m_bIsGravity = isGravity;
@@ -31,7 +36,7 @@ void CRigidBody::SetGravitySpeed(float speed)
 	m_fGravitySpeed = speed;
 }
 
-void CRigidBody::SetGroundCount(UINT value)
+void CRigidBody::SetGroundCount(int value)
 {
 	m_iGroundCount += value;
 }

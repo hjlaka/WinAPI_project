@@ -149,6 +149,9 @@ void CPlayer::Update()
 
 void CPlayer::Render()
 {
+	Vector debugPos = CAMERA->ScreenToWorldPoint(Vector(WINSIZEX - 50, 40));
+	wstring debug = to_wstring(m_pRigid->GetGroundCount());
+	RENDER->Text(debug, debugPos.x - 50, debugPos.y - 10, debugPos.x + 50, debugPos.y + 10, Color(0, 0, 0, 1.f), 15);
 }
 
 void CPlayer::Release()
@@ -222,6 +225,7 @@ void CPlayer::Jump(float fJumpPower)
 void CPlayer::CollisionX()
 {
 	m_pRigid->SetSpeed(0);
+	//m_pRigid->SetGroundCount(+1);
 }
 
 void CPlayer::CollisionY()
@@ -230,16 +234,36 @@ void CPlayer::CollisionY()
 	m_fJumpPower = 0;
 
 	m_pRigid->SetGravitySpeed(0);
+	//m_pRigid->SetGroundCount(+1);
+}
+
+void CPlayer::Collision()
+{
 	m_pRigid->SetGroundCount(+1);
 }
 
 void CPlayer::CollisionExitY()
+{
+	//m_pRigid->SetGroundCount(-1);
+}
+
+void CPlayer::CollisionExitX()
+{
+	//m_pRigid->SetGroundCount(-1);
+}
+
+void CPlayer::CollisionExit()
 {
 	m_pRigid->SetGroundCount(-1);
 }
 
 void CPlayer::OnCollisionEnter(CCollider* pOtherCollider)
 {
+	/*if (pOtherCollider->GetObjName() == L"Ground")
+	{
+		m_pRigid->SetGroundCount(+1);
+	}*/
+	
 	/*if (pOtherCollider->GetObjName() == L"Ground")
 	{
 		m_iJumpCount = 0;
@@ -289,8 +313,8 @@ void CPlayer::OnCollisionStay(CCollider* pOtherCollider)
 
 void CPlayer::OnCollisionExit(CCollider* pOtherCollider)
 {
-	//if (pOtherCollider->GetObjName() == L"Ground")
-	//{
-	//	m_pRigid->SetGroundCount(-1);
-	//}
+	/*if (pOtherCollider->GetObjName() == L"Ground")
+	{
+		m_pRigid->SetGroundCount(-1);
+	}*/
 }

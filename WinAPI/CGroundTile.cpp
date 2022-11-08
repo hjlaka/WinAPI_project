@@ -63,10 +63,12 @@ void CGroundTile::OnCollisionEnter(CCollider* pOther)
 	CPlayer* pPlayer = static_cast<CPlayer*>(pObj);
 	if (nullptr != pPlayer)
 	{
+		pPlayer->Collision();
+
 		Vector standard = Vector(GetCollider()->GetPos().x + (GetCollider()->GetScale().x) / 2, GetCollider()->GetPos().y + (GetCollider()->GetScale().y) / 2);
 		Vector diff = standard - pOther->GetPos();
 
-		if (diff.Normalized().y > 0.66f)
+		if (diff.Normalized().y > 0.66f)	// 방향으로 충돌 종류를 감지
 		{
 			Logger::Debug(L"상하충돌");
 			isUpDownCollision = true;
@@ -78,7 +80,7 @@ void CGroundTile::OnCollisionEnter(CCollider* pOther)
 		{
 			Logger::Debug(L"좌우충돌");
 
-			pPlayer->CollisionX();
+			//pPlayer->CollisionX();
 		}
 	}
 	
@@ -119,10 +121,11 @@ void CGroundTile::OnCollisionExit(CCollider* pOther)
 	CPlayer* pPlayer = static_cast<CPlayer*>(pObj);
 	if (nullptr != pPlayer)
 	{
-		if (isUpDownCollision)
+		pPlayer->CollisionExit();
+		/*if (isUpDownCollision)
 		{
 			pPlayer->CollisionExitY();
-		}
+		}*/
 	}
 	
 
