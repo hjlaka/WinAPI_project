@@ -37,6 +37,7 @@ public:
 	const wstring& GetName();
 
 	void SetLastCallback(CallbackFunc pCallback, DWORD_PTR pParam1, DWORD_PTR pParam2);
+	void RunCallback();
 
 private:
 	void SetName(const wstring& name);

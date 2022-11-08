@@ -91,6 +91,19 @@ void CAnimator::Play(const wstring& aniName, bool trigger)
 	CAnimation* pAnimation = FindAnimation(aniName);
 	// 탐색한 결과 애니메이션이 없는 경우 프로그램 경고
 	assert(nullptr != pAnimation && L"Animation no exist");
+
+
+	//========================= 임시 사항 ==========================
+
+	// 현재 애니메이션의 콜백 함수 호출
+
+	if (nullptr != m_pCurAni && nullptr != m_pCurAni->m_pCallback)
+		m_pCurAni->RunCallback();
+
+	//=============================================================
+
+
+
 	// 트리거 타입일 경우이거나 애니메이션이 바뀌었을 경우 애니메이션을 처음부터 재생
 	if (trigger || m_pCurAni != pAnimation) pAnimation->Replay();
 	// 현재 애니메이션을 탐색한 애니메이션으로 교체

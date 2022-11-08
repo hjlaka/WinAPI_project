@@ -37,6 +37,11 @@ void CAnimation::SetLastCallback(CallbackFunc pCallback, DWORD_PTR pParam1, DWOR
 	m_pParam2 = pParam2;
 }
 
+void CAnimation::RunCallback()
+{
+	m_pCallback(m_pParam1, m_pParam2);
+}
+
 void CAnimation::SetName(const wstring& name)
 {
 	m_strName = name;

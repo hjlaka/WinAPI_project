@@ -24,6 +24,7 @@ private:
 	Vector m_vecLookDir;
 	bool m_bIsMove;
 	bool m_bIsAttack;
+	bool m_bOverPeak;
 	UINT m_iJumpCount;
 
 	float m_fSpeed = 200.0f;
