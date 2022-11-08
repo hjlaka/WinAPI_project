@@ -536,7 +536,6 @@ void CRenderManager::FrameImage(CImage* pImg, float dstX, float dstY, float dstW
 
 void CRenderManager::PrintSystemMessage(const wstring& str)
 {
-	Logger::Debug(L"메시지 함수 진입");
 	float yPos = (m_iMessageCount++) * 20.f;
 	Vector messagePos = CAMERA->ScreenToWorldPoint(Vector(WINSIZEX - 50, yPos));
 	wstring message = str;

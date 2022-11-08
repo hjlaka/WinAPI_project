@@ -50,6 +50,11 @@ Vector CRigidBody::GetValidDir()
 	return validDir;
 }
 
+float CRigidBody::GetGravitySpeed()
+{
+	return m_fGravitySpeed;
+}
+
 void CRigidBody::SetIsGravity(bool isGravity)
 {
 	m_bIsGravity = isGravity;

@@ -2,10 +2,11 @@
 #include "CComponent.h"
 
 enum class Dir { LEFT, RIGHT, UP, DOWN };
+class CPlayer;
 
 class CRigidBody : public CComponent
 {
-
+	friend CPlayer;
 private:
 
 public:
@@ -24,7 +25,7 @@ private:
 
 	float m_fSpeed;
 	Vector m_vecDir;
-	float m_arrDirSpeed[4] = {1, 1, 1, 1};
+	int m_arrDirSpeed[4] = {1, 1, 1, 1};
 
 
 public:
@@ -32,6 +33,7 @@ public:
 	bool GetIsGravity();
 	int GetGroundCount();
 	Vector GetValidDir();
+	float GetGravitySpeed();
 
 	void SetIsGravity(bool isGravity);
 	void SetGravitySpeed(float speed);
