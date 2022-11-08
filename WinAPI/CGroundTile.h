@@ -9,6 +9,8 @@ public:
 	bool m_bIsUpDownCollision;
 	bool m_bIsLeftRightCollision;
 
+	float diffY;
+
 private:
 	void Init() override;
 	void Update() override;

@@ -7,12 +7,14 @@
 
 
 #include "CPlayer.h"
+#include "CGameObject.h"
 
 CGroundTile::CGroundTile()
 {
 	m_strName = L"Ground";
 	m_bIsUpDownCollision = false;
 	m_bIsLeftRightCollision = false;
+	diffY = 0;
 }
 
 CGroundTile::~CGroundTile()
@@ -42,6 +44,8 @@ void CGroundTile::Render()
 	//Vector standard = Vector(GetCollider()->GetPos().x + (GetCollider()->GetScale().x) / 2, GetCollider()->GetPos().y + (GetCollider()->GetScale().y) / 2);
 	//RENDER->FillCircle(standard.x, standard.y, 5.f);
 	//RENDER->FillCircle(GetCollider()->GetPos().x, GetCollider()->GetPos().y, 5.f);
+	if(m_bIsUpDownCollision)
+		RENDER->Text(to_wstring(diffY), m_vecPos.x, m_vecPos.y + 10, m_vecPos.x + 30, m_vecPos.y + 30);
 }
 
 void CGroundTile::Release()
@@ -75,7 +79,7 @@ void CGroundTile::OnCollisionEnter(CCollider* pOther)
 		Vector diff = standard - pOther->GetPos();
 
 		
-		if (diff.Normalized().y < 0.67f)	// 방향으로 충돌 종류를 감지
+		if (diff.Normalized().y < 0.70f)	// 방향으로 충돌 종류를 감지
 		{
 			Logger::Debug(L"좌우충돌");
 			m_bIsLeftRightCollision = true;
@@ -83,10 +87,13 @@ void CGroundTile::OnCollisionEnter(CCollider* pOther)
 			pPlayer->CollisionX();
 		}
 		
-		if (diff.Normalized().y >= 0.67f)
+		if (diff.Normalized().y >= 0.720f)			// 굳이 바닥 아래 옆 타일과 미리 상하충돌 중일 필요가 있을까 
 		{
 			Logger::Debug(L"상하충돌");
 			m_bIsUpDownCollision = true;
+			diffY = diff.Normalized().y;
+
+			pPlayer->SetPos(Vector(pPlayer->GetPos().x, GetCollider()->GetPos().y - GetCollider()->GetScale().y / 2 - pOther->GetScale().y / 2 + 0.0001f) );
 
 			pPlayer->CollisionY();
 
@@ -115,11 +122,7 @@ void CGroundTile::OnCollisionStay(CCollider* pOther)
 	//pOther->GetOwner()->SetPos(pOther->GetOwner()->GetPos() + Vector(0.f, -1.f) * 26.f * DT);
 	// 닿은 개수 만큼 속력이 달라진다.
 
-	
 
-	
-
-	
 	
 	
 }

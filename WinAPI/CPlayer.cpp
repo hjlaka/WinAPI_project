@@ -107,17 +107,16 @@ void CPlayer::Update()
 
 	if (BUTTONSTAY(VK_UP))
 	{
-		m_pRigid->SetDirectionY(-1);
-		//m_vecPos.y -= m_fSpeed * DT;
-		m_bIsMove = true;
-		m_vecMoveDir.y = +1;
+		//m_pRigid->SetDirectionY(-1);
+		//m_bIsMove = true;
+		//m_vecMoveDir.y = +1;
 	}
 	else if (BUTTONSTAY(VK_DOWN))
 	{
-		m_pRigid->SetDirectionY(+1);
-		//m_vecPos.y += m_fSpeed * DT;
+		/*m_pRigid->SetDirectionY(+1);
+
 		m_bIsMove = true;
-		m_vecMoveDir.y = -1;
+		m_vecMoveDir.y = -1;*/
 	}
 	else
 	{
@@ -168,6 +167,13 @@ void CPlayer::Render()
 	RENDERMESSAGE(to_wstring(m_pRigid->m_arrDirSpeed[(int)Dir::DOWN]));
 	RENDERMESSAGE(to_wstring(m_pRigid->m_arrDirSpeed[(int)Dir::RIGHT]));
 	RENDERMESSAGE(to_wstring(m_pRigid->m_arrDirSpeed[(int)Dir::LEFT]));
+
+
+	RENDERMESSAGE(to_wstring(GetCollider()->GetPos().y));
+
+	RENDER->FillCircle(GetCollider()->GetPos().x, GetCollider()->GetPos().y, 5.f);
+
+
 }
 
 void CPlayer::Release()
