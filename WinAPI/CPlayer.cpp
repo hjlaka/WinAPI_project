@@ -64,8 +64,8 @@ void CPlayer::Init()
 	m_pAnimator->CreateAnimation(L"MoveLeftUp",		m_pMoveImage, Vector(0.f, 0.f), Vector(80.f, 75.f), Vector(96.f, 0.f), 0.05f, 8);
 	
 	m_pAnimator->CreateAnimation(L"AttackA", m_pAttackImage, Vector(25.f, 25.f), Vector(50.f, 50.f), Vector(96.f, 0.f), 0.1f, 5);
-	m_pAnimator->CreateAnimation(L"Jump", m_pJumpImage, Vector(25.f, 25.f), Vector(50.f, 50.f), Vector(96.f, 0.f), 0.1f, 2);
-	m_pAnimator->CreateAnimation(L"Fall", m_pFallImage, Vector(25.f, 25.f), Vector(50.f, 50.f), Vector(96.f, 0.f), 0.1f, 2);
+	m_pAnimator->CreateAnimation(L"Jump", m_pJumpImage, Vector(20.f, 25.f), Vector(50.f, 50.f), Vector(96.f, 0.f), 0.1f, 2);
+	m_pAnimator->CreateAnimation(L"Fall", m_pFallImage, Vector(20.f, 25.f), Vector(50.f, 50.f), Vector(96.f, 0.f), 0.1f, 2);
 
 
 	
@@ -262,10 +262,11 @@ void CPlayer::CollisionX()
 	//m_pRigid->SetGroundCount(+1);
 
 	// 충돌시 충돌 방향 확인
+	if (m_vecMoveDir.x < 0)
+		m_pRigid->SetDirSpeed(Dir::LEFT, 0);
 	if(m_vecMoveDir.x > 0)
 		m_pRigid->SetDirSpeed(Dir::RIGHT, 0);
-	else if(m_vecMoveDir.x < 0)
-		m_pRigid->SetDirSpeed(Dir::LEFT, 0);
+	
 }
 
 void CPlayer::CollisionY()
