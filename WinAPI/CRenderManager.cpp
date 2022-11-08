@@ -6,6 +6,8 @@
 #include "WinAPI.h"
 #include "CImage.h"
 
+int CRenderManager::m_iMessageCount = 1;
+
 CRenderManager::CRenderManager()
 {
 	m_pFactory = nullptr;
@@ -107,6 +109,8 @@ void CRenderManager::BeginDraw()
 	m_pRenderTarget->BeginDraw();
 	Vector screenPos = CAMERA->ScreenToWorldPoint(Vector(0, 0));
 	FillRect(screenPos.x, screenPos.y, screenPos.x + WINSIZEX, screenPos.y + WINSIZEY, Color(255, 255, 255, 1.f));
+
+	m_iMessageCount = 1;		// 다시 초기화
 }
 
 void CRenderManager::EndDraw()
@@ -528,6 +532,15 @@ void CRenderManager::FrameImage(CImage* pImg, float dstX, float dstY, float dstW
 	D2D1_RECT_F srcRect = { srcX, srcY, srcW, srcH };
 
 	m_pRenderTarget->DrawBitmap(pImg->GetImage(), imgRect, 1.0f, D2D1_BITMAP_INTERPOLATION_MODE_NEAREST_NEIGHBOR, srcRect);
+}
+
+void CRenderManager::PrintSystemMessage(const wstring& str)
+{
+	Logger::Debug(L"메시지 함수 진입");
+	float yPos = (m_iMessageCount++) * 20.f;
+	Vector messagePos = CAMERA->ScreenToWorldPoint(Vector(WINSIZEX - 50, yPos));
+	wstring message = str;
+	Text(message, messagePos.x - 50, messagePos.y - 10, messagePos.x + 50, messagePos.y + 10, Color(0, 0, 0, 1.f), 15);
 }
 
 IWICImagingFactory* CRenderManager::GetImageFactory()

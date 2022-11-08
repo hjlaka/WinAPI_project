@@ -41,6 +41,8 @@ void CPlayer::Init()
 	m_pIdleImage = RESOURCE->LoadImg(L"PlayerIdle", L"Image\\idle_skul.png");
 	m_pMoveImage = RESOURCE->LoadImg(L"PlayerMove", L"Image\\move_skul.png");
 	m_pAttackImage = RESOURCE->LoadImg(L"PlayerAttack", L"Image\\attackA_skul.png");
+	m_pJumpImage = RESOURCE->LoadImg(L"PlayerJump", L"Image\\jump_skul.png");
+	m_pFallImage = RESOURCE->LoadImg(L"PlayerFall", L"Image\\fall_skul.png");
 
 	m_pAnimator = new CAnimator;
 	m_pAnimator->CreateAnimation(L"IdleUp", m_pIdleImage, Vector(25.f, 25.f), Vector(50.f, 50.f), Vector(96.f, 0.f), 0.5f, 4);
@@ -62,6 +64,10 @@ void CPlayer::Init()
 	m_pAnimator->CreateAnimation(L"MoveLeftUp",		m_pMoveImage, Vector(0.f, 0.f), Vector(80.f, 75.f), Vector(96.f, 0.f), 0.05f, 8);
 	
 	m_pAnimator->CreateAnimation(L"AttackA", m_pAttackImage, Vector(25.f, 25.f), Vector(50.f, 50.f), Vector(96.f, 0.f), 0.1f, 5);
+	m_pAnimator->CreateAnimation(L"Jump", m_pJumpImage, Vector(25.f, 25.f), Vector(50.f, 50.f), Vector(96.f, 0.f), 0.1f, 2);
+	m_pAnimator->CreateAnimation(L"Fall", m_pFallImage, Vector(25.f, 25.f), Vector(50.f, 50.f), Vector(96.f, 0.f), 0.1f, 2);
+
+
 	
 	m_pAnimator->Play(L"IdleDown", false);
 	AddComponent(m_pAnimator);
@@ -149,9 +155,10 @@ void CPlayer::Update()
 
 void CPlayer::Render()
 {
-	Vector debugPos = CAMERA->ScreenToWorldPoint(Vector(WINSIZEX - 50, 40));
-	wstring debug = to_wstring(m_pRigid->GetGroundCount());
-	RENDER->Text(debug, debugPos.x - 50, debugPos.y - 10, debugPos.x + 50, debugPos.y + 10, Color(0, 0, 0, 1.f), 15);
+
+	wstring groundCount = to_wstring(m_pRigid->GetGroundCount());
+	RENDERMESSAGE(groundCount);
+
 }
 
 void CPlayer::Release()
@@ -164,6 +171,24 @@ void CPlayer::AnimatorUpdate()
 		m_vecLookDir = m_vecMoveDir;
 
 	wstring str = L"";
+
+	if (m_pRigid->GetGroundCount() == 0)
+	{
+		if (m_pRigid->GetGravitySpeed() < 0)
+		{
+			str += L"Jump";
+			m_pAnimator->Play(str, false);
+			return;
+		}
+		else
+		{
+			str += L"Fall";
+			m_pAnimator->Play(str, false);
+			return;
+		}
+	}
+	
+
 
 	if (m_bIsAttack)
 	{
