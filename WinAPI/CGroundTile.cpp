@@ -38,6 +38,10 @@ void CGroundTile::Render()
 	CTile::Render();
 
 	ComponentRender();
+
+	//Vector standard = Vector(GetCollider()->GetPos().x + (GetCollider()->GetScale().x) / 2, GetCollider()->GetPos().y + (GetCollider()->GetScale().y) / 2);
+	//RENDER->FillCircle(standard.x, standard.y, 5.f);
+	//RENDER->FillCircle(GetCollider()->GetPos().x, GetCollider()->GetPos().y, 5.f);
 }
 
 void CGroundTile::Release()
@@ -66,7 +70,8 @@ void CGroundTile::OnCollisionEnter(CCollider* pOther)
 	{
 		pPlayer->Collision();
 
-		Vector standard = Vector(GetCollider()->GetPos().x + (GetCollider()->GetScale().x) / 2, GetCollider()->GetPos().y + (GetCollider()->GetScale().y) / 2);
+		//Vector standard = Vector(GetCollider()->GetPos().x + (GetCollider()->GetScale().x) / 2, GetCollider()->GetPos().y + (GetCollider()->GetScale().y) / 2);
+		Vector standard = Vector(GetCollider()->GetPos().x, GetCollider()->GetPos().y);
 		Vector diff = standard - pOther->GetPos();
 
 		
