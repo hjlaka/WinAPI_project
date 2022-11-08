@@ -1,5 +1,8 @@
 #pragma once
 #include "CComponent.h"
+
+enum class Dir { LEFT, RIGHT, UP, DOWN };
+
 class CRigidBody : public CComponent
 {
 
@@ -9,6 +12,7 @@ public:
 
 	CRigidBody();
 	virtual ~CRigidBody();
+
 
 private:
 
@@ -20,13 +24,14 @@ private:
 
 	float m_fSpeed;
 	Vector m_vecDir;
-	float m_fDirSpeed[];
+	float m_arrDirSpeed[4] = {1, 1, 1, 1};
 
 
 public:
 
 	bool GetIsGravity();
 	int GetGroundCount();
+	Vector GetValidDir();
 
 	void SetIsGravity(bool isGravity);
 	void SetGravitySpeed(float speed);
@@ -34,6 +39,8 @@ public:
 	void SetDirectionX(int dirX);
 	void SetDirectionY(int dirY);
 	void SetSpeed(float spd);
+
+	void SetDirSpeed(Dir dir, float spd);
 
 	void PowerToY(float y);
 

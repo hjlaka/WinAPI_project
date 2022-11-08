@@ -11,7 +11,8 @@
 CGroundTile::CGroundTile()
 {
 	m_strName = L"Ground";
-	isUpDownCollision = false;
+	m_bIsUpDownCollision = false;
+	m_bIsLeftRightCollision = false;
 }
 
 CGroundTile::~CGroundTile()
@@ -68,19 +69,21 @@ void CGroundTile::OnCollisionEnter(CCollider* pOther)
 		Vector standard = Vector(GetCollider()->GetPos().x + (GetCollider()->GetScale().x) / 2, GetCollider()->GetPos().y + (GetCollider()->GetScale().y) / 2);
 		Vector diff = standard - pOther->GetPos();
 
-		if (diff.Normalized().y > 0.66f)	// 방향으로 충돌 종류를 감지
+		
+		if (diff.Normalized().y < 0.67f)	// 방향으로 충돌 종류를 감지
+		{
+			Logger::Debug(L"좌우충돌");
+			m_bIsLeftRightCollision = true;
+
+			pPlayer->CollisionX();
+		}
+		else 
 		{
 			Logger::Debug(L"상하충돌");
-			isUpDownCollision = true;
+			m_bIsUpDownCollision = true;
 
 			pPlayer->CollisionY();
 
-		}
-		else
-		{
-			Logger::Debug(L"좌우충돌");
-
-			//pPlayer->CollisionX();
 		}
 	}
 	
@@ -122,10 +125,17 @@ void CGroundTile::OnCollisionExit(CCollider* pOther)
 	if (nullptr != pPlayer)
 	{
 		pPlayer->CollisionExit();
-		/*if (isUpDownCollision)
+		if (m_bIsUpDownCollision)					// 타일 단위로 판단? (상하충돌 겸 좌우 충돌이 일어나면 아래 일이 일어나지 않는다.)
 		{
 			pPlayer->CollisionExitY();
-		}*/
+			m_bIsUpDownCollision = false;
+		}
+		if (m_bIsLeftRightCollision)
+		{
+			pPlayer->CollisionExitX();
+			Logger::Debug(L"좌우 충돌 탈출");
+			m_bIsLeftRightCollision = false;
+		}
 	}
 	
 

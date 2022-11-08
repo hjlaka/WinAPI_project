@@ -224,8 +224,12 @@ void CPlayer::Jump(float fJumpPower)
 
 void CPlayer::CollisionX()
 {
-	m_pRigid->SetSpeed(0);
+	//m_pRigid->SetSpeed(0);
 	//m_pRigid->SetGroundCount(+1);
+	if(m_vecMoveDir.x > 0)
+		m_pRigid->SetDirSpeed(Dir::RIGHT, 0);
+	else if(m_vecMoveDir.x < 0)
+		m_pRigid->SetDirSpeed(Dir::LEFT, 0);
 }
 
 void CPlayer::CollisionY()
@@ -234,7 +238,9 @@ void CPlayer::CollisionY()
 	m_fJumpPower = 0;
 
 	m_pRigid->SetGravitySpeed(0);
+	//m_pRigid->SetDirSpeed(Dir::DOWN, 0);
 	//m_pRigid->SetGroundCount(+1);
+
 }
 
 void CPlayer::Collision()
@@ -245,11 +251,17 @@ void CPlayer::Collision()
 void CPlayer::CollisionExitY()
 {
 	//m_pRigid->SetGroundCount(-1);
+	/*if(m_pRigid->GetGroundCount() == 0)
+		m_pRigid->SetDirSpeed(Dir::DOWN, 1);*/
 }
 
 void CPlayer::CollisionExitX()
 {
 	//m_pRigid->SetGroundCount(-1);
+	//음... 충돌 갯수를 따져볼까....
+	m_pRigid->SetDirSpeed(Dir::RIGHT, 1);
+	m_pRigid->SetDirSpeed(Dir::LEFT, 1);			// 임시
+
 }
 
 void CPlayer::CollisionExit()
@@ -259,6 +271,7 @@ void CPlayer::CollisionExit()
 
 void CPlayer::OnCollisionEnter(CCollider* pOtherCollider)
 {
+	
 	/*if (pOtherCollider->GetObjName() == L"Ground")
 	{
 		m_pRigid->SetGroundCount(+1);
