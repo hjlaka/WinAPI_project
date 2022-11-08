@@ -87,7 +87,7 @@ void CGroundTile::OnCollisionEnter(CCollider* pOther)
 			pPlayer->CollisionX();
 		}
 		
-		if (diff.Normalized().y >= 0.720f)			// 굳이 바닥 아래 옆 타일과 미리 상하충돌 중일 필요가 있을까 
+		if (diff.Normalized().y >= 0.690f)			// 굳이 바닥 아래 옆 타일과 미리 상하충돌 중일 필요가 있을까 
 		{
 			Logger::Debug(L"상하충돌");
 			m_bIsUpDownCollision = true;

@@ -4,7 +4,7 @@
 CRigidBody::CRigidBody()
 {
 	m_fLaunchSpeed = 0;
-	m_fGravity = 1280.f;
+	m_fGravity = 1080.f;
 	m_bIsGravity = true;
 	m_fSpeed = 200.f;
 

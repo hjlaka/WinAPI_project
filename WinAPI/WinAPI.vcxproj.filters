@@ -189,6 +189,9 @@
     <ClInclude Include="CGameManager.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="CMonster01.h">
+      <Filter>GameObject\Stage01</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinAPI.cpp">
@@ -307,6 +310,9 @@
     </ClCompile>
     <ClCompile Include="CGameManager.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="CMonster01.cpp">
+      <Filter>GameObject\Stage01</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
