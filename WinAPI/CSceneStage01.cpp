@@ -10,7 +10,7 @@
 #include "CPathManager.h"
 
 #include "CPlayer.h"
-#include "CMonster.h"
+#include "CMonster01.h"
 #include "CCameraController.h"
 #include "CButton.h"
 #include "CPanel.h"
@@ -30,7 +30,7 @@ void CSceneStage01::Init()
 	pPlayer->SetPos(200, WINSIZEY * 0.5f);
 	AddGameObject(pPlayer);
 
-	CMonster* pMonster = new CMonster();
+	CMonster01* pMonster = new CMonster01();
 	pMonster->SetPos(1000, WINSIZEY * 0.5f);
 	AddGameObject(pMonster);
 
