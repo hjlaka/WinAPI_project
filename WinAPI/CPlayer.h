@@ -19,18 +19,22 @@ private:
 	CImage* m_pJumpImage;
 	CImage* m_pFallImage;
 	CImage* m_pFallRepeatImage;
+	CImage* m_pDashImage;
 
 	Vector m_vecMoveDir;
 	Vector m_vecLookDir;
 	bool m_bIsMove;
 	bool m_bIsAttack;
 	bool m_bOverPeak;
+	bool m_bIsDash;
 	UINT m_iJumpCount;
 
 	UINT m_uiNotBlockingCount;
 
 	float m_fSpeed = 200.0f;
 	float m_fJumpPower = 100.f;
+
+	float m_fDashClock;
 
 
 

@@ -31,8 +31,21 @@ CPlayer::CPlayer()
 	m_bIsMove = false;
 	m_iJumpCount = 0;
 	m_bOverPeak = false;
+	m_bIsDash = false;
 
 	m_uiNotBlockingCount = 0;
+
+	m_fDashClock = 0;
+	
+
+
+	//
+
+
+	m_uiHp = 100;
+	m_uiCurHp = 100;
+	m_uiAtt = 10;
+
 }
 
 CPlayer::~CPlayer()
@@ -47,6 +60,7 @@ void CPlayer::Init()
 	m_pJumpImage = RESOURCE->LoadImg(L"PlayerJump", L"Image\\jump_skul.png");
 	m_pFallImage = RESOURCE->LoadImg(L"PlayerFall", L"Image\\fall_skul.png");
 	m_pFallRepeatImage = RESOURCE->LoadImg(L"PlayerFallRepeat", L"Image\\fallrepeat_skul.png");
+	m_pDashImage = RESOURCE->LoadImg(L"PlayerDash", L"Image\\dash_skul.png");
 
 	m_pAnimator = new CAnimator;
 	m_pAnimator->CreateAnimation(L"IdleUp", m_pIdleImage, Vector(25.f, 20.f), Vector(50.f, 75.f), Vector(96.f, 0.f), 0.5f, 4);
@@ -71,6 +85,7 @@ void CPlayer::Init()
 	m_pAnimator->CreateAnimation(L"Jump", m_pJumpImage, Vector(20.f, 25.f), Vector(50.f, 50.f), Vector(96.f, 0.f), 0.15f, 2);
 	m_pAnimator->CreateAnimation(L"Fall", m_pFallImage, Vector(20.f, 25.f), Vector(50.f, 50.f), Vector(96.f, 0.f), 0.15f, 2);
 	m_pAnimator->CreateAnimation(L"FallRepeat", m_pFallRepeatImage, Vector(20.f, 25.f), Vector(50.f, 50.f), Vector(96.f, 0.f), 0.15f, 3);
+	m_pAnimator->CreateAnimation(L"Dash", m_pDashImage, Vector(0.f, 25.f), Vector(75.f, 50.f), Vector(96.f, 0.f), 0.15f, 1);
 
 	auto attackEnd = [](DWORD_PTR pMe, DWORD_PTR pParam2)
 	{
@@ -108,7 +123,37 @@ void CPlayer::Init()
 void CPlayer::Update()
 {
 	m_bIsMove = false;
+	
+	
 	//m_bIsAttack = false;
+
+	if (m_fDashClock > 0)
+	{
+		m_fDashClock -= DT;
+		if (BUTTONDOWN(VK_LEFT) || BUTTONDOWN(VK_RIGHT))
+		{
+
+			m_bIsDash = true;
+			m_pRigid->SetMultiSpeed(1.5f);
+
+		}
+		
+	}
+	if(m_bIsDash)
+	{
+		if (BUTTONUP(VK_LEFT) || BUTTONUP(VK_RIGHT))
+		{
+			m_fDashClock = 0;
+			m_bIsDash = false;
+			m_pRigid->SetMultiSpeed(1.0f);
+		}
+	}
+
+	if (BUTTONDOWN(VK_LEFT) || BUTTONDOWN(VK_RIGHT))
+	{
+		m_fDashClock = 0.5f;
+	}
+
 
 	if (BUTTONSTAY(VK_LEFT))
 	{
@@ -116,6 +161,7 @@ void CPlayer::Update()
 		//m_vecPos.x -= m_fSpeed * DT;
 		m_bIsMove = true;
 		m_vecMoveDir.x = -1;
+
 	}
 	else if (BUTTONSTAY(VK_RIGHT))
 	{
@@ -129,6 +175,8 @@ void CPlayer::Update()
 		m_vecMoveDir.x = 0;
 		m_pRigid->SetDirectionX(0);
 	}
+
+	
 
 	if (BUTTONSTAY(VK_UP))
 	{
@@ -188,6 +236,10 @@ void CPlayer::Render()
 	RENDERMESSAGE(to_wstring(m_bIsAttack));
 	RENDERMESSAGE(L"¿À¸¥ÂÊ Ãæµ¹ °¹¼ö: " + to_wstring(m_pRigid->m_arrCollisionCount[(int)Dir::RIGHT]));
 	RENDERMESSAGE(L"¿ÞÂÊ Ãæµ¹ °¹¼ö: " + to_wstring(m_pRigid->m_arrCollisionCount[(int)Dir::LEFT]));
+	RENDERMESSAGE(to_wstring(m_fDashClock));
+	RENDERMESSAGE(to_wstring(m_bIsDash));
+	RENDERMESSAGE(to_wstring(m_pRigid->m_fMultiSpeed));
+
 
 
 	RENDERMESSAGE(to_wstring(GetCollider()->GetPos().y));
@@ -207,6 +259,13 @@ void CPlayer::AnimatorUpdate()
 		m_vecLookDir = m_vecMoveDir;
 
 	wstring str = L"";
+
+	if (m_bIsDash)
+	{
+		str += L"Dash";
+		m_pAnimator->Play(str, false);
+		return;
+	}
 
 	if (m_pRigid->GetGroundCount() == 0)
 	{
@@ -239,7 +298,7 @@ void CPlayer::AnimatorUpdate()
 		return;
 	}
 		
-
+	
 
 	if (m_bIsMove)	str += L"Move";
 	else			str += L"Idle";

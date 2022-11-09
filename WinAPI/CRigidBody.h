@@ -27,6 +27,7 @@ private:
 	bool m_bIsOnGround;
 
 	float m_fSpeed;
+	float m_fMultiSpeed;
 	Vector m_vecDir;
 	int m_arrDirSpeed[4] = {1, 1, 1, 1};
 	int m_arrCollisionCount[4] = { 0, 0, 0, 0 };
@@ -46,6 +47,7 @@ public:
 	void SetDirectionX(int dirX);
 	void SetDirectionY(int dirY);
 	void SetSpeed(float spd);
+	void SetMultiSpeed(float spd);
 
 	void SetDirSpeed(Dir dir, float spd);
 	void SetCollisionConunt(Dir dir, int value);

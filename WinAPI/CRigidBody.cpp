@@ -7,6 +7,7 @@ CRigidBody::CRigidBody()
 	m_fGravity = 1080.f;
 	m_bIsGravity = true;
 	m_fSpeed = 200.f;
+	m_fMultiSpeed = 1.f;
 
 	m_fGravitySpeed = 0;
 	m_iGroundCount = 0;
@@ -85,7 +86,7 @@ void CRigidBody::Update()
 	
 
 
-	GetOwner()->SetPos(GetOwner()->GetPos() + m_vecDir.Normalized() * m_fSpeed * DT);
+	GetOwner()->SetPos(GetOwner()->GetPos() + m_vecDir.Normalized() * m_fSpeed * m_fMultiSpeed *  DT);
 
 
 	if (m_bIsGravity)
@@ -152,6 +153,11 @@ void CRigidBody::SetDirectionX(int dirX)
 void CRigidBody::SetSpeed(float spd)
 {
 	m_fSpeed = spd;
+}
+
+void CRigidBody::SetMultiSpeed(float spd)
+{
+	m_fMultiSpeed = spd;
 }
 
 void CRigidBody::SetDirSpeed(Dir dir, float spd)
