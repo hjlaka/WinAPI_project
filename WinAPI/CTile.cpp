@@ -60,6 +60,16 @@ void CTile::Render()
 				Color(255, 0, 0, 1), 5
 			);
 		}
+		if (m_type == TypeTile::Wall)
+		{
+			RENDER->FrameRect(
+				m_vecPos.x,
+				m_vecPos.y,
+				m_vecPos.x + m_vecScale.x,
+				m_vecPos.y + m_vecScale.y,
+				Color(0, 0, 255, 1), 5
+			);
+		}
 	}
 
 	// 0번 타일은 빈타일러 정의
