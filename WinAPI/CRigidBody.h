@@ -3,10 +3,12 @@
 
 enum class Dir { LEFT, RIGHT, UP, DOWN };
 class CPlayer;
+class CMonster01;
 
 class CRigidBody : public CComponent
 {
 	friend CPlayer;
+	friend CMonster01;
 private:
 
 public:

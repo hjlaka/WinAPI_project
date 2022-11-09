@@ -16,6 +16,8 @@ private:
 	CImage* m_pIdleImage;
 	CImage* m_pMoveImage;
 
+	Vector m_vecMoveDir;
+	Vector m_vecLookDir;
 
 public:
 
