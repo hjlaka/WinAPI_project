@@ -22,6 +22,7 @@ private:
 	float m_fLaunchSpeed;
 	bool m_bIsGravity;
 	int m_iGroundCount;
+	bool m_bIsOnGround;
 
 	float m_fSpeed;
 	Vector m_vecDir;

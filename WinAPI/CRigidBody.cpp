@@ -10,6 +10,7 @@ CRigidBody::CRigidBody()
 
 	m_fGravitySpeed = 0;
 	m_iGroundCount = 0;
+	m_bIsOnGround = false;
 }
 
 CRigidBody::~CRigidBody()
@@ -79,20 +80,29 @@ void CRigidBody::Update()
 
 
 	GetOwner()->SetPos(GetOwner()->GetPos() + m_vecDir.Normalized() * m_fSpeed * DT);
+	for (int i = 0; i < 4; i++)
+	{
+		m_arrDirSpeed[i] = 1;	// 왠만하면 초기화?
+	}
 
 	if (m_bIsGravity)
 	{		
 		
-		if (m_iGroundCount == 0)
+		if (!m_bIsOnGround)
 		{
 			if (m_fGravitySpeed < 1000.f)
 			{
 				m_fGravitySpeed += m_fGravity * DT;
 			}
-
+			
 		}
 		else if (m_iGroundCount < 0)
 			assert(!m_iGroundCount < 0);
+		else
+		{
+			//m_bIsOnGround 가 true인 경우
+			m_bIsOnGround = false; // 초기화
+		}
 
 
 		GetOwner()->SetPos(GetOwner()->GetPos() + Vector(0.f, 1.f) * (m_fGravitySpeed) * DT);

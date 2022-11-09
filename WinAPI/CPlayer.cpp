@@ -100,7 +100,7 @@ void CPlayer::Init()
 	m_pRigid = new CRigidBody;
 	AddComponent(m_pRigid);
 	m_bIsRigidBody = true;
-	
+
 }
 
 void CPlayer::Update()
@@ -187,6 +187,7 @@ void CPlayer::Render()
 	wstring groundCount = to_wstring(m_pRigid->GetGroundCount());
 	RENDERMESSAGE(groundCount);
 
+	RENDERMESSAGE(to_wstring(m_pRigid->m_fGravitySpeed));
 	RENDERMESSAGE(to_wstring(m_pRigid->m_arrDirSpeed[(int)Dir::UP]));
 	RENDERMESSAGE(to_wstring(m_pRigid->m_arrDirSpeed[(int)Dir::DOWN]));
 	RENDERMESSAGE(to_wstring(m_pRigid->m_arrDirSpeed[(int)Dir::RIGHT]));
@@ -212,14 +213,8 @@ void CPlayer::AnimatorUpdate()
 
 	wstring str = L"";
 
-	if (m_pRigid->GetGroundCount() == 0)
+	if (!(m_pRigid->m_bIsOnGround))
 	{
-		if (m_pRigid->GetGravitySpeed() < 0)
-		{
-			str += L"Jump";
-			m_pAnimator->Play(str, false);
-			return;
-		}
 		if (m_pRigid->GetGravitySpeed() < 0)
 		{
 			str += L"Jump";
@@ -299,88 +294,9 @@ void CPlayer::Jump(float fJumpPower)
 	m_fJumpPower = fJumpPower;*/
 }
 
-void CPlayer::CollisionX()
-{
-	//m_pRigid->SetSpeed(0);
-	//m_pRigid->SetGroundCount(+1);
-
-	// 충돌시 충돌 방향 확인
-	if (m_vecMoveDir.x < 0)
-		m_pRigid->SetDirSpeed(Dir::LEFT, 0);
-	if(m_vecMoveDir.x > 0)
-		m_pRigid->SetDirSpeed(Dir::RIGHT, 0);
-	
-}
-
-void CPlayer::CollisionY()
-{
-	m_iJumpCount = 0;
-	m_fJumpPower = 0;
-
-	m_pRigid->SetGravitySpeed(0);
-	//m_pRigid->SetDirSpeed(Dir::DOWN, 0);
-	m_pRigid->SetGroundCount(+1);
-
-}
-
-void CPlayer::Collision()
-{
-	/*m_pRigid->SetGroundCount(+1);*/
-}
-
-void CPlayer::CollisionExitY()
-{
-	
-	m_pRigid->SetGroundCount(-1);
-	//m_pRigid->SetGroundCount(-1);
-	/*if(m_pRigid->GetGroundCount() == 0)
-		m_pRigid->SetDirSpeed(Dir::DOWN, 1);*/
-}
-
-void CPlayer::CollisionExitX()
-{
-	//m_pRigid->SetGroundCount(-1);
-	//음... 충돌 갯수를 따져볼까....
-	m_pRigid->SetDirSpeed(Dir::RIGHT, 1);
-	m_pRigid->SetDirSpeed(Dir::LEFT, 1);			// 임시
-
-}
-
-void CPlayer::CollisionExit()
-{
-	/*m_pRigid->SetGroundCount(-1);*/
-}
 
 void CPlayer::OnCollisionEnter(CCollider* pOtherCollider)
 {
-	
-	/*if (pOtherCollider->GetObjName() == L"Ground")
-	{
-		m_pRigid->SetGroundCount(+1);
-	}*/
-	
-	/*if (pOtherCollider->GetObjName() == L"Ground")
-	{
-		m_iJumpCount = 0;
-		m_fJumpPower = 0;
-
-		m_pRigid->SetGravitySpeed(0);
-		m_pRigid->SetGroundCount(+1);
-	}*/
-	//if (pOtherCollider->GetPos().y < GetCollider()->GetPos().y + GetCollider()->GetScale().y / 2)			// 바닥보다 위에 있는 벽이라면...
-	//{
-	//	Logger::Debug(L"벽충돌");
-	//	if (m_vecMoveDir.x == 1)
-	//	{
-	//		m_vecPos.x = pOtherCollider->GetPos().x - (GetCollider()->GetPos().x + GetCollider()->GetScale().x / 2 - m_vecPos.x) - 10;
-	//		Logger::Debug(L"오른쪽으로 가다 충돌");
-	//	}
-	//	else if (m_vecMoveDir.x == -1)
-	//	{
-	//		m_vecPos.x += m_fSpeed * DT;
-	//		Logger::Debug(L"왼쪽으로 가다 충돌");
-	//	}
-	//}
 
 	
 	
@@ -389,27 +305,44 @@ void CPlayer::OnCollisionEnter(CCollider* pOtherCollider)
 void CPlayer::OnCollisionStay(CCollider* pOtherCollider)
 {
 	
-	/*if (pOtherCollider->GetPos().y < GetCollider()->GetPos().y + GetCollider()->GetScale().y / 2 - GetCollider()->GetScale().y / 2)			// 바닥보다 위에 있는 벽이라면...
+	if (pOtherCollider->GetObjName() == L"Ground")
 	{
-		Logger::Debug(L"벽충돌");
-		if (m_vecMoveDir.x == 1)
+		Vector ground = Vector(pOtherCollider->GetPos().x, pOtherCollider->GetPos().y);
+		Vector groundToMe = ground - GetCollider()->GetPos();
+
+
+		if (groundToMe.Normalized().y < 0.70f)	// 방향으로 충돌 종류를 감지
 		{
-			m_vecPos.x -= m_fSpeed * DT;
-			Logger::Debug(L"오른쪽으로 가다 충돌");
+			Logger::Debug(L"좌우충돌");
+
+				// 좌우충돌시 충돌 방향 확인 =========> Stay에서는 충돌상태에서 방향이 바뀌는 경우 오동작이 일어난다. Stay에서는 위치로 판단하자.
+				// 그렇긴 한데, Stay문인데 너무 처리량이 많지 않아? 일단 MoveDir는 키입력시에만 발동될 것이다.
+			if (m_vecMoveDir.x < 0 && groundToMe.x < 0)
+				m_pRigid->SetDirSpeed(Dir::LEFT, 0);
+			if (m_vecMoveDir.x > 0 && groundToMe.x > 0)
+				m_pRigid->SetDirSpeed(Dir::RIGHT, 0);
 		}
-		else if (m_vecMoveDir.x == -1)
+
+		if (groundToMe.Normalized().y >= 0.690f)			// 굳이 바닥 아래 옆 타일과 미리 상하충돌 중일 필요가 있을까 
 		{
-			m_vecPos.x += m_fSpeed * DT;
-			Logger::Debug(L"왼쪽으로 가다 충돌");
+			Logger::Debug(L"상하충돌");
+
+			SetPos(Vector(GetCollider()->GetPos().x, pOtherCollider->GetPos().y - pOtherCollider->GetScale().y / 2 - GetCollider()->GetScale().y / 2 + 0.0001f));			// 필요한가?
+
+			m_iJumpCount = 0;
+			m_fJumpPower = 0;
+
+			m_pRigid->SetGravitySpeed(0);
+
+			m_pRigid->m_bIsOnGround = true;
+
 		}
-	}*/
-		//m_vecPos.y = pOtherCollider->GetOwner()->GetPos().y - (GetCollider()->GetScale().y / 2);
+	}
+	
 }
 
 void CPlayer::OnCollisionExit(CCollider* pOtherCollider)
 {
-	/*if (pOtherCollider->GetObjName() == L"Ground")
-	{
-		m_pRigid->SetGroundCount(-1);
-	}*/
+
+
 }

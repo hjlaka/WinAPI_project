@@ -1,11 +1,11 @@
 #pragma once
-#include "CGameObject.h"
+#include "CUnit.h"
 
 class CImage;
 class CAnimator;
 class CRigidBody;
 
-class CPlayer : public CGameObject
+class CPlayer : public CUnit
 {
 public:
 	CPlayer();
@@ -30,16 +30,8 @@ private:
 	float m_fSpeed = 200.0f;
 	float m_fJumpPower = 100.f;
 
-	CRigidBody* m_pRigid;
 
-public:
 
-	void CollisionX();
-	void CollisionY();
-	void Collision();
-	void CollisionExitY();
-	void CollisionExitX();
-	void CollisionExit();
 
 private:
 	void Init() override;
