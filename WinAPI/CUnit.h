@@ -26,6 +26,12 @@ protected:
 
 	CRigidBody* m_pRigid;
 
+	UINT m_uiHp;			// 체력
+	UINT m_uiCurHp;			// 현재 체력
+	UINT m_uiAtt;			// 공격력
+
+
+
 public:
 
 	void CollisionX();

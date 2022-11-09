@@ -16,6 +16,10 @@ CMonster01::CMonster01()
 	m_vecMoveDir = Vector(0, 0);
 	m_vecLookDir = Vector(0, -1);
 
+
+	m_uiHp = 200;
+	m_uiCurHp = 200;
+	m_uiAtt = 15;
 }
 
 CMonster01::~CMonster01()
