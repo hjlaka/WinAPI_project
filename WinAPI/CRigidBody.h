@@ -29,6 +29,7 @@ private:
 	float m_fSpeed;
 	Vector m_vecDir;
 	int m_arrDirSpeed[4] = {1, 1, 1, 1};
+	int m_arrCollisionCount[4] = { 0, 0, 0, 0 };
 
 
 public:
@@ -37,6 +38,7 @@ public:
 	int GetGroundCount();
 	Vector GetValidDir();
 	float GetGravitySpeed();
+	int GetCollisionCont(Dir dir);
 
 	void SetIsGravity(bool isGravity);
 	void SetGravitySpeed(float speed);
@@ -46,6 +48,8 @@ public:
 	void SetSpeed(float spd);
 
 	void SetDirSpeed(Dir dir, float spd);
+	void SetCollisionConunt(Dir dir, int value);
+
 
 	void PowerToY(float y);
 

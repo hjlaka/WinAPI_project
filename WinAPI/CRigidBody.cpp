@@ -56,6 +56,11 @@ float CRigidBody::GetGravitySpeed()
 	return m_fGravitySpeed;
 }
 
+int CRigidBody::GetCollisionCont(Dir dir)
+{
+	return m_arrCollisionCount[(int)dir];
+}
+
 void CRigidBody::SetIsGravity(bool isGravity)
 {
 	m_bIsGravity = isGravity;
@@ -77,18 +82,16 @@ void CRigidBody::Init()
 
 void CRigidBody::Update()
 {
+	
 
 
 	GetOwner()->SetPos(GetOwner()->GetPos() + m_vecDir.Normalized() * m_fSpeed * DT);
-	for (int i = 0; i < 4; i++)
-	{
-		m_arrDirSpeed[i] = 1;	// 왠만하면 초기화?
-	}
+
 
 	if (m_bIsGravity)
 	{		
 		
-		if (!m_bIsOnGround)
+		if (m_iGroundCount == 0/*!m_bIsOnGround*/)
 		{
 			if (m_fGravitySpeed < 1000.f)
 			{
@@ -98,15 +101,12 @@ void CRigidBody::Update()
 		}
 		else if (m_iGroundCount < 0)
 			assert(!m_iGroundCount < 0);
-		else
-		{
-			//m_bIsOnGround 가 true인 경우
-			m_bIsOnGround = false; // 초기화
-		}
+		
+
 
 
 		GetOwner()->SetPos(GetOwner()->GetPos() + Vector(0.f, 1.f) * (m_fGravitySpeed) * DT);
-		
+
 		//Logger::Debug(L"중력: " + to_wstring(m_fGravitySpeed));
 		//Logger::Debug(L"충돌 갯수: " + to_wstring(m_iGroundCount));
 	}
@@ -133,15 +133,20 @@ void CRigidBody::SetDirectionX(int dirX)
 {
 	if (dirX > 0)
 	{
+
 		m_vecDir.x = dirX * m_arrDirSpeed[(int)Dir::RIGHT];
 
 	}
 	else if (dirX < 0)
 	{
+
 		m_vecDir.x = dirX * m_arrDirSpeed[(int)Dir::LEFT];
+		
 	}
 	else
 		m_vecDir.x = dirX;
+
+	
 }
 
 void CRigidBody::SetSpeed(float spd)
@@ -152,6 +157,16 @@ void CRigidBody::SetSpeed(float spd)
 void CRigidBody::SetDirSpeed(Dir dir, float spd)
 {
 	m_arrDirSpeed[(int)dir] = spd;
+}
+
+void CRigidBody::SetCollisionConunt(Dir dir, int value)
+{
+	m_arrCollisionCount[(int)dir] += value;
+
+	if (m_arrCollisionCount[(int)dir] > 0)
+		m_arrDirSpeed[(int)dir] = 0;
+	else
+		m_arrDirSpeed[(int)dir] = 1;
 }
 
 void CRigidBody::SetDirectionY(int dirY)

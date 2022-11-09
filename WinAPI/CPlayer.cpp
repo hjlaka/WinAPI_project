@@ -31,6 +31,8 @@ CPlayer::CPlayer()
 	m_bIsMove = false;
 	m_iJumpCount = 0;
 	m_bOverPeak = false;
+
+	m_uiNotBlockingCount = 0;
 }
 
 CPlayer::~CPlayer()
@@ -164,19 +166,10 @@ void CPlayer::Update()
 		m_bOverPeak = false;
 		m_pRigid->PowerToY(450.f);
 		m_iJumpCount++;
+		//m_pRigid->SetIsGravity(true);
 		Logger::Debug(L"Jump!");
 	}
 
-	//if (m_bIsJump)
-	//{
-	//	if (m_fJumpPower <= 0)
-	//	{
-	//		m_bIsJump = false;
-	//	}
-
-	//	//m_fJumpPower -= 90.f * DT;				// 점프력이 얼마나 줄어드는지? - 체공시간하고만 연관이 있나?
-	//	//m_vecPos.y -= m_fJumpPower * DT;
-	//}
 
 	AnimatorUpdate();
 }
@@ -193,6 +186,8 @@ void CPlayer::Render()
 	RENDERMESSAGE(to_wstring(m_pRigid->m_arrDirSpeed[(int)Dir::RIGHT]));
 	RENDERMESSAGE(to_wstring(m_pRigid->m_arrDirSpeed[(int)Dir::LEFT]));
 	RENDERMESSAGE(to_wstring(m_bIsAttack));
+	RENDERMESSAGE(L"오른쪽 충돌 갯수: " + to_wstring(m_pRigid->m_arrCollisionCount[(int)Dir::RIGHT]));
+	RENDERMESSAGE(L"왼쪽 충돌 갯수: " + to_wstring(m_pRigid->m_arrCollisionCount[(int)Dir::LEFT]));
 
 
 	RENDERMESSAGE(to_wstring(GetCollider()->GetPos().y));
@@ -213,7 +208,7 @@ void CPlayer::AnimatorUpdate()
 
 	wstring str = L"";
 
-	if (!(m_pRigid->m_bIsOnGround))
+	if (m_pRigid->GetGroundCount() == 0)
 	{
 		if (m_pRigid->GetGravitySpeed() < 0)
 		{
@@ -298,51 +293,93 @@ void CPlayer::Jump(float fJumpPower)
 void CPlayer::OnCollisionEnter(CCollider* pOtherCollider)
 {
 
-	
-	
-}
-
-void CPlayer::OnCollisionStay(CCollider* pOtherCollider)
-{
-	
 	if (pOtherCollider->GetObjName() == L"Ground")
 	{
 		Vector ground = Vector(pOtherCollider->GetPos().x, pOtherCollider->GetPos().y);
 		Vector groundToMe = ground - GetCollider()->GetPos();
 
-
-		if (groundToMe.Normalized().y < 0.70f)	// 방향으로 충돌 종류를 감지
-		{
-			Logger::Debug(L"좌우충돌");
-
-				// 좌우충돌시 충돌 방향 확인 =========> Stay에서는 충돌상태에서 방향이 바뀌는 경우 오동작이 일어난다. Stay에서는 위치로 판단하자.
-				// 그렇긴 한데, Stay문인데 너무 처리량이 많지 않아? 일단 MoveDir는 키입력시에만 발동될 것이다.
-			if (m_vecMoveDir.x < 0 && groundToMe.x < 0)
-				m_pRigid->SetDirSpeed(Dir::LEFT, 0);
-			if (m_vecMoveDir.x > 0 && groundToMe.x > 0)
-				m_pRigid->SetDirSpeed(Dir::RIGHT, 0);
-		}
-
-		if (groundToMe.Normalized().y >= 0.690f)			// 굳이 바닥 아래 옆 타일과 미리 상하충돌 중일 필요가 있을까 
+		if(GetCollider()->GetPos().y < pOtherCollider->GetPos().y && m_pRigid->GetGravitySpeed() >= 0)
+		//if (groundToMe.Normalized().y >= 0.690f)			// 굳이 바닥 아래 옆 타일과 미리 상하충돌 중일 필요가 있을까. 다만 업데이트가 안된다는 게 문제다. 
 		{
 			Logger::Debug(L"상하충돌");
 
-			SetPos(Vector(GetCollider()->GetPos().x, pOtherCollider->GetPos().y - pOtherCollider->GetScale().y / 2 - GetCollider()->GetScale().y / 2 + 0.0001f));			// 필요한가?
+			//SetPos(Vector(GetCollider()->GetPos().x, pOtherCollider->GetPos().y - pOtherCollider->GetScale().y / 2 - GetCollider()->GetScale().y / 2 - 0.01f));			// 필요한가?
+			//m_pRigid->SetIsGravity(false);
+
 
 			m_iJumpCount = 0;
 			m_fJumpPower = 0;
 
 			m_pRigid->SetGravitySpeed(0);
 
-			m_pRigid->m_bIsOnGround = true;
+			//m_pRigid->m_bIsOnGround = true;
+			m_pRigid->SetGroundCount(+1);
+
+			
 
 		}
+		else
+		{
+			m_uiNotBlockingCount++;
+		}
 	}
+	else if (pOtherCollider->GetObjName() == L"Wall")
+	{
+		Vector ground = Vector(pOtherCollider->GetPos().x, pOtherCollider->GetPos().y);
+		Vector groundToMe = ground - GetCollider()->GetPos();
+		//if (groundToMe.Normalized().y < 0.70f)	// 방향으로 충돌 종류를 감지
+		{
+			Logger::Debug(L"좌우충돌");
+
+			if (m_vecMoveDir.x < 0 && groundToMe.x < 0)
+			{
+				//m_pRigid->SetDirSpeed(Dir::LEFT, 0);
+				m_pRigid->SetCollisionConunt(Dir::LEFT, +1);
+				//SetPos(Vector(pOtherCollider->GetPos().x + pOtherCollider->GetScale().x / 2 + GetCollider()->GetScale().x / 2 + 0.1f, GetCollider()->GetPos().y));
+			}
+
+
+			if (m_vecMoveDir.x > 0 && groundToMe.x > 0)
+			{
+				//m_pRigid->SetDirSpeed(Dir::RIGHT, 0);
+				m_pRigid->SetCollisionConunt(Dir::RIGHT, +1);
+				//SetPos(Vector(pOtherCollider->GetPos().x - pOtherCollider->GetScale().x / 2 - GetCollider()->GetScale().x / 2 - 0.1f, GetCollider()->GetPos().y));
+			}
+		}
+				
+	}
+
 	
+}
+
+void CPlayer::OnCollisionStay(CCollider* pOtherCollider)
+{
+	
+
 }
 
 void CPlayer::OnCollisionExit(CCollider* pOtherCollider)
 {
-
+	if (pOtherCollider->GetObjName() == L"Ground")
+	{
+		//if (GetCollider()->GetPos().y < pOtherCollider->GetPos().y)
+		//m_pRigid->m_bIsOnGround = false;
+		if (m_uiNotBlockingCount > 0)
+		{
+			m_uiNotBlockingCount--;
+		}
+		else
+			m_pRigid->SetGroundCount(-1);
+	}
+	else if (pOtherCollider->GetObjName() == L"Wall")
+	{
+		if (pOtherCollider->GetPos().x < GetCollider()->GetPos().x)
+		//m_pRigid->SetDirSpeed(Dir::LEFT, 1);
+			m_pRigid->SetCollisionConunt(Dir::LEFT, -1);
+		else if (pOtherCollider->GetPos().x > GetCollider()->GetPos().x)
+		//m_pRigid->SetDirSpeed(Dir::RIGHT, 1);
+			m_pRigid->SetCollisionConunt(Dir::RIGHT, -1);
+	}
+	
 
 }
