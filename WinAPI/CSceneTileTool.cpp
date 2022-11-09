@@ -113,7 +113,7 @@ void CSceneTileTool::SaveTile(const wstring& strPath)
 	UINT yCount = m_iTileSizeY;
 	UINT tileCount = 0;
 
-	for (CGameObject* pGameObject : m_listObj[(int)Layer::Tile])
+	for (CGameObject* pGameObject : m_listObj[(int)Layer::Tile])				// 타일 레이어의 모든 타일 게임 오브젝트를 순회한다.
 	{
 		CTile* pTile = (CTile*)pGameObject;
 		if (0 != pTile->GetTileIndex() ||
@@ -125,7 +125,7 @@ void CSceneTileTool::SaveTile(const wstring& strPath)
 	fwrite(&yCount, sizeof(UINT), 1, pFile);
 	fwrite(&tileCount, sizeof(UINT), 1, pFile);
 
-	for (CGameObject* pGameObject : m_listObj[(int)Layer::Tile])
+	for (CGameObject* pGameObject : m_listObj[(int)Layer::Tile])				// 타일 레이어의 모든 타일 게임 오브젝트를 순회한다.
 	{
 		CTile* pTile = dynamic_cast<CTile*>(pGameObject);
 		if (0 != pTile->GetTileIndex() ||
@@ -182,15 +182,15 @@ void CSceneTileTool::LoadTile(const wstring& strPath)
 	CTile loadTile;
 	for (UINT count = 0; count < tileCount; count++)
 	{
-		loadTile.Load(pFile);
+		loadTile.Load(pFile);													// 타일 객체에 정보를 불러옴
 
-		for (CGameObject* pGameObject : m_listObj[(int)Layer::Tile])
+		for (CGameObject* pGameObject : m_listObj[(int)Layer::Tile])			// 타일 레이어의 모든 게임오브젝트를 순회
 		{
-			CTile* pTile = (CTile*)pGameObject;
-			if (pTile->GetTilePosX() == loadTile.GetTilePosX() &&
+			CTile* pTile = (CTile*)pGameObject;								// 각 오브젝트를 타일로서 호출
+			if (pTile->GetTilePosX() == loadTile.GetTilePosX() &&			// 이번에 호출된 타일이 불러온 타일의 정보와 같다면
 				pTile->GetTilePosY() == loadTile.GetTilePosY())
 			{
-				pTile->SetTileIndex(loadTile.GetTileIndex());
+				pTile->SetTileIndex(loadTile.GetTileIndex());				// 호출된 타일의 정보를 갱신
 				pTile->SetType(loadTile.GetType());
 			}
 		}

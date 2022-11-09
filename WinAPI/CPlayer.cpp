@@ -311,18 +311,6 @@ void CPlayer::OnCollisionStay(CCollider* pOtherCollider)
 		Vector groundToMe = ground - GetCollider()->GetPos();
 
 
-		if (groundToMe.Normalized().y < 0.70f)	// 방향으로 충돌 종류를 감지
-		{
-			Logger::Debug(L"좌우충돌");
-
-				// 좌우충돌시 충돌 방향 확인 =========> Stay에서는 충돌상태에서 방향이 바뀌는 경우 오동작이 일어난다. Stay에서는 위치로 판단하자.
-				// 그렇긴 한데, Stay문인데 너무 처리량이 많지 않아? 일단 MoveDir는 키입력시에만 발동될 것이다.
-			if (m_vecMoveDir.x < 0 && groundToMe.x < 0)
-				m_pRigid->SetDirSpeed(Dir::LEFT, 0);
-			if (m_vecMoveDir.x > 0 && groundToMe.x > 0)
-				m_pRigid->SetDirSpeed(Dir::RIGHT, 0);
-		}
-
 		if (groundToMe.Normalized().y >= 0.690f)			// 굳이 바닥 아래 옆 타일과 미리 상하충돌 중일 필요가 있을까 
 		{
 			Logger::Debug(L"상하충돌");
@@ -336,6 +324,22 @@ void CPlayer::OnCollisionStay(CCollider* pOtherCollider)
 
 			m_pRigid->m_bIsOnGround = true;
 
+		}
+	}
+	else if (pOtherCollider->GetObjName() == L"Wall")
+	{
+		Vector ground = Vector(pOtherCollider->GetPos().x, pOtherCollider->GetPos().y);
+		Vector groundToMe = ground - GetCollider()->GetPos();
+		//if (groundToMe.Normalized().y < 0.70f)	// 방향으로 충돌 종류를 감지
+		{
+			Logger::Debug(L"좌우충돌");
+
+			// 좌우충돌시 충돌 방향 확인 =========> Stay에서는 충돌상태에서 방향이 바뀌는 경우 오동작이 일어난다. Stay에서는 위치로 판단하자.
+			// 그렇긴 한데, Stay문인데 너무 처리량이 많지 않아? 일단 MoveDir는 키입력시에만 발동될 것이다.
+			if (m_vecMoveDir.x < 0 && groundToMe.x < 0)
+				m_pRigid->SetDirSpeed(Dir::LEFT, 0);
+			if (m_vecMoveDir.x > 0 && groundToMe.x > 0)
+				m_pRigid->SetDirSpeed(Dir::RIGHT, 0);
 		}
 	}
 	
