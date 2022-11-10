@@ -4,6 +4,8 @@
 
 CPlayerAttack::CPlayerAttack()
 {
+	m_layer = Layer::PlayerAttack;
+	m_strName = L"PlayerAttack";
 }
 
 CPlayerAttack::~CPlayerAttack()
