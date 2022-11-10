@@ -20,6 +20,7 @@ private:
 	CImage* m_pFallImage;
 	CImage* m_pFallRepeatImage;
 	CImage* m_pDashImage;
+	CImage* m_pJumpAttackImage;
 
 	Vector m_vecMoveDir;
 	Vector m_vecLookDir;

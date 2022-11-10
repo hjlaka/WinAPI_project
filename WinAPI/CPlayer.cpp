@@ -63,6 +63,7 @@ void CPlayer::Init()
 	m_pFallImage = RESOURCE->LoadImg(L"PlayerFall", L"Image\\fall_skul.png");
 	m_pFallRepeatImage = RESOURCE->LoadImg(L"PlayerFallRepeat", L"Image\\fallrepeat_skul.png");
 	m_pDashImage = RESOURCE->LoadImg(L"PlayerDash", L"Image\\dash_skul.png");
+	m_pJumpAttackImage = RESOURCE->LoadImg(L"PlayerJumpAttack", L"Image\\jumpattack_skul.png");
 
 	m_pAnimator = new CAnimator;
 	m_pAnimator->CreateAnimation(L"IdleUp", m_pIdleImage, Vector(25.f, 20.f), Vector(50.f, 75.f), Vector(96.f, 0.f), 0.5f, 4);
@@ -88,6 +89,7 @@ void CPlayer::Init()
 	m_pAnimator->CreateAnimation(L"Fall", m_pFallImage, Vector(20.f, 25.f), Vector(50.f, 50.f), Vector(96.f, 0.f), 0.15f, 2);
 	m_pAnimator->CreateAnimation(L"FallRepeat", m_pFallRepeatImage, Vector(20.f, 25.f), Vector(50.f, 50.f), Vector(96.f, 0.f), 0.15f, 3);
 	m_pAnimator->CreateAnimation(L"Dash", m_pDashImage, Vector(0.f, 25.f), Vector(75.f, 50.f), Vector(96.f, 0.f), 0.15f, 1);
+	m_pAnimator->CreateAnimation(L"JumpAttack", m_pJumpAttackImage, Vector(0.f, 20.f), Vector(100.f, 75.f), Vector(96.f, 0.f), 0.1f, 4);
 
 	auto attackEnd = [](DWORD_PTR pMe, DWORD_PTR pParam2)
 	{
@@ -109,6 +111,7 @@ void CPlayer::Init()
 	};
 
 	m_pAnimator->SetAnimationCallBack(L"AttackA", attackEnd, (DWORD_PTR)this, 0);
+	m_pAnimator->SetAnimationCallBack(L"JumpAttack", attackEnd, (DWORD_PTR)this, 0);
 	m_pAnimator->SetAnimationCallBack(L"Fall", falling, (DWORD_PTR)this, 0);
 	
 	m_pAnimator->Play(L"IdleDown", false);
@@ -279,6 +282,13 @@ void CPlayer::AnimatorUpdate()
 
 	if (m_pRigid->GetGroundCount() == 0)
 	{
+		if (m_bIsAttack)
+		{
+			str += L"JumpAttack";
+			m_pAnimator->Play(str, false);
+			return;
+		}
+
 		if (m_pRigid->GetGravitySpeed() < 0)
 		{
 			str += L"Jump";
