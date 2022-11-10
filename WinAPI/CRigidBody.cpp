@@ -1,6 +1,9 @@
 #include "framework.h"
 #include "CRigidBody.h"
 
+#include "CGameObject.h"
+#include "CCollider.h"
+
 CRigidBody::CRigidBody()
 {
 	m_fLaunchSpeed = 0;
@@ -12,6 +15,8 @@ CRigidBody::CRigidBody()
 	m_fGravitySpeed = 0;
 	m_iGroundCount = 0;
 	m_bIsOnGround = false;
+
+	m_uiNotBlockingCount = 0;
 }
 
 CRigidBody::~CRigidBody()
@@ -88,8 +93,14 @@ void CRigidBody::Update()
 
 	GetOwner()->SetPos(GetOwner()->GetPos() + m_vecDir.Normalized() * m_fSpeed * m_fMultiSpeed *  DT);
 
+	/*for (int i = 0; i < 4; i++)
+	{
+		if(m_arrCollisionCount[i] == 0)
+			m_arrDirSpeed[i] = 1;
+	}*/
 
-	if (m_bIsGravity)
+
+	if (m_bIsGravity)			// 중력을 받는 물체라면?
 	{		
 		
 		if (m_iGroundCount == 0/*!m_bIsOnGround*/)
@@ -112,6 +123,8 @@ void CRigidBody::Update()
 		//Logger::Debug(L"충돌 갯수: " + to_wstring(m_iGroundCount));
 	}
 }
+
+
 
 void CRigidBody::PowerToY(float y)
 {
@@ -174,6 +187,76 @@ void CRigidBody::SetCollisionConunt(Dir dir, int value)
 	else
 		m_arrDirSpeed[(int)dir] = 1;
 }
+
+void CRigidBody::GroundCollisionEnter(CCollider* myCollider, CCollider* pOtherCollider)
+{
+	Vector ground = Vector(pOtherCollider->GetPos().x, pOtherCollider->GetPos().y);
+	Vector groundToMe = ground - myCollider->GetPos();
+
+	if (myCollider->GetPos().y < pOtherCollider->GetPos().y && GetGravitySpeed() >= 0)
+		//if (groundToMe.Normalized().y >= 0.690f)			// 굳이 바닥 아래 옆 타일과 미리 상하충돌 중일 필요가 있을까. 다만 업데이트가 안된다는 게 문제다. 
+	{
+		Logger::Debug(L"상하충돌");
+
+
+		SetGravitySpeed(0);
+
+
+		SetGroundCount(+1);
+
+
+	}
+	else
+	{
+		m_uiNotBlockingCount++;
+	}
+}
+
+void CRigidBody::WallCollisionEnter(CCollider* myCollider, CCollider* pOtherCollider)
+{
+	Vector ground = Vector(pOtherCollider->GetPos().x, pOtherCollider->GetPos().y);
+	Vector groundToMe = ground - myCollider->GetPos();
+	//if (groundToMe.Normalized().y < 0.70f)	// 방향으로 충돌 종류를 감지
+	{
+		Logger::Debug(L"좌우충돌");
+
+		if (/*m_vecMoveDir.x < 0 &&*/ groundToMe.x < 0)
+		{
+			//m_pRigid->SetDirSpeed(Dir::LEFT, 0);
+			SetCollisionConunt(Dir::LEFT, +1);
+			//SetPos(Vector(pOtherCollider->GetPos().x + pOtherCollider->GetScale().x / 2 + GetCollider()->GetScale().x / 2 + 0.1f, GetCollider()->GetPos().y));
+		}
+
+
+		if (/*m_vecMoveDir.x > 0 &&*/ groundToMe.x > 0)
+		{
+			//m_pRigid->SetDirSpeed(Dir::RIGHT, 0);
+			SetCollisionConunt(Dir::RIGHT, +1);
+			//SetPos(Vector(pOtherCollider->GetPos().x - pOtherCollider->GetScale().x / 2 - GetCollider()->GetScale().x / 2 - 0.1f, GetCollider()->GetPos().y));
+		}
+	}
+}
+
+void CRigidBody::GroundCollisionExit(CCollider* myCollider, CCollider* pOtherCollider)
+{
+	if (m_uiNotBlockingCount > 0)
+	{
+		m_uiNotBlockingCount--;
+	}
+	else
+		SetGroundCount(-1);
+}
+
+void CRigidBody::WallCollisionExit(CCollider* myCollider, CCollider* pOtherCollider)
+{
+	if (pOtherCollider->GetPos().x < myCollider->GetPos().x)
+		//m_pRigid->SetDirSpeed(Dir::LEFT, 1);
+		SetCollisionConunt(Dir::LEFT, -1);
+	else if (pOtherCollider->GetPos().x > myCollider->GetPos().x)
+		//m_pRigid->SetDirSpeed(Dir::RIGHT, 1);
+		SetCollisionConunt(Dir::RIGHT, -1);
+}
+
 
 void CRigidBody::SetDirectionY(int dirY)
 {

@@ -25,6 +25,7 @@ private:
 	bool m_bIsGravity;
 	int m_iGroundCount;
 	bool m_bIsOnGround;
+	UINT m_uiNotBlockingCount;
 
 	float m_fSpeed;
 	float m_fMultiSpeed;
@@ -51,6 +52,12 @@ public:
 
 	void SetDirSpeed(Dir dir, float spd);
 	void SetCollisionConunt(Dir dir, int value);
+
+
+	void GroundCollisionEnter(CCollider* myCollider, CCollider* pOtherCollider);
+	void WallCollisionEnter(CCollider* myCollider, CCollider* pOtherCollider);
+	void GroundCollisionExit(CCollider* myCollider, CCollider* pOtherCollider);
+	void WallCollisionExit(CCollider* myCollider, CCollider* pOtherCollider);
 
 
 	void PowerToY(float y);
