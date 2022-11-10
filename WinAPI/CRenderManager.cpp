@@ -539,7 +539,7 @@ void CRenderManager::PrintSystemMessage(const wstring& str)
 	float yPos = (m_iMessageCount++) * 20.f;
 	Vector messagePos = CAMERA->ScreenToWorldPoint(Vector(WINSIZEX - 200, yPos));
 	wstring message = str;
-	Text(message, messagePos.x - 50, messagePos.y - 10, messagePos.x + 50, messagePos.y + 10, Color(0, 0, 0, 1.f), 15);
+	Text(message, messagePos.x - 100, messagePos.y - 10, messagePos.x + 100, messagePos.y + 10, Color(0, 0, 0, 1.f), 15);
 }
 
 IWICImagingFactory* CRenderManager::GetImageFactory()
