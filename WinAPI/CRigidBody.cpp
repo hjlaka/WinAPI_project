@@ -188,15 +188,18 @@ void CRigidBody::SetCollisionConunt(Dir dir, int value)
 		m_arrDirSpeed[(int)dir] = 1;
 }
 
-void CRigidBody::GroundCollisionEnter(CCollider* myCollider, CCollider* pOtherCollider)
+bool CRigidBody::GroundCollisionEnter(CCollider* myCollider, CCollider* pOtherCollider)
 {
 	Vector ground = Vector(pOtherCollider->GetPos().x, pOtherCollider->GetPos().y);
 	Vector groundToMe = ground - myCollider->GetPos();
 
-	if (myCollider->GetPos().y < pOtherCollider->GetPos().y && GetGravitySpeed() >= 0)
+	if (myCollider->GetPos().y + myCollider->GetScale().y/2 < pOtherCollider->GetPos().y - pOtherCollider->GetScale().y/2 + 2.f && GetGravitySpeed() >= 0)
+		//캐릭터가 장애물 위에 있고, 아래로 떨어지는 속도가 0 이상일 때
 		//if (groundToMe.Normalized().y >= 0.690f)			// 굳이 바닥 아래 옆 타일과 미리 상하충돌 중일 필요가 있을까. 다만 업데이트가 안된다는 게 문제다. 
 	{
 		Logger::Debug(L"상하충돌");
+
+		GetOwner()->SetPos(GetOwner()->GetPos().x, pOtherCollider->GetPos().y - pOtherCollider->GetScale().y/2 - myCollider->GetScale().y/2 + 0.1f) ;
 
 
 		SetGravitySpeed(0);
@@ -204,11 +207,14 @@ void CRigidBody::GroundCollisionEnter(CCollider* myCollider, CCollider* pOtherCo
 
 		SetGroundCount(+1);
 
+		return true;		// 상하충돌 여부
 
 	}
 	else
 	{
 		m_uiNotBlockingCount++;
+
+		return false;
 	}
 }
 
@@ -249,9 +255,11 @@ void CRigidBody::GroundCollisionExit(CCollider* myCollider, CCollider* pOtherCol
 
 void CRigidBody::WallCollisionExit(CCollider* myCollider, CCollider* pOtherCollider)
 {
-	if (pOtherCollider->GetPos().x < myCollider->GetPos().x)
+	//if (pOtherCollider->GetPos().x + pOtherCollider->GetScale().x/2 < myCollider->GetPos().x - myCollider->GetScale().x/2)
+	if (pOtherCollider->GetPos().x< myCollider->GetPos().x)
 		//m_pRigid->SetDirSpeed(Dir::LEFT, 1);
 		SetCollisionConunt(Dir::LEFT, -1);
+	//else if (pOtherCollider->GetPos().x - pOtherCollider->GetScale().x / 2 > myCollider->GetPos().x + myCollider->GetScale().x / 2)
 	else if (pOtherCollider->GetPos().x > myCollider->GetPos().x)
 		//m_pRigid->SetDirSpeed(Dir::RIGHT, 1);
 		SetCollisionConunt(Dir::RIGHT, -1);

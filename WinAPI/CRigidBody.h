@@ -54,7 +54,7 @@ public:
 	void SetCollisionConunt(Dir dir, int value);
 
 
-	void GroundCollisionEnter(CCollider* myCollider, CCollider* pOtherCollider);
+	bool GroundCollisionEnter(CCollider* myCollider, CCollider* pOtherCollider);
 	void WallCollisionEnter(CCollider* myCollider, CCollider* pOtherCollider);
 	void GroundCollisionExit(CCollider* myCollider, CCollider* pOtherCollider);
 	void WallCollisionExit(CCollider* myCollider, CCollider* pOtherCollider);
