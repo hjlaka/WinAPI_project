@@ -198,6 +198,12 @@
     <ClInclude Include="CWallTile.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="CAttack.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="CPlayerAttack.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinAPI.cpp">
@@ -324,6 +330,12 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="CWallTile.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="CAttack.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="CPlayerAttack.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

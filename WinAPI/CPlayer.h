@@ -48,6 +48,7 @@ private:
 	void AnimatorUpdate();
 	void CreateMissile();
 	void Jump(float fJumpPower);
+	void Attack();
 
 
 	void OnCollisionEnter(CCollider* pOtherCollider) override;

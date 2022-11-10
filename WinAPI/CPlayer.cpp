@@ -14,6 +14,7 @@
 #include "CRigidBody.h"
 
 #include "CMissile.h"
+#include "CPlayerAttack.h"
 
 
 CPlayer::CPlayer()
@@ -27,7 +28,7 @@ CPlayer::CPlayer()
 	m_pMoveImage = nullptr;
 
 	m_vecMoveDir = Vector(0, 0);
-	m_vecLookDir = Vector(0, -1);
+	m_vecLookDir = Vector(1, 0);
 	m_bIsMove = false;
 	m_iJumpCount = 0;
 	m_bOverPeak = false;
@@ -197,9 +198,10 @@ void CPlayer::Update()
 		m_pRigid->SetDirectionY(0);
 	}
 
-	if (BUTTONSTAY('X'))
+	if (BUTTONDOWN('X'))
 	{
 		m_bIsAttack = true;
+		Attack();
 	}
 
 	if (BUTTONSTAY('R'))
@@ -228,6 +230,7 @@ void CPlayer::Render()
 	wstring groundCount = to_wstring(m_pRigid->GetGroundCount());
 	RENDERMESSAGE(groundCount);
 
+	RENDERMESSAGE(to_wstring(m_vecLookDir.x));
 	RENDERMESSAGE(to_wstring(m_pRigid->m_fGravitySpeed));
 	RENDERMESSAGE(to_wstring(m_pRigid->m_arrDirSpeed[(int)Dir::UP]));
 	RENDERMESSAGE(to_wstring(m_pRigid->m_arrDirSpeed[(int)Dir::DOWN]));
@@ -348,6 +351,19 @@ void CPlayer::Jump(float fJumpPower)
 	m_fJumpPower = fJumpPower;*/
 }
 
+
+void CPlayer::Attack()
+{
+	Logger::Debug(L"공격 생성");
+
+	CPlayerAttack* pAttack = new CPlayerAttack();
+	pAttack->SetPos(m_vecPos);
+	pAttack->SetOffset(Vector(m_vecLookDir.x * 30, -10));
+	pAttack->SetOwner(this);
+	pAttack->SetAttackDuration(0.8f);
+	//pAttack->SetDir(m_vecLookDir);
+	ADDOBJECT(pAttack);
+}
 
 void CPlayer::OnCollisionEnter(CCollider* pOtherCollider)
 {
