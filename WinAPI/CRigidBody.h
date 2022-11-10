@@ -19,9 +19,9 @@ public:
 
 private:
 
-	float m_fGravitySpeed;
+
 	float m_fGravity;
-	float m_fLaunchSpeed;
+
 	bool m_bIsGravity;
 	int m_iGroundCount;
 	bool m_bIsOnGround;
@@ -29,14 +29,13 @@ private:
 
 	float m_fSpeed;
 	float m_fMultiSpeed;
-	Vector m_vecDir;
+
 	int m_arrDirSpeed[4] = {1, 1, 1, 1};
 	int m_arrCollisionCount[4] = { 0, 0, 0, 0 };
 
 	float m_fForceX;
 	float m_fFriction;
 	Vector m_vecForce;
-	float m_fSpeedX;
 	
 	Vector m_vecVelocity;
 
@@ -45,7 +44,6 @@ public:
 
 	bool GetIsGravity();
 	int GetGroundCount();
-	Vector GetValidDir();
 	float GetGravitySpeed();
 	int GetCollisionCont(Dir dir);
 
@@ -59,6 +57,10 @@ public:
 
 	void SetDirSpeed(Dir dir, float spd);
 	void SetCollisionConunt(Dir dir, int value);
+
+	void SetVelocityX(float x);
+
+	void UpdateVelocityX();
 
 
 	bool GroundCollisionEnter(CCollider* myCollider, CCollider* pOtherCollider);

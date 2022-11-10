@@ -128,9 +128,7 @@ void CPlayer::Init()
 void CPlayer::Update()
 {
 	m_bIsMove = false;
-	
-	
-	//m_bIsAttack = false;
+
 
 	if (m_fDashClock > 0)
 	{
@@ -163,6 +161,7 @@ void CPlayer::Update()
 	if (BUTTONSTAY(VK_LEFT))
 	{
 		m_pRigid->SetDirectionX(-1);
+		m_pRigid->SetVelocityX(-200);
 		//m_vecPos.x -= m_fSpeed * DT;
 		m_bIsMove = true;
 		m_vecMoveDir.x = -1;
@@ -171,6 +170,7 @@ void CPlayer::Update()
 	else if (BUTTONSTAY(VK_RIGHT))
 	{
 		m_pRigid->SetDirectionX(+1);
+		m_pRigid->SetVelocityX(200);
 		//m_vecPos.x += m_fSpeed * DT;
 		m_bIsMove = true;
 		m_vecMoveDir.x = +1;
@@ -198,8 +198,8 @@ void CPlayer::Update()
 	}
 	else
 	{
-		m_vecMoveDir.y = 0;
-		m_pRigid->SetDirectionY(0);
+		/*m_vecMoveDir.y = 0;
+		m_pRigid->SetDirectionY(0);*/
 	}
 
 	if (BUTTONDOWN('X'))
@@ -249,7 +249,6 @@ void CPlayer::Render()
 	RENDERMESSAGE(groundCount);
 
 	RENDERMESSAGE(to_wstring(m_vecLookDir.x));
-	RENDERMESSAGE(to_wstring(m_pRigid->m_fGravitySpeed));
 	RENDERMESSAGE(to_wstring(m_pRigid->m_arrDirSpeed[(int)Dir::UP]));
 	RENDERMESSAGE(to_wstring(m_pRigid->m_arrDirSpeed[(int)Dir::DOWN]));
 	RENDERMESSAGE(to_wstring(m_pRigid->m_arrDirSpeed[(int)Dir::RIGHT]));

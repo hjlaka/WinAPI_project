@@ -6,23 +6,19 @@
 
 CRigidBody::CRigidBody()
 {
-	m_fLaunchSpeed = 0;
 	m_fGravity = 1080.f;
 	m_bIsGravity = true;
 	m_fSpeed = 200.f;
-	m_fMultiSpeed = 1.f;
+	m_fMultiSpeed = 1.f;		// 대쉬 속도 등
 
-	m_fGravitySpeed = 0;
 	m_iGroundCount = 0;
 	m_bIsOnGround = false;
-
 	m_uiNotBlockingCount = 0;
 
 	m_fForceX = 0;
 	m_fFriction = 30.f;
 
 	m_vecForce = Vector(0, 0);
-	m_fSpeedX = 0;
 
 	m_vecVelocity = Vector(0, 0);
 }
@@ -41,33 +37,11 @@ int CRigidBody::GetGroundCount()
 	return m_iGroundCount;
 }
 
-Vector CRigidBody::GetValidDir()
-{
-	Vector validDir = m_vecDir;
-	if (validDir.x > 0)
-	{
-		validDir.x *= m_arrDirSpeed[(int)Dir::RIGHT];
-	}
-	else if (validDir.x < 0)
-	{
-		validDir.x *= m_arrDirSpeed[(int)Dir::LEFT];
-	}
 
-	if (validDir.y > 0)
-	{
-		validDir.y *= m_arrDirSpeed[(int)Dir::DOWN];
-	}
-	else if (validDir.y < 0)
-	{
-		validDir.y *= m_arrDirSpeed[(int)Dir::UP];
-	}
-
-	return validDir;
-}
 
 float CRigidBody::GetGravitySpeed()
 {
-	return m_fGravitySpeed;
+	return m_vecVelocity.y;
 }
 
 int CRigidBody::GetCollisionCont(Dir dir)
@@ -82,7 +56,7 @@ void CRigidBody::SetIsGravity(bool isGravity)
 
 void CRigidBody::SetGravitySpeed(float speed)
 {
-	m_fGravitySpeed = speed;
+	m_vecVelocity.y = speed;
 }
 
 void CRigidBody::SetGroundCount(int value)
@@ -96,11 +70,16 @@ void CRigidBody::Init()
 
 void CRigidBody::Update()
 {
+	//m_vecVelocity.Normalized();		// 2차원 조작이어서 필요 없는 것 같다.
+	UpdateVelocityX();
+	//UpdateVelocityY
+
+	// 속도 = 속도 + 가속도
+	// 거리 = 속도 x 시간
+
+	GetOwner()->SetPos(GetOwner()->GetPos() + m_vecVelocity * DT);
+
 	
-	// 거리 = 속력 x 시간
-	GetOwner()->SetPos(GetOwner()->GetPos() + m_vecDir.Normalized() * m_fSpeed * (m_fMultiSpeed + m_fForceX) * DT);
-	GetOwner()->SetPos(GetOwner()->GetPos() + m_vecForce * DT);
-	GetOwner()->SetPos(GetOwner()->GetPos() + Vector(0.f, 1.f) * (m_fGravitySpeed)*DT);		// 아래 방향으로 중력 속도만큼 이동한다.
 
 	if (m_vecForce.Magnitude() > 1.f)
 	{
@@ -112,21 +91,14 @@ void CRigidBody::Update()
 	}
 
 
-	if (m_fForceX > 0)
+	if (m_vecVelocity.x > 0)
 	{
-		m_fForceX -= m_fFriction * DT;
+		m_vecVelocity.x -= m_fFriction * DT;
 	}
-	else
+	else if (m_vecVelocity.x < 0)
 	{
-		m_fForceX = 0;
+		m_vecVelocity.x += m_fFriction * DT;
 	}
-
-
-	/*for (int i = 0; i < 4; i++)
-	{
-		if(m_arrCollisionCount[i] == 0)
-			m_arrDirSpeed[i] = 1;
-	}*/
 
 
 	if (m_bIsGravity)			// 중력을 받는 물체라면?
@@ -134,25 +106,15 @@ void CRigidBody::Update()
 		
 		if (m_iGroundCount == 0/*!m_bIsOnGround*/)
 		{
-			if (m_fGravitySpeed < 1000.f)
+			if (m_vecVelocity.y < 1000.f)
 			{
-				m_fGravitySpeed += m_fGravity * DT;
+				m_vecVelocity.y += m_fGravity * DT;
 			}
 			
 		}
 		else if (m_iGroundCount < 0)
 			assert(!m_iGroundCount < 0);
 		
-
-
-
-		
-
-
-		
-
-		//Logger::Debug(L"중력: " + to_wstring(m_fGravitySpeed));
-		//Logger::Debug(L"충돌 갯수: " + to_wstring(m_iGroundCount));
 	}
 }
 
@@ -160,8 +122,7 @@ void CRigidBody::Update()
 
 void CRigidBody::PowerToY(float y)
 {
-	//m_fLaunchSpeed = 1.f * y;
-	m_fGravitySpeed = -1.f * y;
+	m_vecVelocity.y = -1.f * y;
 }
 void CRigidBody::PowerToX(float x)
 {
@@ -186,25 +147,7 @@ void CRigidBody::Release()
 
 
 
-void CRigidBody::SetDirectionX(int dirX)
-{
-	if (dirX > 0)
-	{
 
-		m_vecDir.x = dirX * m_arrDirSpeed[(int)Dir::RIGHT];
-
-	}
-	else if (dirX < 0)
-	{
-
-		m_vecDir.x = dirX * m_arrDirSpeed[(int)Dir::LEFT];
-		
-	}
-	else
-		m_vecDir.x = dirX;
-
-	
-}
 
 void CRigidBody::SetSpeed(float spd)
 {
@@ -229,6 +172,23 @@ void CRigidBody::SetCollisionConunt(Dir dir, int value)
 		m_arrDirSpeed[(int)dir] = 0;
 	else
 		m_arrDirSpeed[(int)dir] = 1;
+}
+
+void CRigidBody::SetVelocityX(float x)
+{
+	m_vecVelocity.x = x;
+}
+
+void CRigidBody::UpdateVelocityX()
+{
+	if (m_vecVelocity.x > 0)
+	{
+		m_vecVelocity.x *= m_fMultiSpeed* m_arrDirSpeed[(int)Dir::RIGHT];
+	}
+	else if (m_vecVelocity.x < 0)
+	{
+		m_vecVelocity.x *= m_fMultiSpeed * m_arrDirSpeed[(int)Dir::LEFT];
+	}
 }
 
 bool CRigidBody::GroundCollisionEnter(CCollider* myCollider, CCollider* pOtherCollider)
@@ -307,14 +267,32 @@ void CRigidBody::WallCollisionExit(CCollider* myCollider, CCollider* pOtherColli
 		//m_pRigid->SetDirSpeed(Dir::RIGHT, 1);
 		SetCollisionConunt(Dir::RIGHT, -1);
 }
+void CRigidBody::SetDirectionX(int dirX)
+{
+	if (dirX > 0)
+	{
 
+		m_vecVelocity.x = dirX * m_arrDirSpeed[(int)Dir::RIGHT];
+
+	}
+	else if (dirX < 0)
+	{
+
+		m_vecVelocity.x = dirX * m_arrDirSpeed[(int)Dir::LEFT];
+
+	}
+	else
+		m_vecVelocity.x = dirX;
+
+
+}
 
 void CRigidBody::SetDirectionY(int dirY)
 {
-	if (dirY > 0)
-		m_vecDir.y = dirY * m_arrDirSpeed[(int)Dir::DOWN];
+	/*if (dirY > 0)
+		m_vecVelocity.y = dirY * m_arrDirSpeed[(int)Dir::DOWN];
 	else if (dirY < 0)
-		m_vecDir.y = dirY * m_arrDirSpeed[(int)Dir::UP];
+		m_vecVelocity.y = dirY * m_arrDirSpeed[(int)Dir::UP];
 	else
-		m_vecDir.y = dirY;
+		m_vecVelocity.y = dirY;*/
 }
