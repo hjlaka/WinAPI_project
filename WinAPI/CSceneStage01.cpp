@@ -42,6 +42,8 @@ void CSceneStage01::Enter()
 {
 	CAMERA->FadeIn(0.25f);
 	LoadTile(GETPATH + L"Tile\\Stage01.tile");	
+
+	CAMERA->SetTargetObj(pPlayer);
 }
 
 void CSceneStage01::Update()

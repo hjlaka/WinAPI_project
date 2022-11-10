@@ -208,6 +208,14 @@ void CPlayer::Update()
 		Attack();
 	}
 
+	if (BUTTONDOWN('C'))
+	{
+		m_pRigid->PowerToX(50.f);
+		m_pRigid->PowerToY(50.f);
+
+		//m_pRigid->Power(Vector(100, -100));
+	}
+
 	if (BUTTONSTAY('R'))
 	{
 		m_vecPos = Vector(100, 100);
@@ -252,6 +260,7 @@ void CPlayer::Render()
 	RENDERMESSAGE(to_wstring(m_fDashClock));
 	RENDERMESSAGE(to_wstring(m_bIsDash));
 	RENDERMESSAGE(to_wstring(m_pRigid->m_fMultiSpeed));
+	RENDERMESSAGE(to_wstring(m_pRigid->m_vecForce.x) + L", " + to_wstring(m_pRigid->m_vecForce.y));
 
 
 

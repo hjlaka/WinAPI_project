@@ -46,24 +46,24 @@ void CMonster01::Init()
 
 void CMonster01::Update()
 {
-	if (BUTTONSTAY(VK_LEFT))
-	{
-		m_pRigid->SetDirectionX(-1);
-		//m_vecPos.x -= m_fSpeed * DT;
-		m_vecMoveDir.x = -1;
+	//if (BUTTONSTAY(VK_LEFT))
+	//{
+	//	m_pRigid->SetDirectionX(-1);
+	//	//m_vecPos.x -= m_fSpeed * DT;
+	//	m_vecMoveDir.x = -1;
 
-	}
-	else if (BUTTONSTAY(VK_RIGHT))
-	{
-		m_pRigid->SetDirectionX(+1);
-		//m_vecPos.x += m_fSpeed * DT;
-		m_vecMoveDir.x = +1;
-	}
-	else
-	{
-		m_vecMoveDir.x = 0;
-		m_pRigid->SetDirectionX(0);
-	}
+	//}
+	//else if (BUTTONSTAY(VK_RIGHT))
+	//{
+	//	m_pRigid->SetDirectionX(+1);
+	//	//m_vecPos.x += m_fSpeed * DT;
+	//	m_vecMoveDir.x = +1;
+	//}
+	//else
+	//{
+	//	m_vecMoveDir.x = 0;
+	//	m_pRigid->SetDirectionX(0);
+	//}
 }
 
 void CMonster01::Render()
@@ -79,7 +79,8 @@ void CMonster01::OnCollisionEnter(CCollider* pOtherCollider)
 
 	if (pOtherCollider->GetObjName() == L"PlayerAttack")
 	{
-		m_vecPos += (GetCollider()->GetPos() - pOtherCollider->GetPos()).Normalized() * 10;
+		//m_vecPos += (GetCollider()->GetPos() - pOtherCollider->GetPos()).Normalized() * 10;
+		//m_pRigid->Power((GetCollider()->GetPos() - pOtherCollider->GetPos()).Normalized() * 150);
 	}
 
 	if (pOtherCollider->GetObjName() == L"Ground")

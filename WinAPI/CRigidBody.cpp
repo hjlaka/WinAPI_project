@@ -17,6 +17,14 @@ CRigidBody::CRigidBody()
 	m_bIsOnGround = false;
 
 	m_uiNotBlockingCount = 0;
+
+	m_fForceX = 0;
+	m_fFriction = 30.f;
+
+	m_vecForce = Vector(0, 0);
+	m_fSpeedX = 0;
+
+	m_vecVelocity = Vector(0, 0);
 }
 
 CRigidBody::~CRigidBody()
@@ -89,9 +97,30 @@ void CRigidBody::Init()
 void CRigidBody::Update()
 {
 	
+	// 거리 = 속력 x 시간
+	GetOwner()->SetPos(GetOwner()->GetPos() + m_vecDir.Normalized() * m_fSpeed * (m_fMultiSpeed + m_fForceX) * DT);
+	GetOwner()->SetPos(GetOwner()->GetPos() + m_vecForce * DT);
+	GetOwner()->SetPos(GetOwner()->GetPos() + Vector(0.f, 1.f) * (m_fGravitySpeed)*DT);		// 아래 방향으로 중력 속도만큼 이동한다.
+
+	if (m_vecForce.Magnitude() > 1.f)
+	{
+		m_vecForce += m_vecForce.Normalized() * -1 * m_fFriction * 3.f * DT;
+	}
+	else
+	{
+		m_vecForce = Vector(0, 0);
+	}
 
 
-	GetOwner()->SetPos(GetOwner()->GetPos() + m_vecDir.Normalized() * m_fSpeed * m_fMultiSpeed *  DT);
+	if (m_fForceX > 0)
+	{
+		m_fForceX -= m_fFriction * DT;
+	}
+	else
+	{
+		m_fForceX = 0;
+	}
+
 
 	/*for (int i = 0; i < 4; i++)
 	{
@@ -117,7 +146,10 @@ void CRigidBody::Update()
 
 
 
-		GetOwner()->SetPos(GetOwner()->GetPos() + Vector(0.f, 1.f) * (m_fGravitySpeed) * DT);
+		
+
+
+		
 
 		//Logger::Debug(L"중력: " + to_wstring(m_fGravitySpeed));
 		//Logger::Debug(L"충돌 갯수: " + to_wstring(m_iGroundCount));
@@ -131,6 +163,17 @@ void CRigidBody::PowerToY(float y)
 	//m_fLaunchSpeed = 1.f * y;
 	m_fGravitySpeed = -1.f * y;
 }
+void CRigidBody::PowerToX(float x)
+{
+	m_fForceX = x;
+}
+
+void CRigidBody::Power(Vector force)
+{
+	m_vecForce = force;
+}
+
+
 
 void CRigidBody::Render()
 {

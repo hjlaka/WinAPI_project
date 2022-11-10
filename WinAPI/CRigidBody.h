@@ -33,6 +33,13 @@ private:
 	int m_arrDirSpeed[4] = {1, 1, 1, 1};
 	int m_arrCollisionCount[4] = { 0, 0, 0, 0 };
 
+	float m_fForceX;
+	float m_fFriction;
+	Vector m_vecForce;
+	float m_fSpeedX;
+	
+	Vector m_vecVelocity;
+
 
 public:
 
@@ -61,6 +68,8 @@ public:
 
 
 	void PowerToY(float y);
+	void PowerToX(float x);
+	void Power(Vector force);
 
 public:
 
