@@ -96,7 +96,6 @@ void CRigidBody::Update()
 	if (m_bIsGravity)			// 중력을 받는 물체라면?
 	{		
 		
-		//if (m_iGroundCount == 0/*!m_bIsOnGround*/)		 // 땅에 접촉시에는 중력을 받지 않는다?
 		{
 			if (m_vecVelocity.y < 900.f)
 			{
@@ -104,8 +103,6 @@ void CRigidBody::Update()
 			}
 			
 		}
-		/*else if (m_iGroundCount < 0)
-			assert(!m_iGroundCount < 0);*/
 		
 	}
 

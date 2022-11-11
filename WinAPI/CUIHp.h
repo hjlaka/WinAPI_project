@@ -24,7 +24,7 @@ public:
 	void SetOwner(CUnit* pUnit);
 
 
-private:
+protected:
 	virtual void Init() override;
 	virtual void Render() override;
 	virtual void Update() override;

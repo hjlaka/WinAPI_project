@@ -19,6 +19,21 @@ void CUIHpMonster::Init()
 
 void CUIHpMonster::Render()
 {
+
+	RENDER->FillRect(
+		m_vecRenderPos.x,
+		m_vecRenderPos.y,
+		m_vecRenderPos.x + m_vecScale.x,
+		m_vecRenderPos.y + m_vecScale.y,
+		Color(0, 255, 0, 1)
+	);
+
+
+	RENDER->Text(to_wstring(m_pOwner->GetCurHp()),
+		m_vecRenderPos.x,
+		m_vecRenderPos.y,
+		m_vecRenderPos.x + m_vecScale.x,
+		m_vecRenderPos.y + m_vecScale.y);
 }
 
 void CUIHpMonster::Update()
