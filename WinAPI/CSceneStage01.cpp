@@ -34,11 +34,12 @@ void CSceneStage01::Init()
 
 	pPlayer = new CPlayer();
 	pPlayer->SetPos(200, WINSIZEY * 0.5f);
-	pPlayer->SetImgRate(1.f);
+	pPlayer->SetImgRate(1.3f);
 	AddGameObject(pPlayer);
 
 	CMonster01* pMonster = new CMonster01();
 	pMonster->SetPos(900, WINSIZEY * 0.2f);
+	pMonster->SetImgRate(1.3f);
 	AddGameObject(pMonster);
 
 	CCameraController* pCamController = new CCameraController;
