@@ -34,7 +34,7 @@ void CSceneStage01::Init()
 
 	pPlayer = new CPlayer();
 	pPlayer->SetPos(200, WINSIZEY * 0.5f);
-	pPlayer->SetImgRate(1.5f);
+	pPlayer->SetImgRate(1.f);
 	AddGameObject(pPlayer);
 
 	CMonster01* pMonster = new CMonster01();

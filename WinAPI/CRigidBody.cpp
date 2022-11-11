@@ -15,7 +15,7 @@ CRigidBody::CRigidBody()
 	m_uiNotBlockingCount = 0;
 
 	m_fForceX = 0;
-	m_fFriction = 30.f;
+	m_fFriction = 50.f;
 
 	m_vecForce = Vector(0, 0);
 
@@ -98,7 +98,7 @@ void CRigidBody::Update()
 		
 		//if (m_iGroundCount == 0/*!m_bIsOnGround*/)		 // 땅에 접촉시에는 중력을 받지 않는다?
 		{
-			if (m_vecVelocity.y < 1000.f)
+			if (m_vecVelocity.y < 900.f)
 			{
 				m_vecVelocity.y += m_fGravity * DT;
 			}
@@ -220,7 +220,7 @@ bool CRigidBody::GroundCollisionEnter(CCollider* myCollider, CCollider* pOtherCo
 		//캐릭터가 장애물 위에 있고, 아래로 떨어지는 속도가 0 이상일 때
 		//if (groundToMe.Normalized().y >= 0.690f)			// 굳이 바닥 아래 옆 타일과 미리 상하충돌 중일 필요가 있을까. 다만 업데이트가 안된다는 게 문제다. 
 	{
-		Logger::Debug(L"상하충돌");
+		//Logger::Debug(L"상하충돌");
 		isUpDownCol = true;
 
 		GetOwner()->SetPos(GetOwner()->GetPos().x, pOtherCollider->GetPos().y - pOtherCollider->GetScale().y/2 - myCollider->GetScale().y/2 + 0.1f) ;
@@ -248,7 +248,7 @@ void CRigidBody::WallCollisionEnter(CCollider* myCollider, CCollider* pOtherColl
 	Vector groundToMe = ground - myCollider->GetPos();
 	//if (groundToMe.Normalized().y < 0.70f)	// 방향으로 충돌 종류를 감지
 	{
-		Logger::Debug(L"좌우충돌");
+		//Logger::Debug(L"좌우충돌");
 
 		if (/*m_vecMoveDir.x < 0 &&*/ groundToMe.x < 0)
 		{

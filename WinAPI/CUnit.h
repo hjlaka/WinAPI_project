@@ -30,6 +30,8 @@ protected:
 	UINT m_uiCurHp;			// 현재 체력
 	UINT m_uiAtt;			// 공격력
 
+	UINT m_uiSpeed;			// 속도
+
 	bool m_bGetHit;	
 	float m_fInvincibleTime;
 

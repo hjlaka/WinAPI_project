@@ -48,6 +48,8 @@ CPlayer::CPlayer()
 	m_uiCurHp = 100;
 	m_uiAtt = 10;
 
+	m_uiSpeed = 300.f;
+
 }
 
 CPlayer::~CPlayer()
@@ -129,6 +131,9 @@ void CPlayer::Update()
 {
 	m_bIsMove = false;
 
+	Logger::Debug(L"x, y: " + to_wstring(m_vecPos.x) + L", " + to_wstring(m_vecPos.y));
+
+
 
 	if (m_fDashClock > 0)
 	{
@@ -161,7 +166,7 @@ void CPlayer::Update()
 	if (BUTTONSTAY(VK_LEFT))
 	{
 		m_pRigid->SetDirectionX(-1);
-		m_pRigid->SetVelocityX(-200);
+		m_pRigid->SetVelocityX(-1 * m_uiSpeed);
 		//m_vecPos.x -= m_fSpeed * DT;
 		m_bIsMove = true;
 		m_vecMoveDir.x = -1;
@@ -170,7 +175,7 @@ void CPlayer::Update()
 	else if (BUTTONSTAY(VK_RIGHT))
 	{
 		m_pRigid->SetDirectionX(+1);
-		m_pRigid->SetVelocityX(200);
+		m_pRigid->SetVelocityX(m_uiSpeed);
 		//m_vecPos.x += m_fSpeed * DT;
 		m_bIsMove = true;
 		m_vecMoveDir.x = +1;
@@ -246,21 +251,10 @@ void CPlayer::Render()
 {
 
 	wstring groundCount = to_wstring(m_pRigid->GetGroundCount());
-	RENDERMESSAGE(groundCount);
 
-	RENDERMESSAGE(to_wstring(m_vecLookDir.x));
-	RENDERMESSAGE(to_wstring(m_pRigid->m_arrDirSpeed[(int)Dir::UP]));
-	RENDERMESSAGE(to_wstring(m_pRigid->m_arrDirSpeed[(int)Dir::DOWN]));
-	RENDERMESSAGE(to_wstring(m_pRigid->m_arrDirSpeed[(int)Dir::RIGHT]));
-	RENDERMESSAGE(to_wstring(m_pRigid->m_arrDirSpeed[(int)Dir::LEFT]));
-	RENDERMESSAGE(to_wstring(m_bIsAttack));
 	RENDERMESSAGE(L"오른쪽 충돌 갯수: " + to_wstring(m_pRigid->m_arrCollisionCount[(int)Dir::RIGHT]));
 	RENDERMESSAGE(L"왼쪽 충돌 갯수: " + to_wstring(m_pRigid->m_arrCollisionCount[(int)Dir::LEFT]));
-	RENDERMESSAGE(to_wstring(m_fDashClock));
-	RENDERMESSAGE(to_wstring(m_bIsDash));
-	RENDERMESSAGE(to_wstring(m_pRigid->m_fMultiSpeed));
-	RENDERMESSAGE(to_wstring(m_pRigid->m_vecForce.x) + L", " + to_wstring(m_pRigid->m_vecForce.y));
-
+	RENDERMESSAGE(L"플레이어 체력: " + to_wstring(m_uiCurHp));
 
 
 	RENDERMESSAGE(to_wstring(GetCollider()->GetPos().y));
