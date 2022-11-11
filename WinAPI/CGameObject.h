@@ -58,6 +58,18 @@ protected:
 
 	void ComponentRender();
 
+	// 리소스 배율
+
+protected:
+	float m_fImgRate;
+
+public:
+	float GetImgRate();
+	void SetImgRate(float rate);
+	
+	
+
+
 	// 중력 컴포넌트
 
 protected:

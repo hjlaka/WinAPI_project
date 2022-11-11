@@ -33,6 +33,8 @@ private:
 	DWORD_PTR			m_pParam1;
 	DWORD_PTR			m_pParam2;
 
+	float				m_fRate;			// 이미지 배율
+
 public:
 	const wstring& GetName();
 

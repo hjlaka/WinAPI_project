@@ -19,6 +19,8 @@ CAnimation::CAnimation()
 	m_pCallback = nullptr;
 	m_pParam1 = 0;
 	m_pParam2 = 0;
+
+	m_fRate = 1;
 }
 
 CAnimation::~CAnimation()
@@ -66,6 +68,7 @@ void CAnimation::Create(CImage* pImg, Vector lt, Vector slice, Vector step, floa
 
 		m_vecFrame.push_back(frame);
 	}
+
 }
 
 void CAnimation::Replay()
@@ -77,6 +80,7 @@ void CAnimation::Replay()
 
 void CAnimation::Init()
 {
+	
 }
 
 void CAnimation::Update()
@@ -110,13 +114,15 @@ void CAnimation::Render()
 	Vector pos = m_pAnimator->GetOwner()->GetPos();	// 애니메이션이 그려질 위치 확인
 	AniFrame frame = m_vecFrame[m_iCurFrame];		// 애니메이션이 그려질 프레임 확인
 
+	m_fRate = m_pAnimator->GetOwner()->GetImgRate();		// 이미지 리소스 배율
+
 	// 프레임 이미지 그리기
 	RENDER->FrameImage(
 		m_pImage,
-		pos.x - frame.slice.x * 0.5f,
-		pos.y - frame.slice.y * 0.5f,
-		pos.x + frame.slice.x * 0.5f,
-		pos.y + frame.slice.y * 0.5f,
+		pos.x - frame.slice.x * 0.5f * m_fRate,
+		pos.y - frame.slice.y * 0.5f * m_fRate,
+		pos.x + frame.slice.x * 0.5f * m_fRate,
+		pos.y + frame.slice.y * 0.5f * m_fRate,
 		frame.lt.x,
 		frame.lt.y,
 		frame.lt.x + frame.slice.x,

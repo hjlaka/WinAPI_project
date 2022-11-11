@@ -14,6 +14,8 @@ CGameObject::CGameObject()
 
 	m_pCollider = nullptr;
 	m_bIsRigidBody = false;
+
+	m_fImgRate = 1.f;
 }
 
 CGameObject::~CGameObject()
@@ -97,6 +99,16 @@ void CGameObject::ComponentRender()
 	{
 		pComponent->Render();
 	}
+}
+
+void CGameObject::SetImgRate(float rate)
+{
+	m_fImgRate = rate;
+}
+
+float CGameObject::GetImgRate()
+{
+	return m_fImgRate;
 }
 
 bool CGameObject::GetIsRigidBody()
