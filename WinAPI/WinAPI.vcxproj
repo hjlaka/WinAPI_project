@@ -142,6 +142,7 @@
     <ClInclude Include="CAnimation.h" />
     <ClInclude Include="CAnimator.h" />
     <ClInclude Include="CAttack.h" />
+    <ClInclude Include="CBackGround.h" />
     <ClInclude Include="CButton.h" />
     <ClInclude Include="CCameraController.h" />
     <ClInclude Include="CCameraManager.h" />
@@ -181,6 +182,7 @@
     <ClInclude Include="CTimeManager.h" />
     <ClInclude Include="CUI.h" />
     <ClInclude Include="CUIManager.h" />
+    <ClInclude Include="CUIHp.h" />
     <ClInclude Include="CUnit.h" />
     <ClInclude Include="CWallTile.h" />
     <ClInclude Include="framework.h" />
@@ -195,6 +197,7 @@
     <ClCompile Include="CAnimation.cpp" />
     <ClCompile Include="CAnimator.cpp" />
     <ClCompile Include="CAttack.cpp" />
+    <ClCompile Include="CBackGround.cpp" />
     <ClCompile Include="CButton.cpp" />
     <ClCompile Include="CCameraController.cpp" />
     <ClCompile Include="CCameraManager.cpp" />
@@ -234,6 +237,7 @@
     <ClCompile Include="CTimeManager.cpp" />
     <ClCompile Include="CUI.cpp" />
     <ClCompile Include="CUIManager.cpp" />
+    <ClCompile Include="CUIHp.cpp" />
     <ClCompile Include="CUnit.cpp" />
     <ClCompile Include="CWallTile.cpp" />
     <ClCompile Include="WinAPI.cpp" />

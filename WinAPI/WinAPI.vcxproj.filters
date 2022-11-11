@@ -207,6 +207,12 @@
     <ClInclude Include="CSmoke.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="CUIHp.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="CBackGround.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinAPI.cpp">
@@ -342,6 +348,12 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="CSmoke.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="CUIHp.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="CBackGround.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
