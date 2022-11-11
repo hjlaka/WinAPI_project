@@ -4,36 +4,14 @@
 
 CUnit::CUnit()
 {
+	m_bGetHit = false;
+	m_fInvincibleTime = 0;
 }
 
 CUnit::~CUnit()
 {
 }
 
-void CUnit::CollisionX()
-{
-}
-
-void CUnit::CollisionY()
-{
-
-}
-
-void CUnit::Collision()
-{
-}
-
-void CUnit::CollisionExitY()
-{
-}
-
-void CUnit::CollisionExitX()
-{
-}
-
-void CUnit::CollisionExit()
-{
-}
 
 void CUnit::Init()
 {
@@ -41,6 +19,14 @@ void CUnit::Init()
 
 void CUnit::Update()
 {
+
+	if (m_bGetHit)
+	{
+		m_fInvincibleTime += DT;
+
+		if (m_fInvincibleTime > 0.2f)
+			m_bGetHit = false;
+	}
 }
 
 void CUnit::Render()

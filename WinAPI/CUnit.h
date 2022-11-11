@@ -30,16 +30,11 @@ protected:
 	UINT m_uiCurHp;			// 현재 체력
 	UINT m_uiAtt;			// 공격력
 
+	bool m_bGetHit;	
+	float m_fInvincibleTime;
 
 
-public:
 
-	void CollisionX();
-	void CollisionY();
-	void Collision();
-	void CollisionExitY();
-	void CollisionExitX();
-	void CollisionExit();
 
 public:
 

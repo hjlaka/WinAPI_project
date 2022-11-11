@@ -46,6 +46,7 @@ void CMonster01::Init()
 
 void CMonster01::Update()
 {
+	CUnit::Update();
 	//if (BUTTONSTAY(VK_LEFT))
 	//{
 	//	m_pRigid->SetDirectionX(-1);
@@ -68,6 +69,7 @@ void CMonster01::Update()
 
 void CMonster01::Render()
 {
+	RENDERMESSAGE(L"몬스터 체력: " + to_wstring(m_uiCurHp));
 }
 
 void CMonster01::Release()
@@ -77,10 +79,15 @@ void CMonster01::Release()
 void CMonster01::OnCollisionEnter(CCollider* pOtherCollider)
 {
 
-	if (pOtherCollider->GetObjName() == L"PlayerAttack")
+	if (pOtherCollider->GetObjName() == L"PlayerAttack" && !m_bGetHit)
 	{
+		Logger::Debug(L"몬스터 피격");
 		//m_vecPos += (GetCollider()->GetPos() - pOtherCollider->GetPos()).Normalized() * 10;
 		//m_pRigid->Power((GetCollider()->GetPos() - pOtherCollider->GetPos()).Normalized() * 150);
+		Vector diff = (GetCollider()->GetPos() - pOtherCollider->GetPos());
+		m_pRigid->Power(Vector(diff.Normalized() * 3.f));
+
+		m_bGetHit = true;
 	}
 
 	if (pOtherCollider->GetObjName() == L"Ground")
