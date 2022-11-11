@@ -42,6 +42,9 @@ void CMonster01::Init()
 	m_pRigid = new CRigidBody;
 	AddComponent(m_pRigid);
 	m_bIsRigidBody = true;
+
+
+	
 }
 
 void CMonster01::Update()

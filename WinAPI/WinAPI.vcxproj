@@ -156,6 +156,7 @@
     <ClInclude Include="CGroundTile.h" />
     <ClInclude Include="CImageObject.h" />
     <ClInclude Include="CInputManager.h" />
+    <ClInclude Include="CMainUI.h" />
     <ClInclude Include="CMissile.h" />
     <ClInclude Include="CMonster.h" />
     <ClInclude Include="CMonster01.h" />
@@ -181,6 +182,7 @@
     <ClInclude Include="CTilePanel.h" />
     <ClInclude Include="CTimeManager.h" />
     <ClInclude Include="CUI.h" />
+    <ClInclude Include="CUIHpMonster.h" />
     <ClInclude Include="CUIManager.h" />
     <ClInclude Include="CUIHp.h" />
     <ClInclude Include="CUnit.h" />
@@ -211,6 +213,7 @@
     <ClCompile Include="CGroundTile.cpp" />
     <ClCompile Include="CImageObject.cpp" />
     <ClCompile Include="CInputManager.cpp" />
+    <ClCompile Include="CMainUI.cpp" />
     <ClCompile Include="CMissile.cpp" />
     <ClCompile Include="CMonster.cpp" />
     <ClCompile Include="CMonster01.cpp" />
@@ -236,6 +239,7 @@
     <ClCompile Include="CTilePanel.cpp" />
     <ClCompile Include="CTimeManager.cpp" />
     <ClCompile Include="CUI.cpp" />
+    <ClCompile Include="CUIHpMonster.cpp" />
     <ClCompile Include="CUIManager.cpp" />
     <ClCompile Include="CUIHp.cpp" />
     <ClCompile Include="CUnit.cpp" />

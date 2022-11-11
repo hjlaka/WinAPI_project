@@ -213,6 +213,12 @@
     <ClInclude Include="CBackGround.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="CMainUI.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="CUIHpMonster.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinAPI.cpp">
@@ -354,6 +360,12 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="CBackGround.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="CMainUI.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="CUIHpMonster.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

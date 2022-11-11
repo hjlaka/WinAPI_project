@@ -12,7 +12,7 @@ public:
 	virtual ~CUIHp();
 
 
-private:
+protected:
 
 	CUnit* m_pOwner;
 
@@ -25,16 +25,16 @@ public:
 
 
 private:
-	void Init() override;
-	void Render() override;
-	void Update() override;
-	void Release() override;
+	virtual void Init() override;
+	virtual void Render() override;
+	virtual void Update() override;
+	virtual void Release() override;
 
-	void OnMouseEnter() final;
-	void OnMouseOver() final;
-	void OnMouseExit() final;
-	void OnMouseUp() final;
-	void OnMouseDown() final;
-	void OnMouseClicked() final;
+	void OnMouseEnter();
+	void OnMouseOver();
+	void OnMouseExit();
+	void OnMouseUp();
+	void OnMouseDown();
+	void OnMouseClicked();
 };
 

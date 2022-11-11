@@ -24,6 +24,17 @@ void CUIHp::Init()
 {
 }
 
+
+
+void CUIHp::Update()
+{
+	if (!m_bScreenFixed && nullptr != m_pOwner)
+	{
+		m_vecPos.x = m_pOwner->GetPos().x - GetScale().x / 2;
+		m_vecPos.y = m_pOwner->GetPos().y + m_pOwner->GetScale().y/2 + 10.f;
+	}
+}
+
 void CUIHp::Render()
 {
 	RENDER->FillRect(
@@ -40,10 +51,6 @@ void CUIHp::Render()
 		m_vecRenderPos.y,
 		m_vecRenderPos.x + m_vecScale.x,
 		m_vecRenderPos.y + m_vecScale.y);
-}
-
-void CUIHp::Update()
-{
 }
 
 void CUIHp::Release()
