@@ -23,7 +23,6 @@ private:
 	float m_fGravity;
 
 	bool m_bIsGravity;
-	int m_iGroundCount;
 	bool m_bIsOnGround;
 	UINT m_uiNotBlockingCount;
 
@@ -39,6 +38,8 @@ private:
 	
 	Vector m_vecVelocity;
 
+	bool isUpDownCol;
+
 
 public:
 
@@ -49,7 +50,6 @@ public:
 
 	void SetIsGravity(bool isGravity);
 	void SetGravitySpeed(float speed);
-	void SetGroundCount(int value);
 	void SetDirectionX(int dirX);
 	void SetDirectionY(int dirY);
 	void SetSpeed(float spd);
@@ -61,6 +61,7 @@ public:
 	void SetVelocityX(float x);
 
 	void UpdateVelocityX();
+	void UpdateVelocityY();
 
 
 	bool GroundCollisionEnter(CCollider* myCollider, CCollider* pOtherCollider);
