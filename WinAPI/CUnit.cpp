@@ -54,3 +54,43 @@ void CUnit::OnCollisionStay(CCollider* pOtherCollider)
 void CUnit::OnCollisionExit(CCollider* pOtherCollider)
 {
 }
+
+int CUnit::GetHp()
+{
+	return m_iHp;
+}
+
+int CUnit::GetCurHp()
+{
+	return m_iCurHp;
+}
+
+int CUnit::GetAttack()
+{
+	return m_iAtt;
+}
+
+float CUnit::GetSpeed()
+{
+	return m_fSpeed;
+}
+
+void CUnit::SetHp(int hp)
+{
+	m_iHp = hp;
+}
+
+void CUnit::SetCurHp(int curHp)
+{
+	m_iCurHp = curHp;
+}
+
+void CUnit::SetAttack(int att)
+{
+	m_iAtt = att;
+}
+
+void CUnit::SetSpeed(float spd)
+{
+	m_fSpeed = spd;
+}

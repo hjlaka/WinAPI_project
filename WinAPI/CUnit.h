@@ -36,6 +36,21 @@ protected:
 	float m_fInvincibleTime;
 
 
+public:
+
+	int GetHp();
+	int GetCurHp();
+	int GetAttack();
+	float GetSpeed();
+
+
+protected:
+	void SetHp(int hp);
+	void SetCurHp(int curHp);
+	void SetAttack(int att);
+	void SetSpeed(float spd);
+
+
 
 
 public:

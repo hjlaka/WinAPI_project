@@ -16,6 +16,8 @@
 #include "CPanel.h"
 #include "CBackGround.h"
 
+#include "CUIHp.h"
+
 CSceneStage01::CSceneStage01()
 {
 	pPlayer = nullptr;
@@ -27,20 +29,26 @@ CSceneStage01::~CSceneStage01()
 
 void CSceneStage01::Init()
 {
-	CBackGround* pBG = new CBackGround;
+	/*CBackGround* pBG = new CBackGround;
 	pBG->SetImage(RESOURCE->LoadImg(L"BGStage01", L"Image\\stage01_map.png"));
 	pBG->SetPos(0, 0);
-	AddGameObject(pBG);
+	AddGameObject(pBG);*/
 
-	pPlayer = new CPlayer();
+	pPlayer = new CPlayer;
 	pPlayer->SetPos(200, WINSIZEY * 0.5f);
 	pPlayer->SetImgRate(1.3f);
 	AddGameObject(pPlayer);
 
-	CMonster01* pMonster = new CMonster01();
+	CMonster01* pMonster = new CMonster01;
 	pMonster->SetPos(900, WINSIZEY * 0.2f);
 	pMonster->SetImgRate(1.3f);
 	AddGameObject(pMonster);
+
+	CUIHp* pPlayerHpUI = new CUIHp;
+	pPlayerHpUI->SetPos(100.f, WINSIZEY * 0.8f);
+	pPlayerHpUI->SetOwner(pPlayer);
+	pPlayerHpUI->SetScale(Vector(100.f, 60.f));
+	AddGameObject(pPlayerHpUI);
 
 	CCameraController* pCamController = new CCameraController;
 	AddGameObject(pCamController);
