@@ -17,9 +17,9 @@ CMonster01::CMonster01()
 	m_vecLookDir = Vector(0, -1);
 
 
-	m_uiHp = 200;
-	m_uiCurHp = 200;
-	m_uiAtt = 15;
+	m_iHp = 200;
+	m_iCurHp = 200;
+	m_iAtt = 15;
 }
 
 CMonster01::~CMonster01()
@@ -69,7 +69,7 @@ void CMonster01::Update()
 
 void CMonster01::Render()
 {
-	RENDERMESSAGE(L"몬스터 체력: " + to_wstring(m_uiCurHp));
+	RENDERMESSAGE(L"몬스터 체력: " + to_wstring(m_iCurHp));
 }
 
 void CMonster01::Release()

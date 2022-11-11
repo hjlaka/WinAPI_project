@@ -44,11 +44,11 @@ CPlayer::CPlayer()
 	//
 
 
-	m_uiHp = 100;
-	m_uiCurHp = 100;
-	m_uiAtt = 10;
+	m_iHp = 100;
+	m_iCurHp = 100;
+	m_iAtt = 10;
 
-	m_uiSpeed = 300.f;
+	m_fSpeed = 300.f;
 
 }
 
@@ -166,7 +166,7 @@ void CPlayer::Update()
 	if (BUTTONSTAY(VK_LEFT))
 	{
 		m_pRigid->SetDirectionX(-1);
-		m_pRigid->SetVelocityX(-1 * m_uiSpeed);
+		m_pRigid->SetVelocityX(-1 * m_fSpeed);
 		//m_vecPos.x -= m_fSpeed * DT;
 		m_bIsMove = true;
 		m_vecMoveDir.x = -1;
@@ -175,7 +175,7 @@ void CPlayer::Update()
 	else if (BUTTONSTAY(VK_RIGHT))
 	{
 		m_pRigid->SetDirectionX(+1);
-		m_pRigid->SetVelocityX(m_uiSpeed);
+		m_pRigid->SetVelocityX(m_fSpeed);
 		//m_vecPos.x += m_fSpeed * DT;
 		m_bIsMove = true;
 		m_vecMoveDir.x = +1;
@@ -254,7 +254,7 @@ void CPlayer::Render()
 
 	RENDERMESSAGE(L"오른쪽 충돌 갯수: " + to_wstring(m_pRigid->m_arrCollisionCount[(int)Dir::RIGHT]));
 	RENDERMESSAGE(L"왼쪽 충돌 갯수: " + to_wstring(m_pRigid->m_arrCollisionCount[(int)Dir::LEFT]));
-	RENDERMESSAGE(L"플레이어 체력: " + to_wstring(m_uiCurHp));
+	RENDERMESSAGE(L"플레이어 체력: " + to_wstring(m_iCurHp));
 
 
 	RENDERMESSAGE(to_wstring(GetCollider()->GetPos().y));

@@ -26,11 +26,11 @@ protected:
 
 	CRigidBody* m_pRigid;
 
-	UINT m_uiHp;			// 체력
-	UINT m_uiCurHp;			// 현재 체력
-	UINT m_uiAtt;			// 공격력
+	int			m_iHp;			// 체력
+	int			m_iCurHp;			// 현재 체력
+	int			m_iAtt;			// 공격력
 
-	UINT m_uiSpeed;			// 속도
+	float		m_fSpeed;			// 속도
 
 	bool m_bGetHit;	
 	float m_fInvincibleTime;

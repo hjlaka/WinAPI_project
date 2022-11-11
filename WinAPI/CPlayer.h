@@ -32,7 +32,6 @@ private:
 
 
 
-	float m_fSpeed = 200.0f;
 	float m_fJumpPower = 100.f;
 
 	float m_fDashClock;

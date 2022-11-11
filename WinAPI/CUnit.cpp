@@ -6,6 +6,12 @@ CUnit::CUnit()
 {
 	m_bGetHit = false;
 	m_fInvincibleTime = 0;
+
+	m_iHp = 0;
+	m_iCurHp = 0;
+	m_iAtt = 0;
+
+	m_fSpeed = 0;
 }
 
 CUnit::~CUnit()
