@@ -5,6 +5,9 @@
 #include "CRenderManager.h"
 #include "CGameObject.h"
 
+#include "CGameManager.h"
+#include "CPlayer.h"
+
 CCameraManager::CCameraManager()
 {
 	m_vecLookAt		= Vector(0, 0);
@@ -87,6 +90,8 @@ void CCameraManager::Init()
 
 void CCameraManager::Update()
 {
+
+	
 	// 추적할 게임오브젝트가 있을 경우
 	if (nullptr != m_pTargetObj)
 	{
@@ -102,8 +107,17 @@ void CCameraManager::Update()
 		}
 	}
 
+	// 허용 범위 내에서
+	if (m_vecTargetPos.x < WINSIZEX * 0.5f)
+		m_vecTargetPos.x = WINSIZEX * 0.5f;
+	else if (m_vecTargetPos.x > GAME->GetBGEndX() - WINSIZEX * 0.5f)
+		m_vecTargetPos.x = GAME->GetBGEndX() - WINSIZEX * 0.5f;
+
 	// 목표 위치로 이동
 	MoveToTarget();
+
+
+	
 }
 
 void CCameraManager::Render()

@@ -13,8 +13,14 @@ private:
 	CImage* m_pBGImg;
 	// z°ª Ãß°¡
 
+	float m_fStartX;
+	float m_fEndX;
+
 public:
 	void SetImage(CImage* bgImg);
+
+	float GetStartX();
+	float GetEndX();
 
 private:
 	void Init() override;

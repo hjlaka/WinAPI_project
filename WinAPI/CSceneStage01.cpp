@@ -17,7 +17,9 @@
 #include "CBackGround.h"
 
 #include "CUIHp.h"
-//#include "CMonster.h"
+#include "CUIHpMonster.h"
+
+#include "CGameManager.h"
 
 CSceneStage01::CSceneStage01()
 {
@@ -30,15 +32,17 @@ CSceneStage01::~CSceneStage01()
 
 void CSceneStage01::Init()
 {
-	/*CBackGround* pBG = new CBackGround;
+	pBG = new CBackGround;
 	pBG->SetImage(RESOURCE->LoadImg(L"BGStage01", L"Image\\stage01_map.png"));
 	pBG->SetPos(0, 0);
-	AddGameObject(pBG);*/
+	AddGameObject(pBG);
+	GAME->SetBGEndX(pBG->GetEndX());
 
 	pPlayer = new CPlayer;
 	pPlayer->SetPos(200, WINSIZEY * 0.5f);
 	pPlayer->SetImgRate(1.2f);
 	AddGameObject(pPlayer);
+	GAME->SetPlayer(pPlayer);
 
 	CMonster01* pMonster = new CMonster01;
 	pMonster->SetPos(900, WINSIZEY * 0.2f);
@@ -51,8 +55,7 @@ void CSceneStage01::Init()
 	pPlayerHpUI->SetScale(Vector(100.f, 60.f));
 	AddGameObject(pPlayerHpUI);
 
-	CUIHp* pMonsterUI = new CUIHp;
-	pMonsterUI->SetScreenFixed(false);
+	CUIHpMonster* pMonsterUI = new CUIHpMonster;
 	pMonsterUI->SetOwner(pMonster);
 	pMonsterUI->SetScale(Vector(80.f, 10.f));
 	AddGameObject(pMonsterUI);
@@ -72,7 +75,7 @@ void CSceneStage01::Enter()
 	//LoadBackGroundImage(GETPATH + L"Stage01_map.png");
 	
 
-	CAMERA->SetTargetObj(pPlayer);
+	//CAMERA->SetTargetObj(pPlayer);
 }
 
 void CSceneStage01::Update()
@@ -82,6 +85,10 @@ void CSceneStage01::Update()
 		CAMERA->FadeOut(0.25f);
 		DELAYCHANGESCENE(GroupScene::Title, 0.25f);
 	}
+
+	CAMERA->SetTargetPos(GAME->GetPlayer()->GetPos() + Vector(0, -100.f), .1f);
+
+	
 }
 
 void CSceneStage01::Render()

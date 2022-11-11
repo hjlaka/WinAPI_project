@@ -13,6 +13,7 @@
 #include "CCameraManager.h"
 #include "CUIManager.h"
 #include "CSoundManager.h"
+#include "CGameManager.h"
 
 CCore::CCore()
 {
@@ -36,6 +37,7 @@ void CCore::Init()
 	CAMERA->Init();
 	UI->Init();
 	SOUND->Init();
+	GAME->Init();
 
 	SCENE->Init();
 }
@@ -81,6 +83,7 @@ void CCore::Release()
 {
 	SCENE->Release();
 
+	GAME->Release();
 	TIME->Release();
 	RENDER->Release();
 	INPUT->Release();

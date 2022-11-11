@@ -6,6 +6,9 @@ CBackGround::CBackGround()
 	m_vecPos = Vector(0, 0);
 
 	m_pBGImg = nullptr;
+
+	m_fStartX = 0;
+	m_fEndX = 0;
 }
 
 CBackGround::~CBackGround()
@@ -15,6 +18,18 @@ CBackGround::~CBackGround()
 void CBackGround::SetImage(CImage* bgImg)
 {
 	m_pBGImg = bgImg;
+	m_fStartX = m_vecPos.x;
+	m_fEndX = m_vecPos.x + m_pBGImg->GetWidth();
+}
+
+float CBackGround::GetStartX()
+{
+	return m_fStartX;
+}
+
+float CBackGround::GetEndX()
+{
+	return m_fEndX;
 }
 
 void CBackGround::Init()
