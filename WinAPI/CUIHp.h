@@ -15,9 +15,10 @@ public:
 protected:
 
 	CUnit* m_pOwner;
+	float m_fHpRate;
 
-	//int m_iHp;
-	//int m_iCurHp;
+	/*int m_iHp;
+	int m_iCurHp;*/
 
 public:
 

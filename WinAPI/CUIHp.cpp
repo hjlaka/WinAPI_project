@@ -9,6 +9,8 @@ CUIHp::CUIHp()
 	//m_iCurHp = 0;
 	m_layer = Layer::Ui;
 	//m_bScreenFixed = true;
+
+	m_fHpRate = 1.f;
 }
 
 CUIHp::~CUIHp()
@@ -18,6 +20,8 @@ CUIHp::~CUIHp()
 void CUIHp::SetOwner(CUnit* pOwner)
 {
 	m_pOwner = pOwner;
+	/*m_iHp = m_pOwner->GetHp();
+	m_iCurHp = m_pOwner->GetCurHp();*/
 }
 
 void CUIHp::Init()
