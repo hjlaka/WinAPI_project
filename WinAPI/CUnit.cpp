@@ -75,6 +75,11 @@ float CUnit::GetSpeed()
 	return m_fSpeed;
 }
 
+Vector CUnit::GetLookDir()
+{
+	return m_vecLookDir;
+}
+
 void CUnit::SetHp(int hp)
 {
 	m_iHp = hp;

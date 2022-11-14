@@ -23,7 +23,7 @@ private:
 	CImage* m_pJumpAttackImage;
 
 	Vector m_vecMoveDir;
-	Vector m_vecLookDir;
+	
 	bool m_bIsMove;
 	bool m_bIsAttack;
 	bool m_bOverPeak;

@@ -122,11 +122,11 @@ void CRigidBody::Update()
 
 void CRigidBody::PowerToY(float y)
 {
-	m_vecVelocity.y = -1.f * y;
+	m_vecVelocity.y =  y;
 }
 void CRigidBody::PowerToX(float x)
 {
-	m_fForceX = x;
+	m_vecVelocity.x = x;
 }
 
 void CRigidBody::Power(Vector force)

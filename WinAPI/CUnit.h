@@ -24,6 +24,9 @@ public:
 
 protected:
 
+	Vector m_vecLookDir;
+
+
 	CRigidBody* m_pRigid;
 
 	int			m_iHp;			// Ã¼·Â
@@ -42,6 +45,7 @@ public:
 	int GetCurHp();
 	int GetAttack();
 	float GetSpeed();
+	Vector GetLookDir();
 
 
 protected:

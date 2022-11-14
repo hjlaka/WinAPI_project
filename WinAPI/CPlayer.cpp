@@ -130,12 +130,13 @@ void CPlayer::Init()
 void CPlayer::Update()
 {
 	m_bIsMove = false;
+	m_bIsDash = false;
 
 	Logger::Debug(L"x, y: " + to_wstring(m_vecPos.x) + L", " + to_wstring(m_vecPos.y));
 
 
 
-	if (m_fDashClock > 0)
+	/*if (m_fDashClock > 0)
 	{
 		m_fDashClock -= DT;
 		if (BUTTONDOWN(VK_LEFT) || BUTTONDOWN(VK_RIGHT))
@@ -160,7 +161,7 @@ void CPlayer::Update()
 	if (BUTTONDOWN(VK_LEFT) || BUTTONDOWN(VK_RIGHT))
 	{
 		m_fDashClock = 0.5f;
-	}
+	}*/
 
 
 	if (BUTTONSTAY(VK_LEFT))
@@ -213,12 +214,21 @@ void CPlayer::Update()
 		Attack();
 	}
 
-	if (BUTTONDOWN('C'))
+	if (BUTTONDOWN('Z') && m_fDashClock <= 0)
 	{
-		m_pRigid->PowerToX(50.f);
-		m_pRigid->PowerToY(50.f);
+		/*m_pRigid->PowerToX(50.f);
+		m_pRigid->PowerToY(50.f);*/
 
 		//m_pRigid->Power(Vector(100, -100));
+
+		m_fDashClock = 0.3f;
+	}
+	if (m_fDashClock > 0)
+	{
+		m_fDashClock -= DT;
+		m_bIsDash = true;
+		m_pRigid->SetGravitySpeed(0);
+		m_pRigid->PowerToX(450.f);
 	}
 
 	if (BUTTONSTAY('R'))
@@ -226,12 +236,12 @@ void CPlayer::Update()
 		m_vecPos = Vector(100, 100);
 	}
 
-	if (BUTTONDOWN(VK_SPACE) && m_iJumpCount < 2)
+	if (BUTTONDOWN('C') && m_iJumpCount < 2)
 	{
 		//CreateMissile();
 		//Jump(400.f);
 		m_bOverPeak = false;
-		m_pRigid->PowerToY(450.f);
+		m_pRigid->PowerToY(-550.f);
 		m_iJumpCount++;
 		//m_pRigid->SetIsGravity(true);
 		Logger::Debug(L"Jump!");
