@@ -68,6 +68,7 @@ public:
 	void WallCollisionEnter(CCollider* myCollider, CCollider* pOtherCollider);
 	void GroundCollisionExit(CCollider* myCollider, CCollider* pOtherCollider);
 	void WallCollisionExit(CCollider* myCollider, CCollider* pOtherCollider);
+	void WallCollisionStay(CCollider* myCollider, CCollider* pOtherCollider);
 
 
 	void PowerToY(float y);

@@ -31,14 +31,21 @@ CPlayer::CPlayer()
 	m_vecMoveDir = Vector(0, 0);
 	m_vecLookDir = Vector(1, 0);
 	m_bIsMove = false;
+	m_bIsAttack = false;
+	m_iAttackCount = 0;
 	m_iJumpCount = 0;
 	m_bOverPeak = false;
 	m_bIsDash = false;
 
 	
+	m_fFallTime = 0;
+	m_fAttackATime = 0;
+	m_fAttackBTime = 0;
 
 	m_fDashClock = 0;
 	
+	m_pPlayerState = nullptr;
+	m_state = State::IDLE;
 
 
 	//
@@ -54,6 +61,8 @@ CPlayer::CPlayer()
 
 CPlayer::~CPlayer()
 {
+	if (nullptr != m_pPlayerState)
+		delete m_pPlayerState;
 }
 
 void CPlayer::Init()
@@ -61,6 +70,7 @@ void CPlayer::Init()
 	m_pIdleImage = RESOURCE->LoadImg(L"PlayerIdle", L"Image\\idle_skul.png");
 	m_pMoveImage = RESOURCE->LoadImg(L"PlayerMove", L"Image\\move_skul.png");
 	m_pAttackImage = RESOURCE->LoadImg(L"PlayerAttack", L"Image\\attackA_skul.png");
+	m_pAttackBImage = RESOURCE->LoadImg(L"PlayerAttackB", L"Image\\attackB_skul.png");
 	m_pJumpImage = RESOURCE->LoadImg(L"PlayerJump", L"Image\\jump_skul.png");
 	m_pFallImage = RESOURCE->LoadImg(L"PlayerFall", L"Image\\fall_skul.png");
 	m_pFallRepeatImage = RESOURCE->LoadImg(L"PlayerFallRepeat", L"Image\\fallrepeat_skul.png");
@@ -78,7 +88,7 @@ void CPlayer::Init()
 	m_pAnimator->CreateAnimation(L"IdleLeftUp", m_pIdleImage, Vector(0.f, 20.f), Vector(85.f, 75.f), Vector(96.f, 0.f), 0.5f, 4);
 
 	m_pAnimator->CreateAnimation(L"MoveUp",			m_pMoveImage, Vector(0.f, 20.f), Vector(80.f, 75.f), Vector(96.f, 0.f), 0.05f, 8);
-	m_pAnimator->CreateAnimation(L"MoveRightUp",	m_pMoveImage, Vector(0.f, 20.f), Vector(80.f, 75.f), Vector(96.f, 0.f), 0.05f, 8);
+	m_pAnimator->CreateAnimation(L"MoveRightUp",	m_pMoveImage, Vector(0.f, 20.f), Vector(80.f,  75.f), Vector(96.f, 0.f), 0.05f, 8);
 	m_pAnimator->CreateAnimation(L"MoveRight",		m_pMoveImage, Vector(0.f, 20.f), Vector(80.f, 75.f), Vector(96.f, 0.f), 0.05f, 8);
 	m_pAnimator->CreateAnimation(L"MoveRightDown",	m_pMoveImage, Vector(0.f, 20.f), Vector(80.f, 75.f), Vector(96.f, 0.f), 0.05f, 8);
 	m_pAnimator->CreateAnimation(L"MoveDown",		m_pMoveImage, Vector(0.f, 20.f), Vector(80.f, 75.f), Vector(96.f, 0.f), 0.05f, 8);
@@ -87,6 +97,7 @@ void CPlayer::Init()
 	m_pAnimator->CreateAnimation(L"MoveLeftUp",		m_pMoveImage, Vector(0.f, 20.f), Vector(80.f, 75.f), Vector(96.f, 0.f), 0.05f, 8);
 	
 	m_pAnimator->CreateAnimation(L"AttackA", m_pAttackImage, Vector(0.f, 20.f), Vector(100.f, 75.f), Vector(96.f, 0.f), 0.1f, 5);
+	m_pAnimator->CreateAnimation(L"AttackB", m_pAttackBImage, Vector(0.f, 20.f), Vector(100.f, 75.f), Vector(96.f, 0.f), 0.1f, 4);
 	m_pAnimator->CreateAnimation(L"Jump", m_pJumpImage, Vector(20.f, 25.f), Vector(50.f, 50.f), Vector(96.f, 0.f), 0.15f, 2);
 	m_pAnimator->CreateAnimation(L"Fall", m_pFallImage, Vector(20.f, 25.f), Vector(50.f, 50.f), Vector(96.f, 0.f), 0.15f, 2);
 	m_pAnimator->CreateAnimation(L"FallRepeat", m_pFallRepeatImage, Vector(20.f, 25.f), Vector(50.f, 50.f), Vector(96.f, 0.f), 0.15f, 3);
@@ -99,7 +110,14 @@ void CPlayer::Init()
 
 		//플레이어의 공격 상태를 해제한다.
 
+		if (pPlayer->m_iAttackCount > 1)
+		{
+
+		}
+
 		pPlayer->m_bIsAttack = false;
+		pPlayer->m_iAttackCount++;
+		
 	};
 
 	auto falling = [](DWORD_PTR pMe, DWORD_PTR pParam2)
@@ -112,9 +130,10 @@ void CPlayer::Init()
 	
 	};
 
-	m_pAnimator->SetAnimationCallBack(L"AttackA", attackEnd, (DWORD_PTR)this, 0);
-	m_pAnimator->SetAnimationCallBack(L"JumpAttack", attackEnd, (DWORD_PTR)this, 0);
-	m_pAnimator->SetAnimationCallBack(L"Fall", falling, (DWORD_PTR)this, 0);
+	//m_pAnimator->SetAnimationCallBack(L"AttackA", attackEnd, (DWORD_PTR)this, 0);
+	//m_pAnimator->SetAnimationCallBack(L"AttackB", attackEnd, (DWORD_PTR)this, 0);
+	//m_pAnimator->SetAnimationCallBack(L"JumpAttack", attackEnd, (DWORD_PTR)this, 0);
+	//m_pAnimator->SetAnimationCallBack(L"Fall", falling, (DWORD_PTR)this, 0);
 	
 	m_pAnimator->Play(L"IdleDown", false);
 	AddComponent(m_pAnimator);
@@ -129,46 +148,20 @@ void CPlayer::Init()
 
 void CPlayer::Update()
 {
+	
 	m_bIsMove = false;
 	m_bIsDash = false;
+
 
 	Logger::Debug(L"x, y: " + to_wstring(m_vecPos.x) + L", " + to_wstring(m_vecPos.y));
 
 
-
-	/*if (m_fDashClock > 0)
-	{
-		m_fDashClock -= DT;
-		if (BUTTONDOWN(VK_LEFT) || BUTTONDOWN(VK_RIGHT))
-		{
-
-			m_bIsDash = true;
-			m_pRigid->SetMultiSpeed(1.5f);
-
-		}
-		
-	}
-	if(m_bIsDash)
-	{
-		if (BUTTONUP(VK_LEFT) || BUTTONUP(VK_RIGHT))
-		{
-			m_fDashClock = 0;
-			m_bIsDash = false;
-			m_pRigid->SetMultiSpeed(1.0f);
-		}
-	}
-
-	if (BUTTONDOWN(VK_LEFT) || BUTTONDOWN(VK_RIGHT))
-	{
-		m_fDashClock = 0.5f;
-	}*/
 
 
 	if (BUTTONSTAY(VK_LEFT))
 	{
 		m_pRigid->SetDirectionX(-1);
 		m_pRigid->SetVelocityX(-1 * m_fSpeed);
-		//m_vecPos.x -= m_fSpeed * DT;
 		m_bIsMove = true;
 		m_vecMoveDir.x = -1;
 
@@ -177,7 +170,6 @@ void CPlayer::Update()
 	{
 		m_pRigid->SetDirectionX(+1);
 		m_pRigid->SetVelocityX(m_fSpeed);
-		//m_vecPos.x += m_fSpeed * DT;
 		m_bIsMove = true;
 		m_vecMoveDir.x = +1;
 	}
@@ -187,40 +179,32 @@ void CPlayer::Update()
 		m_pRigid->SetDirectionX(0);
 	}
 
-	
-
-	if (BUTTONSTAY(VK_UP))
-	{
-		//m_pRigid->SetDirectionY(-1);
-		//m_bIsMove = true;
-		//m_vecMoveDir.y = +1;
-	}
-	else if (BUTTONSTAY(VK_DOWN))
-	{
-		/*m_pRigid->SetDirectionY(+1);
-
-		m_bIsMove = true;
-		m_vecMoveDir.y = -1;*/
-	}
-	else
-	{
-		/*m_vecMoveDir.y = 0;
-		m_pRigid->SetDirectionY(0);*/
-	}
 
 	if (BUTTONDOWN('X'))
 	{
+		
 		m_bIsAttack = true;
 		Attack();
+		m_fAttackATime = 0.5f;
 	}
+
+	if (m_fAttackATime > 0.f)
+	{
+		m_fAttackATime -= DT;
+		if (m_fAttackATime <= 0)
+			m_bIsAttack = false;
+	}
+	else
+	{
+		m_fAttackATime = 0;
+	}
+
+
+
+
 
 	if (BUTTONDOWN('Z') && m_fDashClock <= 0)
 	{
-		/*m_pRigid->PowerToX(50.f);
-		m_pRigid->PowerToY(50.f);*/
-
-		//m_pRigid->Power(Vector(100, -100));
-
 		m_fDashClock = 0.3f;
 	}
 	if (m_fDashClock > 0)
@@ -238,12 +222,11 @@ void CPlayer::Update()
 
 	if (BUTTONDOWN('C') && m_iJumpCount < 2)
 	{
-		//CreateMissile();
-		//Jump(400.f);
+
 		m_bOverPeak = false;
 		m_pRigid->PowerToY(-550.f);
 		m_iJumpCount++;
-		//m_pRigid->SetIsGravity(true);
+
 		Logger::Debug(L"Jump!");
 		if (m_iJumpCount == 2)
 		{
@@ -253,6 +236,12 @@ void CPlayer::Update()
 		}
 	}
 
+	if (m_pRigid->GetGroundCount() == 0 && m_pRigid->GetGravitySpeed() >= 0)
+	{
+		m_fFallTime += DT;
+	}
+
+	UpdateInState();
 
 	AnimatorUpdate();
 }
@@ -278,6 +267,10 @@ void CPlayer::Release()
 {
 }
 
+void CPlayer::UpdateInState()
+{
+}
+
 void CPlayer::AnimatorUpdate()
 {
 	if (m_vecMoveDir.Length() > 0)
@@ -294,6 +287,7 @@ void CPlayer::AnimatorUpdate()
 
 	if (m_pRigid->GetGroundCount() == 0)
 	{
+		
 		if (m_bIsAttack)
 		{
 			str += L"JumpAttack";
@@ -307,7 +301,8 @@ void CPlayer::AnimatorUpdate()
 			m_pAnimator->Play(str, false);
 			return;
 		}
-		else if(!m_bOverPeak)
+		//else if(!m_bOverPeak)
+		else if(m_fFallTime <= 0.3f)
 		{
 			str += L"Fall";
 			m_pAnimator->Play(str, false);
@@ -325,9 +320,21 @@ void CPlayer::AnimatorUpdate()
 
 	if (m_bIsAttack)
 	{
-		str += L"AttackA";
-		m_pAnimator->Play(str, false);
-		return;
+		
+		if (m_iAttackCount == 0)
+		{
+			str += L"AttackA";
+			m_pAnimator->Play(str, false);
+			
+			return;
+		}
+		else
+		{
+			str += L"AttackB";
+			m_pAnimator->Play(str, false);
+			
+			return;
+		}
 	}
 		
 	
@@ -343,6 +350,8 @@ void CPlayer::AnimatorUpdate()
 
 	m_pAnimator->Play(str, false);
 }
+
+
 
 void CPlayer::CreateMissile()
 {
@@ -406,6 +415,7 @@ void CPlayer::OnCollisionEnter(CCollider* pOtherCollider)
 		{
 			m_iJumpCount = 0;
 			m_fJumpPower = 0;
+			m_fFallTime = 0;
 		}
 
 	}
@@ -420,6 +430,12 @@ void CPlayer::OnCollisionEnter(CCollider* pOtherCollider)
 
 void CPlayer::OnCollisionStay(CCollider* pOtherCollider)
 {
+	if (pOtherCollider->GetObjName() == L"Ground")
+	{
+		m_pRigid->WallCollisionStay(GetCollider(), pOtherCollider);
+	}
+	
+
 	//if (pOtherCollider->GetObjName() == L"Ground")
 	//{
 	//	CCollider* playerColl = GetCollider();

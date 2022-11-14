@@ -4,18 +4,28 @@
 class CImage;
 class CAnimator;
 class CRigidBody;
+class CStatePlayer;
+class CPlayerJumping;
+
+enum class State {IDLE, ATTACKA, ATTACKB, MOVE, DASH, JUMP, JUMPATTACK};
 
 class CPlayer : public CUnit
 {
+	friend CPlayerJumping;
+
 public:
 	CPlayer();
 	virtual ~CPlayer();
+
+public:
+	CStatePlayer* m_pPlayerState;
 
 private:
 	CAnimator* m_pAnimator;
 	CImage* m_pIdleImage;
 	CImage* m_pMoveImage;
 	CImage* m_pAttackImage;
+	CImage* m_pAttackBImage;
 	CImage* m_pJumpImage;
 	CImage* m_pFallImage;
 	CImage* m_pFallRepeatImage;
@@ -26,15 +36,21 @@ private:
 	
 	bool m_bIsMove;
 	bool m_bIsAttack;
+	int m_iAttackCount;
 	bool m_bOverPeak;
 	bool m_bIsDash;
 	UINT m_iJumpCount;
 
 
+	float m_fFallTime;
+	float m_fAttackATime;
+	float m_fAttackBTime;
 
 	float m_fJumpPower = 100.f;
 
 	float m_fDashClock;
+
+	State m_state;
 
 
 
@@ -45,6 +61,7 @@ private:
 	void Render() override;
 	void Release() override;
 
+	void UpdateInState();
 	void AnimatorUpdate();
 	void CreateMissile();
 	void Jump(float fJumpPower);

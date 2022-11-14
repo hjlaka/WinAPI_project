@@ -52,6 +52,9 @@
     <Filter Include="GameObject\Stage01">
       <UniqueIdentifier>{f2ad0501-d505-4b88-af0d-880a4673ef5b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="헤더 파일\PlayerState">
+      <UniqueIdentifier>{21949d90-fbe1-4257-8dae-63a11d1c11f4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -219,6 +222,21 @@
     <ClInclude Include="CUIHpMonster.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="CPlayerAttacking.h">
+      <Filter>헤더 파일\PlayerState</Filter>
+    </ClInclude>
+    <ClInclude Include="CPlayerDashing.h">
+      <Filter>헤더 파일\PlayerState</Filter>
+    </ClInclude>
+    <ClInclude Include="CPlayerJumping.h">
+      <Filter>헤더 파일\PlayerState</Filter>
+    </ClInclude>
+    <ClInclude Include="CPlayerMoving.h">
+      <Filter>헤더 파일\PlayerState</Filter>
+    </ClInclude>
+    <ClInclude Include="CStatePlayer.h">
+      <Filter>헤더 파일\PlayerState</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinAPI.cpp">
@@ -367,6 +385,21 @@
     </ClCompile>
     <ClCompile Include="CUIHpMonster.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="CPlayerAttacking.cpp">
+      <Filter>헤더 파일\PlayerState</Filter>
+    </ClCompile>
+    <ClCompile Include="CPlayerDashing.cpp">
+      <Filter>헤더 파일\PlayerState</Filter>
+    </ClCompile>
+    <ClCompile Include="CPlayerJumping.cpp">
+      <Filter>헤더 파일\PlayerState</Filter>
+    </ClCompile>
+    <ClCompile Include="CPlayerMoving.cpp">
+      <Filter>헤더 파일\PlayerState</Filter>
+    </ClCompile>
+    <ClCompile Include="CStatePlayer.cpp">
+      <Filter>헤더 파일\PlayerState</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

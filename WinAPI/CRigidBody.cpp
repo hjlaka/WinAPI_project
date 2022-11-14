@@ -289,6 +289,34 @@ void CRigidBody::WallCollisionExit(CCollider* myCollider, CCollider* pOtherColli
 		//m_pRigid->SetDirSpeed(Dir::RIGHT, 1);
 		SetCollisionConunt(Dir::RIGHT, -1);
 }
+void CRigidBody::WallCollisionStay(CCollider* myCollider, CCollider* pOtherCollider)
+{
+	
+	Vector wallPos = pOtherCollider->GetPos();
+	Vector myPos = myCollider->GetPos();
+	Vector wallScale = pOtherCollider->GetScale();
+	Vector myScale = myCollider->GetScale();
+
+	//타일과 부딪혔는데
+	//타일의 꼭대기보다 유닛이 위에, 혹은 타일의 바닥보다 유닛이 아래에 있다면
+
+	if (myPos.y + myScale.y * 0.5f > wallPos.y - wallScale.y * 0.5f + 5.f  &&
+		myPos.y - myScale.y * 0.5f < wallPos.y + wallScale.y * 0.5f - 5.f)
+	{
+		Logger::Debug(L"벽충돌");
+		// 유닛이 벽보다 오른쪽에 있다면
+		if (myPos.x - myScale.x * 0.5f > wallPos.x + wallScale.x * 0.5f - 3.f)
+		{
+			myCollider->GetOwner()->SetPos(wallPos.x + (wallScale.x + myScale.x) * 0.5f, myPos.y);
+		}
+		else if (myPos.x + myScale.x * 0.5f < wallPos.x - wallScale.x * 0.5f + 3.f)
+		{
+			myCollider->GetOwner()->SetPos(wallPos.x - (wallScale.x + myScale.x) * 0.5f, myPos.y);
+		}
+	}
+
+
+}
 void CRigidBody::SetDirectionX(int dirX)
 {
 	if (dirX > 0)
