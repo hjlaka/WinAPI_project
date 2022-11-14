@@ -6,7 +6,7 @@
 
 CRigidBody::CRigidBody()
 {
-	m_fGravity = 1080.f;
+	m_fGravity = 1180.f;
 	m_bIsGravity = true;
 	m_fSpeed = 200.f;
 	m_fMultiSpeed = 1.f;		// 대쉬 속도 등

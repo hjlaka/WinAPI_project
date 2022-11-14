@@ -7,7 +7,7 @@ class CRigidBody;
 class CStatePlayer;
 class CPlayerJumping;
 
-enum class State {IDLE, ATTACKA, ATTACKB, MOVE, DASH, JUMP, JUMPATTACK};
+enum class STATE {IDLE, ATTACKA, ATTACKB, MOVE, DASH, JUMP, JUMPATTACK};
 
 class CPlayer : public CUnit
 {
@@ -19,6 +19,7 @@ public:
 
 public:
 	CStatePlayer* m_pPlayerState;
+	STATE m_state;
 
 private:
 	CAnimator* m_pAnimator;
@@ -36,6 +37,7 @@ private:
 	
 	bool m_bIsMove;
 	bool m_bIsAttack;
+	bool m_bAttackContinue;
 	int m_iAttackCount;
 	bool m_bOverPeak;
 	bool m_bIsDash;
@@ -50,7 +52,7 @@ private:
 
 	float m_fDashClock;
 
-	State m_state;
+	
 
 
 
