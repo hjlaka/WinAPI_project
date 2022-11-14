@@ -11,6 +11,7 @@ public:
 
 private:
 	CImage* m_pBGImg;
+	float m_fZPos;
 	// z°ª Ãß°¡
 
 	float m_fStartX;
@@ -18,6 +19,7 @@ private:
 
 public:
 	void SetImage(CImage* bgImg);
+	void SetZPos(float zPos);
 
 	float GetStartX();
 	float GetEndX();

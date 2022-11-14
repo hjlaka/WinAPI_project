@@ -9,6 +9,7 @@ CBackGround::CBackGround()
 
 	m_fStartX = 0;
 	m_fEndX = 0;
+	m_fZPos = 0;
 }
 
 CBackGround::~CBackGround()
@@ -20,6 +21,11 @@ void CBackGround::SetImage(CImage* bgImg)
 	m_pBGImg = bgImg;
 	m_fStartX = m_vecPos.x;
 	m_fEndX = m_vecPos.x + m_pBGImg->GetWidth();
+}
+
+void CBackGround::SetZPos(float zPos)
+{
+	m_fZPos = zPos;
 }
 
 float CBackGround::GetStartX()
@@ -38,10 +44,21 @@ void CBackGround::Init()
 
 void CBackGround::Update()
 {
+	//Z값에 따라서 카메라와 함께 움직인다.
+
+	if (m_pBGImg != nullptr && m_fZPos > 0)
+	{
+		m_vecPos = Vector(CAMERA->GetLookAt().x * m_fZPos, (m_vecPos.y + CAMERA->GetLookAt().y) * -0.001f) + Vector(WINSIZEX * -0.5f, WINSIZEY * 0.25f);
+	}
+	
 }
 
 void CBackGround::Render()
 {
+
+	
+	/*if(m_fZPos == 0)
+		return;*/
 	// 배경이미지 표현 갱신
 	if (nullptr != m_pBGImg)
 	{
