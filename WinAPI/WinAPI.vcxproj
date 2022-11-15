@@ -192,6 +192,7 @@
     <ClInclude Include="CUIHpMonster.h" />
     <ClInclude Include="CUIManager.h" />
     <ClInclude Include="CUIHp.h" />
+    <ClInclude Include="CUISkill.h" />
     <ClInclude Include="CUnit.h" />
     <ClInclude Include="CWallTile.h" />
     <ClInclude Include="framework.h" />
@@ -257,6 +258,7 @@
     <ClCompile Include="CUIHpMonster.cpp" />
     <ClCompile Include="CUIManager.cpp" />
     <ClCompile Include="CUIHp.cpp" />
+    <ClCompile Include="CUISkill.cpp" />
     <ClCompile Include="CUnit.cpp" />
     <ClCompile Include="CWallTile.cpp" />
     <ClCompile Include="WinAPI.cpp" />

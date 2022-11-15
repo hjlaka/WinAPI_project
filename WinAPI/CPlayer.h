@@ -1,5 +1,6 @@
 #pragma once
 #include "CUnit.h"
+#include "Skill.h"
 
 class CImage;
 class CAnimator;
@@ -59,19 +60,28 @@ private:
 	float m_fDashClock;
 
 
+protected:
 	// ½ºÅ³
-
+	SkillInfo m_skillA;
+	SkillInfo m_skillS;
 
 	int m_iSkillCount;
 
+	float m_fSkillACoolClock;
+	float m_fSkillSCoolClock;
+
 protected:
+	virtual void SkillSetUp() {};
 	virtual void SkillA() {};
 	virtual void SkillS() {};
+	//virtual void SkillAction(SkillInfo skill) {};
+
+	void UpdateSkill();
 
 
 
 
-private:
+protected:
 	void Init() override;
 	void Update() override;
 	void Render() override;

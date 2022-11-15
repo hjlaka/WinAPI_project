@@ -22,6 +22,7 @@ void CCollisionManager::Init()
 	CheckLayer(Layer::Tile, Layer::Monster);
 	CheckLayer(Layer::Tile, Layer::Player);
 	CheckLayer(Layer::PlayerAttack, Layer::Monster);
+	CheckLayer(Layer::PlayerAttack, Layer::Tile);
 }
 
 void CCollisionManager::Update()

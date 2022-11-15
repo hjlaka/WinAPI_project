@@ -54,8 +54,15 @@ CPlayer::CPlayer()
 
 	//
 
-	m_iSkillCount = 2;
+	SkillInfo skillEmpty;
+	skillEmpty.state = SKILL_STATE::NONE;
 
+	m_skillA = skillEmpty;
+	m_skillS = skillEmpty;
+
+	m_iSkillCount = 2;
+	m_fSkillACoolClock = 0;
+	m_fSkillSCoolClock = 0;
 
 	//
 
@@ -75,6 +82,12 @@ CPlayer::~CPlayer()
 {
 	if (nullptr != m_pPlayerState)
 		delete m_pPlayerState;
+}
+
+void CPlayer::UpdateSkill()
+{
+	m_skillA.UpdateCool();
+	m_skillS.UpdateCool();
 }
 
 void CPlayer::Init()
@@ -159,6 +172,8 @@ void CPlayer::Init()
 	m_pRigid = new CRigidBody;
 	AddComponent(m_pRigid);
 	m_bIsRigidBody = true;
+
+	SkillSetUp();
 
 
 }
@@ -383,6 +398,7 @@ void CPlayer::Update()
 	}
 
 	UpdateInState();
+	UpdateSkill();
 
 	AnimatorUpdate();
 }

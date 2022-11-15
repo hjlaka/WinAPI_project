@@ -21,8 +21,8 @@ private:
 	virtual void Render() override;
 	virtual void Release() override;
 
-	void OnCollisionEnter(CCollider* pOtherCollider) override;
-	void OnCollisionStay(CCollider* pOtherCollider) override;
-	void OnCollisionExit(CCollider* pOtherCollider) override;
+	virtual void OnCollisionEnter(CCollider* pOtherCollider) override;
+	virtual void OnCollisionStay(CCollider* pOtherCollider) override;
+	virtual void OnCollisionExit(CCollider* pOtherCollider) override;
 };
 

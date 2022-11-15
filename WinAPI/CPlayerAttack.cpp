@@ -30,6 +30,7 @@ void CPlayerAttack::Init()
 void CPlayerAttack::Update()
 {
 	CAttack::Update();
+
 }
 
 void CPlayerAttack::Render()

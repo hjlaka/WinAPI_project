@@ -44,6 +44,7 @@ void CAttack::Update()
 	else
 	{
 		DELETEOBJECT(this);
+		Logger::Debug(L"삭제되었어");
 	}
 }
 

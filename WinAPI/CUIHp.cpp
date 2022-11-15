@@ -5,11 +5,7 @@
 
 CUIHp::CUIHp()
 {
-	//m_iHp = 0;
-	//m_iCurHp = 0;
 	m_layer = Layer::Ui;
-	//m_bScreenFixed = true;
-
 	m_fHpRate = 1.f;
 }
 
