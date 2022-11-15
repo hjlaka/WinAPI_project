@@ -2,6 +2,7 @@
 #include "framework.h"
 
 class CUnit;
+class CGameObject;
 
 enum class SKILL_STATE {NONE, COOLING, READY};
 
@@ -12,8 +13,9 @@ struct SkillInfo
 	float fCurCool;
 	SKILL_STATE state;
 	wstring strDescription;
+	//CGameObject* pObj;	
 
-	SkillInfo() { strName = L""; fCool = 0; fCurCool = 0; state = SKILL_STATE::NONE; strDescription = L""; }
+	SkillInfo() { strName = L""; fCool = 0; fCurCool = 0; state = SKILL_STATE::NONE; strDescription = L"";  }
 
 	void UseSkill()
 	{
@@ -41,5 +43,15 @@ struct SkillInfo
 				
 		}
 		
+	}
+
+	void ReadySkill()
+	{
+		if (SKILL_STATE::NONE == state)
+			return;
+
+		state = SKILL_STATE::READY;
+		fCurCool = 0;
+
 	}
 };

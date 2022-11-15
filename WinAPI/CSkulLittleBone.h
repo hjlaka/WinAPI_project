@@ -32,6 +32,11 @@ public:
 
 private:
 
+	void ReturnHead();
+
+
+private:
+
 	void SkillSetUp() override;
 	void SkillA() override;
 	void SkillS() override;
@@ -40,7 +45,10 @@ private:
 private:
 
 	void Init() override;
+	void Update() override;
 	void Render() override;
+
+	void OnCollisionEnter(CCollider* pOtherCollider) override;
 
 };
 

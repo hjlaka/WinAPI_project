@@ -35,9 +35,7 @@ CSceneStage01::~CSceneStage01()
 
 void CSceneStage01::Init()
 {
-	
 
-	
 
 	CBackGround* pBG1 = new CBackGround;
 	pBG1->SetImage(RESOURCE->LoadImg(L"BGStage01_1", L"Image\\stage01_1.png"));

@@ -14,8 +14,11 @@ private:
 public:
 	CRigidBody* GetRigidBody();
 
+public:
+	void HeadInit();
+
 private:
-	//void Init() override;
+	void Init() override;
 	void Update() override;
 	//void Render() override;
 	//void Release() override;

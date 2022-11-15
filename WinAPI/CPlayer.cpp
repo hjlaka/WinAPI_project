@@ -178,7 +178,6 @@ void CPlayer::Init()
 	AddComponent(m_pRigid);
 	m_bIsRigidBody = true;
 
-	SkillSetUp();
 
 
 }

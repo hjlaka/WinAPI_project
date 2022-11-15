@@ -3,13 +3,14 @@
 
 CShootedHead::CShootedHead()
 {
+	m_strName = L"내 두개골";
 	m_fAttack = 15.f;
 	m_fDuration = 0.f;
 
 	m_pRigid = new CRigidBody;
 	AddComponent(m_pRigid);
-	m_pRigid->SetIsGravity(false);
-	m_pRigid->SetIsFrictional(false);
+	
+	
 }
 
 CShootedHead::~CShootedHead()
@@ -21,6 +22,21 @@ CRigidBody* CShootedHead::GetRigidBody()
 	return m_pRigid;
 }
 
+void CShootedHead::HeadInit()
+{
+	Logger::Debug(L"머리 초기화");
+	m_pRigid->SetIsGravity(false);
+	m_pRigid->SetIsFrictional(false);
+	m_vecPos = Vector(-100, -100);
+}
+
+void CShootedHead::Init()
+{
+	CPlayerAttack::Init();
+
+	HeadInit();
+}
+
 void CShootedHead::Update()
 {
 	
@@ -28,14 +44,12 @@ void CShootedHead::Update()
 	{
 		m_fDuration -= DT;
 	}
-	
 
-	Logger::Debug(to_wstring(m_fDuration));
-
-	/*if (m_fDuration < 0)
+	if (m_fDuration <= 0)
 	{
-		DELETEOBJECT(this);
-	}*/
+		HeadInit();
+		//DELETEOBJECT(this);
+	}
 }
 
 void CShootedHead::OnCollisionEnter(CCollider* pOtherCollider)
@@ -57,10 +71,6 @@ void CShootedHead::OnCollisionEnter(CCollider* pOtherCollider)
 		m_pRigid->SetIsFrictional(true);
 		m_pRigid->PowerToX(-20.f);
 		m_pRigid->WallCollisionEnter(GetCollider(), pOtherCollider);
-
-	}
-	else if (pOtherCollider->GetObjName() == L"Player")
-	{
 
 	}
 }
