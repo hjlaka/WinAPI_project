@@ -237,6 +237,12 @@
     <ClInclude Include="CStatePlayer.h">
       <Filter>헤더 파일\PlayerState</Filter>
     </ClInclude>
+    <ClInclude Include="CShootedHead.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="CSkullLittleBone.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinAPI.cpp">
@@ -400,6 +406,12 @@
     </ClCompile>
     <ClCompile Include="CStatePlayer.cpp">
       <Filter>헤더 파일\PlayerState</Filter>
+    </ClCompile>
+    <ClCompile Include="CShootedHead.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="CSkullLittleBone.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

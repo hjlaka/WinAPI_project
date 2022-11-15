@@ -12,6 +12,16 @@ CPlayerAttack::~CPlayerAttack()
 {
 }
 
+float CPlayerAttack::GetAttack()
+{
+	return m_fAttack;
+}
+
+void CPlayerAttack::SetAttack(float attack)
+{
+	m_fAttack = attack;
+}
+
 void CPlayerAttack::Init()
 {
 	AddCollider(ColliderType::Rect, Vector(10, 10), Vector(0, 0));

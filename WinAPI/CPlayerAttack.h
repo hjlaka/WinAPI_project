@@ -6,11 +6,20 @@ public:
 	CPlayerAttack();
 	virtual ~CPlayerAttack();
 
+protected:
+	float m_fAttack;
+
+public:
+	float GetAttack();
+	void SetAttack(float attack);
+
+
+
 private:
-	void Init() override;
-	void Update() override;
-	void Render() override;
-	void Release() override;
+	virtual void Init() override;
+	virtual void Update() override;
+	virtual void Render() override;
+	virtual void Release() override;
 
 	void OnCollisionEnter(CCollider* pOtherCollider) override;
 	void OnCollisionStay(CCollider* pOtherCollider) override;
