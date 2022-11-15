@@ -8,6 +8,7 @@ CRigidBody::CRigidBody()
 {
 	m_fGravity = 1180.f;
 	m_bIsGravity = true;
+	m_bIsFrictional = true;
 	m_fSpeed = 200.f;
 	m_fMultiSpeed = 1.f;		// 대쉬 속도 등
 
@@ -33,6 +34,11 @@ bool CRigidBody::GetIsGravity()
 	return m_bIsGravity;
 }
 
+bool CRigidBody::GetIsFrictional()
+{
+	return m_bIsFrictional;
+}
+
 int CRigidBody::GetGroundCount()
 {
 	return m_arrCollisionCount[(int)Dir::DOWN];
@@ -55,6 +61,11 @@ void CRigidBody::SetIsGravity(bool isGravity)
 	m_bIsGravity = isGravity;
 }
 
+void CRigidBody::SetIsFrictional(bool isFrictional)
+{
+	m_bIsFrictional = isFrictional;
+}
+
 void CRigidBody::SetGravitySpeed(float speed)
 {
 	m_vecVelocity.y = speed;
@@ -68,29 +79,33 @@ void CRigidBody::Init()
 void CRigidBody::Update()
 {
 
-	if (m_vecForce.Magnitude() > 1.f)
+	if (m_bIsFrictional)
 	{
-		m_vecForce += m_vecForce.Normalized() * -1 * m_fFriction * DT;
-	}
-	else
-	{
-		m_vecForce = Vector(0, 0);
+		if (m_vecForce.Magnitude() > 0.f)
+		{
+			m_vecForce += m_vecForce.Normalized() * -1 * m_fFriction * DT;
+			if(m_vecForce.Magnitude() < 1.f)
+				m_vecForce = Vector(0, 0);
+		}
+
+
+
+
+		if (m_vecVelocity.x > 0)
+		{
+			m_vecVelocity.x -= m_fFriction * DT;			// 항시 작용한다?
+			if (m_vecVelocity.x < 1.f)
+				m_vecVelocity.x = 0;
+		}
+		else if (m_vecVelocity.x < 0)
+		{
+			m_vecVelocity.x += m_fFriction * DT;
+			if (m_vecVelocity.x > -1.f)
+				m_vecVelocity.x = 0;
+		}
+
 	}
 	
-
-
-	if (m_vecVelocity.x > 1.f)
-	{
-		m_vecVelocity.x -= m_fFriction * DT;			// 항시 작용한다?
-	}
-	else if (m_vecVelocity.x < 1.f)
-	{
-		m_vecVelocity.x += m_fFriction * DT;
-	}
-	else
-	{
-		m_vecVelocity.x = 0;
-	}
 
 
 	if (m_bIsGravity)			// 중력을 받는 물체라면?
@@ -140,7 +155,8 @@ void CRigidBody::Power(Vector force)
 void CRigidBody::Render()
 {
 	if (isUpDownCol)
-		RENDER->Text(L"상하충돌중", GetOwner()->GetPos().x, GetOwner()->GetPos().y, GetOwner()->GetPos().x + 100, GetOwner()->GetPos().y + 100);
+		RENDER->Text(L"상하충돌중", GetOwner()->GetPos().x, GetOwner()->GetPos().y - 20 , GetOwner()->GetPos().x + 100, GetOwner()->GetPos().y + 80);
+	RENDER->Text(L"좌우 속도:" + to_wstring(m_vecVelocity.x), GetOwner()->GetPos().x, GetOwner()->GetPos().y + 0, GetOwner()->GetPos().x + 100, GetOwner()->GetPos().y + 100);
 	RENDER->Text(L"중력값:" + to_wstring(m_vecVelocity.y), GetOwner()->GetPos().x, GetOwner()->GetPos().y + 20, GetOwner()->GetPos().x + 100, GetOwner()->GetPos().y + 120);
 	RENDER->Text(L"힘 값:" + to_wstring(m_vecForce.x) + L", " + to_wstring(m_vecForce.y), GetOwner()->GetPos().x, GetOwner()->GetPos().y + 40, GetOwner()->GetPos().x + 100, GetOwner()->GetPos().y + 140);
 }
@@ -162,6 +178,11 @@ void CRigidBody::SetSpeed(float spd)
 void CRigidBody::SetMultiSpeed(float spd)
 {
 	m_fMultiSpeed = spd;
+}
+
+void CRigidBody::SetFriction(float friction)
+{
+	m_fFriction = friction;
 }
 
 void CRigidBody::SetDirSpeed(Dir dir, float spd)

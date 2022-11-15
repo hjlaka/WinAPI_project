@@ -23,6 +23,8 @@ private:
 	float m_fGravity;
 
 	bool m_bIsGravity;
+	bool m_bIsFrictional;
+
 	bool m_bIsOnGround;
 	UINT m_uiNotBlockingCount;
 
@@ -44,16 +46,19 @@ private:
 public:
 
 	bool GetIsGravity();
+	bool GetIsFrictional();
 	int GetGroundCount();
 	float GetGravitySpeed();
 	int GetCollisionCont(Dir dir);
 
 	void SetIsGravity(bool isGravity);
+	void SetIsFrictional(bool isFrictional);
 	void SetGravitySpeed(float speed);
 	void SetDirectionX(int dirX);
 	void SetDirectionY(int dirY);
 	void SetSpeed(float spd);
 	void SetMultiSpeed(float spd);
+	void SetFriction(float friction);
 
 	void SetDirSpeed(Dir dir, float spd);
 	void SetCollisionConunt(Dir dir, int value);
