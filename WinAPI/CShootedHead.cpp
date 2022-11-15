@@ -7,10 +7,16 @@ CShootedHead::CShootedHead()
 
 	m_pRigid = new CRigidBody;
 	AddComponent(m_pRigid);
+	m_pRigid->SetIsGravity(false);
 }
 
 CShootedHead::~CShootedHead()
 {
+}
+
+CRigidBody* CShootedHead::GetRigidBody()
+{
+	return m_pRigid;
 }
 
 void CShootedHead::Init()

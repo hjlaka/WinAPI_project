@@ -8,7 +8,11 @@ public:
 	virtual ~CShootedHead();
 
 private:
+	Vector m_vecDir;
 	CRigidBody* m_pRigid;
+
+public:
+	CRigidBody* GetRigidBody();
 
 private:
 	void Init() override;

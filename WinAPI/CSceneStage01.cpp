@@ -10,6 +10,7 @@
 #include "CPathManager.h"
 
 #include "CPlayer.h"
+#include "CSkulLittleBone.h"
 #include "CMonster01.h"
 #include "CCameraController.h"
 #include "CButton.h"
@@ -61,7 +62,7 @@ void CSceneStage01::Init()
 
 	
 
-	pPlayer = new CPlayer;
+	pPlayer = new CSkulLittleBone;
 	pPlayer->SetPos(200, WINSIZEY * 0.5f);
 	pPlayer->SetImgRate(1.2f);
 	AddGameObject(pPlayer);

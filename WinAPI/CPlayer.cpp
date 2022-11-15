@@ -38,6 +38,7 @@ CPlayer::CPlayer()
 	m_bIsDash = false;
 	m_bAttackContinue = false;
 
+	m_fAttackContinue = 0;
 	
 	m_fFallTime = 0;
 	m_fAttackATime = 0;
@@ -48,6 +49,13 @@ CPlayer::CPlayer()
 	m_pPlayerState = nullptr;
 	m_state = STATE::IDLE;
 
+	m_curSkulType = SKUL_TYPE::LITTLE_BONE;
+	m_subSkulType = SKUL_TYPE::HUNTER;
+
+	//
+
+	m_iSkillCount = 2;
+
 
 	//
 
@@ -57,6 +65,9 @@ CPlayer::CPlayer()
 	m_iAtt = 10;
 
 	m_fSpeed = 300.f;
+
+
+	//
 
 }
 
@@ -159,7 +170,7 @@ void CPlayer::Update()
 	m_bIsDash = false;
 
 
-	Logger::Debug(L"x, y: " + to_wstring(m_vecPos.x) + L", " + to_wstring(m_vecPos.y));
+	//Logger::Debug(L"x, y: " + to_wstring(m_vecPos.x) + L", " + to_wstring(m_vecPos.y));
 	
 	
 	m_vecMoveDir.x = 0;
@@ -271,6 +282,25 @@ void CPlayer::Update()
 			
 		}
 	}
+	else if (m_fAttackContinue > 0)	// 공격중은 아니나 연속 공격 타이머가 돌아가고 있을때
+	{
+		m_fAttackContinue -= DT;
+		//if (BUTTONDOWN('X'))
+		//{
+		//	if (m_state == STATE::ATTACKA)
+		//	{
+		//		m_fAttackATime = 0.5f;
+		//		m_bAttackContinue = false;
+		//	}
+		//	else if (m_state == STATE::ATTACKB)
+		//	{
+		//		m_fAttackBTime = 0.4f;
+		//		m_bAttackContinue = false;
+		//	}
+
+		//}
+
+	}
 	else if (BUTTONDOWN('X'))
 	{
 		m_state = STATE::ATTACKA;
@@ -294,6 +324,21 @@ void CPlayer::Update()
 	}
 
 
+	if (BUTTONDOWN('A'))
+	{
+		// 던지기 공격
+		SkillA();
+	}
+
+
+
+	if (BUTTONDOWN(VK_SPACE))
+	{
+		Logger::Debug(L"스컬 변경");
+		SKUL_TYPE temp = m_curSkulType;
+		m_curSkulType = m_subSkulType;
+		m_subSkulType = temp;
+	}
 
 
 
@@ -356,6 +401,8 @@ void CPlayer::Render()
 	RENDERMESSAGE(to_wstring(GetCollider()->GetPos().y));
 
 	RENDER->FillCircle(GetCollider()->GetPos().x, GetCollider()->GetPos().y, 5.f);
+
+	RENDER->Text(L"스컬:" + to_wstring((int)m_curSkulType), GetPos().x, GetPos().y + 80, GetPos().x + 100, GetPos().y + 180);
 
 
 }

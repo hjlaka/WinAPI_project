@@ -8,6 +8,7 @@ class CStatePlayer;
 class CPlayerJumping;
 
 enum class STATE {IDLE, ATTACKA, ATTACKB, MOVE, DASH, JUMP, JUMPATTACK};
+enum class SKUL_TYPE {LITTLE_BONE, HUNTER};
 
 class CPlayer : public CUnit
 {
@@ -22,6 +23,9 @@ public:
 	STATE m_state;
 
 private:
+	SKUL_TYPE m_curSkulType;
+	SKUL_TYPE m_subSkulType;
+
 	CAnimator* m_pAnimator;
 	CImage* m_pIdleImage;
 	CImage* m_pMoveImage;
@@ -44,6 +48,8 @@ private:
 	UINT m_iJumpCount;
 
 
+	float m_fAttackContinue;		// 후속 공격으로 연계되는 시간
+
 	float m_fFallTime;
 	float m_fAttackATime;
 	float m_fAttackBTime;
@@ -52,7 +58,15 @@ private:
 
 	float m_fDashClock;
 
-	
+
+	// 스킬
+
+
+	int m_iSkillCount;
+
+protected:
+	virtual void SkillA() {};
+	virtual void SkillS() {};
 
 
 

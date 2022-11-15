@@ -240,8 +240,11 @@
     <ClInclude Include="CShootedHead.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="CSkullLittleBone.h">
+    <ClInclude Include="CSkulLittleBone.h">
       <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Skill.h">
+      <Filter>Util</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -410,7 +413,7 @@
     <ClCompile Include="CShootedHead.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="CSkullLittleBone.cpp">
+    <ClCompile Include="CSkulLittleBone.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

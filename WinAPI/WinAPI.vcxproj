@@ -179,7 +179,7 @@
     <ClInclude Include="CSceneTitle.h" />
     <ClInclude Include="CImage.h" />
     <ClInclude Include="CShootedHead.h" />
-    <ClInclude Include="CSkullLittleBone.h" />
+    <ClInclude Include="CSkulLittleBone.h" />
     <ClInclude Include="CSmoke.h" />
     <ClInclude Include="CSound.h" />
     <ClInclude Include="CSoundManager.h" />
@@ -201,6 +201,7 @@
     <ClInclude Include="Struct.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="WinAPI.h" />
+    <ClInclude Include="Skill.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CAnimation.cpp" />
@@ -243,7 +244,7 @@
     <ClCompile Include="CSceneTitle.cpp" />
     <ClCompile Include="CImage.cpp" />
     <ClCompile Include="CShootedHead.cpp" />
-    <ClCompile Include="CSkullLittleBone.cpp" />
+    <ClCompile Include="CSkulLittleBone.cpp" />
     <ClCompile Include="CSmoke.cpp" />
     <ClCompile Include="CSound.cpp" />
     <ClCompile Include="CSoundManager.cpp" />
