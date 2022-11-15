@@ -16,8 +16,6 @@ CUIHp::~CUIHp()
 void CUIHp::SetOwner(CUnit* pOwner)
 {
 	m_pOwner = pOwner;
-	/*m_iHp = m_pOwner->GetHp();
-	m_iCurHp = m_pOwner->GetCurHp();*/
 }
 
 void CUIHp::Init()

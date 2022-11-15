@@ -19,8 +19,10 @@
 
 #include "CUIHp.h"
 #include "CUIHpMonster.h"
+#include "CUISkill.h"
 
 #include "CGameManager.h"
+#include "Skill.h"
 
 CSceneStage01::CSceneStage01()
 {
@@ -83,6 +85,13 @@ void CSceneStage01::Init()
 	pMonsterUI->SetOwner(pMonster);
 	pMonsterUI->SetScale(Vector(80.f, 10.f));
 	AddGameObject(pMonsterUI);
+
+	CUISkill* pPlayerSkillUI = new CUISkill;
+	pPlayerSkillUI->SetPos(100.f, WINSIZEY * 0.8f - 100.f);
+	pPlayerSkillUI->SetScale(Vector(50.f, 50.f));
+	
+	pPlayerSkillUI->SetLinkedValue(pPlayer->GetSkillA());
+	AddGameObject(pPlayerSkillUI);
 
 
 	CCameraController* pCamController = new CCameraController;

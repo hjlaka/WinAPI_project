@@ -90,6 +90,11 @@ void CPlayer::UpdateSkill()
 	m_skillS.UpdateCool();
 }
 
+SkillInfo* CPlayer::GetSkillA()
+{
+	return &m_skillA;
+}
+
 void CPlayer::Init()
 {
 

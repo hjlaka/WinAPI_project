@@ -78,6 +78,9 @@ protected:
 
 	void UpdateSkill();
 
+public:
+	SkillInfo* GetSkillA();
+
 
 
 
