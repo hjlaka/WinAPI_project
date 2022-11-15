@@ -37,6 +37,8 @@ void CSceneStage01::Init()
 {
 	
 
+	
+
 	CBackGround* pBG1 = new CBackGround;
 	pBG1->SetImage(RESOURCE->LoadImg(L"BGStage01_1", L"Image\\stage01_1.png"));
 	pBG1->SetPos(0, 0);
@@ -62,8 +64,22 @@ void CSceneStage01::Init()
 	GAME->SetBGEndX(pBG->GetEndX());
 
 
-	
 
+
+	
+	
+	
+}
+
+void CSceneStage01::Enter()
+{
+	CAMERA->FadeIn(0.25f);
+	LoadTile(GETPATH + L"Tile\\Stage01.tile");
+	//LoadBackGroundImage(GETPATH + L"Stage01_map.png");
+
+
+	//CAMERA->SetTargetObj(pPlayer);
+	
 	pPlayer = new CSkulLittleBone;
 	pPlayer->SetPos(200, WINSIZEY * 0.5f);
 	pPlayer->SetImgRate(1.2f);
@@ -89,7 +105,7 @@ void CSceneStage01::Init()
 	CUISkill* pPlayerSkillUI = new CUISkill;
 	pPlayerSkillUI->SetPos(100.f, WINSIZEY * 0.8f - 100.f);
 	pPlayerSkillUI->SetScale(Vector(50.f, 50.f));
-	
+
 	pPlayerSkillUI->SetLinkedValue(pPlayer->GetSkillA());
 	AddGameObject(pPlayerSkillUI);
 
@@ -97,18 +113,6 @@ void CSceneStage01::Init()
 	CCameraController* pCamController = new CCameraController;
 	AddGameObject(pCamController);
 
-	
-	
-}
-
-void CSceneStage01::Enter()
-{
-	CAMERA->FadeIn(0.25f);
-	LoadTile(GETPATH + L"Tile\\Stage01.tile");	
-	//LoadBackGroundImage(GETPATH + L"Stage01_map.png");
-	
-
-	//CAMERA->SetTargetObj(pPlayer);
 }
 
 void CSceneStage01::Update()
@@ -149,6 +153,11 @@ void CSceneStage01::Render()
 
 void CSceneStage01::Exit()
 {
+
+	// 현재씬에 추가된 오브젝트들 삭제.
+
+	DeleteAll();
+
 }
 
 void CSceneStage01::Release()

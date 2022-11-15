@@ -2,6 +2,7 @@
 #include "CPlayer.h"
 #include "Skill.h"
 
+class CShootedHead;
 
 
 
@@ -19,6 +20,7 @@ public:
 private:
 	bool m_bHeadOn;
 	Vector m_vecHeadPos;
+	CShootedHead* m_pHead;
 
 public:
 
@@ -37,6 +39,7 @@ private:
 
 private:
 
+	void Init() override;
 	void Render() override;
 
 };

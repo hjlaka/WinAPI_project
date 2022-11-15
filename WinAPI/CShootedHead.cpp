@@ -4,7 +4,7 @@
 CShootedHead::CShootedHead()
 {
 	m_fAttack = 15.f;
-	m_fDuration = 6.f;
+	m_fDuration = 0.f;
 
 	m_pRigid = new CRigidBody;
 	AddComponent(m_pRigid);
@@ -23,14 +23,19 @@ CRigidBody* CShootedHead::GetRigidBody()
 
 void CShootedHead::Update()
 {
-	m_fDuration -= DT;
+	
+	if (m_fDuration > 0)
+	{
+		m_fDuration -= DT;
+	}
+	
 
 	Logger::Debug(to_wstring(m_fDuration));
 
-	if (m_fDuration < 0)
+	/*if (m_fDuration < 0)
 	{
 		DELETEOBJECT(this);
-	}
+	}*/
 }
 
 void CShootedHead::OnCollisionEnter(CCollider* pOtherCollider)
@@ -52,6 +57,10 @@ void CShootedHead::OnCollisionEnter(CCollider* pOtherCollider)
 		m_pRigid->SetIsFrictional(true);
 		m_pRigid->PowerToX(-20.f);
 		m_pRigid->WallCollisionEnter(GetCollider(), pOtherCollider);
+
+	}
+	else if (pOtherCollider->GetObjName() == L"Player")
+	{
 
 	}
 }

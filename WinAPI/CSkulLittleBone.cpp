@@ -5,20 +5,20 @@
 
 CSkulLittleBone::CSkulLittleBone()
 {
+	m_pHead = nullptr;
 }
 
 CSkulLittleBone::~CSkulLittleBone()
 {
 }
 
-bool CSkulLittleBone::GetHeadOn()
+void CSkulLittleBone::Init()
 {
-	return m_bHeadOn;
-}
-
-void CSkulLittleBone::SetHeadOn(bool headOn)
-{
-	m_bHeadOn = headOn;
+	CPlayer::Init();
+	m_pHead = new CShootedHead;
+	m_pHead->SetOwner(this);
+	m_pHead->SetPos(GetPos());
+	ADDOBJECT(m_pHead);
 }
 
 void CSkulLittleBone::SkillSetUp()
@@ -41,16 +41,25 @@ void CSkulLittleBone::SkillSetUp()
 	m_skillS = skillHeadIsI;
 }
 
+bool CSkulLittleBone::GetHeadOn()
+{
+	return m_bHeadOn;
+}
+
+void CSkulLittleBone::SetHeadOn(bool headOn)
+{
+	m_bHeadOn = headOn;
+}
+
+
+
 void CSkulLittleBone::SkillA()
 {
 	if (m_skillA.state == SKILL_STATE::READY)
 	{
-		CShootedHead* head = new CShootedHead;
-		head->SetPos(GetPos());
-
-		head->GetRigidBody()->PowerToX(m_vecLookDir.x * 400.f);
-		head->SetOwner(this);
-		ADDOBJECT(head);
+		m_pHead->SetPos(GetPos());
+		m_pHead->SetAttackDuration(6.0f);
+		m_pHead->GetRigidBody()->PowerToX(m_vecLookDir.x * 400.f);
 
 		m_bHeadOn = false;
 		m_skillA.UseSkill();
@@ -62,15 +71,23 @@ void CSkulLittleBone::SkillA()
 
 void CSkulLittleBone::SkillS()
 {
+	if (m_skillA.state == SKILL_STATE::READY)
+	{
+		
+	}
 }
 
 //void CSkulLittleBone::SkillAction()
 //{
 //}
 
+
+
 void CSkulLittleBone::Render()
 {
 	CPlayer::Render();
+	RENDER->Text(L"플레이어 위치:" + to_wstring((int)GetPos().x) + L", " + to_wstring((int)GetPos().y), GetPos().x, GetPos().y + 90, GetPos().x + 200, GetPos().y + 190);
 	RENDER->Text(L"머리 상태:" + to_wstring((int)m_bHeadOn), GetPos().x, GetPos().y + 100, GetPos().x + 100, GetPos().y + 200);
+	RENDER->Text(L"머리 위치:" + to_wstring((int)m_pHead->GetPos().x) + L", " + to_wstring((int)m_pHead->GetPos().y), GetPos().x, GetPos().y + 110, GetPos().x + 200, GetPos().y + 210);
 	RENDER->Text(L"스킬A쿨:" + to_wstring((int)m_skillA.fCurCool), GetPos().x, GetPos().y + 120, GetPos().x + 100, GetPos().y + 220);
 }

@@ -33,8 +33,12 @@ struct SkillInfo
 		{
 			fCurCool -= DT;
 
-			if(fCurCool <= 0)
+			if (fCurCool <= 0)
+			{
 				state = SKILL_STATE::READY;
+				fCurCool = 0;
+			}
+				
 		}
 		
 	}
