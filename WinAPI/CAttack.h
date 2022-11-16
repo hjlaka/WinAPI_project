@@ -3,6 +3,8 @@
 
 class CUnit;
 
+enum class ATTACK_TYPE { MELEE, RANGED };
+
 class CAttack : public CGameObject
 {
 public:
@@ -14,8 +16,12 @@ protected:
 	CUnit* m_pOwner;		// 공격 주인
 	float m_fDuration;		// 공격 지속시간
 	Vector m_vecOffset;		// 공격 위치 조정값
+	ATTACK_TYPE	m_type;		// 공격 타입
 
 public:
+
+	ATTACK_TYPE GetAttackType();
+	CUnit* GetOwner();
 
 	void SetOwner(CUnit* owner);
 	void SetAttackDuration(float duration);

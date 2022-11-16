@@ -1,5 +1,6 @@
 #pragma once
 #include "CGameObject.h"
+#include "CAttack.h"
 
 class CRigidBody;
 

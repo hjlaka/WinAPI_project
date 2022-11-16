@@ -87,8 +87,19 @@ void CMonster01::OnCollisionEnter(CCollider* pOtherCollider)
 		Logger::Debug(L"몬스터 피격");
 		//m_vecPos += (GetCollider()->GetPos() - pOtherCollider->GetPos()).Normalized() * 10;
 		//m_pRigid->Power((GetCollider()->GetPos() - pOtherCollider->GetPos()).Normalized() * 150);
-		Vector diff = (GetCollider()->GetPos() - pOtherCollider->GetPos());
-		m_pRigid->Power( Vector(diff.Normalized().x * 1, 0)); //diff.Normalized().y * 10
+
+		CAttack* pAttack = (CAttack*)(pOtherCollider->GetOwner());
+
+		if (pAttack->GetAttackType() == ATTACK_TYPE::RANGED)
+		{
+			Vector diff = (GetCollider()->GetPos() - pOtherCollider->GetPos());
+			m_pRigid->Power(diff.Normalized() * 3.f); //diff.Normalized().y * 10
+		}
+		else if (pAttack->GetAttackType() == ATTACK_TYPE::MELEE)
+		{
+			m_pRigid->Power(Vector(pAttack->GetOwner()->GetLookDir().x * 3, 3)); //diff.Normalized().y * 10
+		}
+		
 
 		m_iCurHp -= 10;
 

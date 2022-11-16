@@ -11,6 +11,7 @@ CShootedHead::CShootedHead()
 	AddComponent(m_pRigid);
 
 	m_bHeadOn = true;
+	m_type = ATTACK_TYPE::RANGED;
 	
 	
 }

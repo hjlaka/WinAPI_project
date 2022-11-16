@@ -179,6 +179,7 @@
     <ClInclude Include="CSceneTitle.h" />
     <ClInclude Include="CImage.h" />
     <ClInclude Include="CShootedHead.h" />
+    <ClInclude Include="CSkulHunter.h" />
     <ClInclude Include="CSkulLittleBone.h" />
     <ClInclude Include="CSmoke.h" />
     <ClInclude Include="CSound.h" />
@@ -245,6 +246,7 @@
     <ClCompile Include="CSceneTitle.cpp" />
     <ClCompile Include="CImage.cpp" />
     <ClCompile Include="CShootedHead.cpp" />
+    <ClCompile Include="CSkulHunter.cpp" />
     <ClCompile Include="CSkulLittleBone.cpp" />
     <ClCompile Include="CSmoke.cpp" />
     <ClCompile Include="CSound.cpp" />

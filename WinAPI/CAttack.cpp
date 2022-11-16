@@ -7,11 +7,22 @@ CAttack::CAttack()
 {
 	m_pOwner = nullptr;
 	m_fDuration = 0;
+	m_type = ATTACK_TYPE::MELEE;
 
 }
 
 CAttack::~CAttack()
 {
+}
+
+ATTACK_TYPE CAttack::GetAttackType()
+{
+	return m_type;
+}
+
+CUnit* CAttack::GetOwner()
+{
+	return m_pOwner;
 }
 
 void CAttack::SetOwner(CUnit* owner)
