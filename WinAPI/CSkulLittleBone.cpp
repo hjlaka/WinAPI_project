@@ -76,6 +76,8 @@ void CSkulLittleBone::SkillA()
 	if (m_skillA.state == SKILL_STATE::READY)
 	{
 		Logger::Debug(L"스킬 사용. 바라보는 곳: " + to_wstring(m_vecLookDir.x));
+		//Logger::Debug(L"")
+		m_pHead->GetRigidBody()->InitWallCollision();
 		m_pHead->SetPos(GetPos() + Vector(m_vecLookDir.x * 60, -10));
 		//m_pHead->GetRigidBody()->PowerToX(m_vecLookDir.x * 400.f);
 		m_pHead->GetRigidBody()->SetVelocityX(m_vecLookDir.x * 400.f);
@@ -106,6 +108,17 @@ void CSkulLittleBone::SkillS()
 
 void CSkulLittleBone::Render()
 {
+	//RENDERMESSAGE(L" " + to_wstring(m_pRigid->m_arrCollisionCount[(int)Dir::Dow]));
+	RENDERMESSAGE(L"왼쪽 충돌 갯수: " + to_wstring(m_pHead->GetRigidBody()->m_arrCollisionCount[(int)Dir::LEFT]));
+	RENDERMESSAGE(L"오른쪽 충돌 갯수: " + to_wstring(m_pHead->GetRigidBody()->m_arrCollisionCount[(int)Dir::RIGHT]	));
+	RENDERMESSAGE(L"위쪽 충돌 갯수: " + to_wstring(m_pHead->GetRigidBody()->m_arrCollisionCount[(int)Dir::UP]));
+	RENDERMESSAGE(L"아래쪽 충돌 갯수: " + to_wstring(m_pHead->GetRigidBody()->m_arrCollisionCount[(int)Dir::DOWN]));
+	RENDERMESSAGE(L"플레이어 체력: " + to_wstring(m_iCurHp));
+	RENDERMESSAGE(L"플레이어 상태: " + to_wstring((int)m_state));
+
+
+
+
 	CPlayer::Render();
 	RENDER->Text(L"플레이어 위치:" + to_wstring((int)GetPos().x) + L", " + to_wstring((int)GetPos().y), GetPos().x, GetPos().y + 90, GetPos().x + 200, GetPos().y + 190);
 	RENDER->Text(L"머리 상태:" + to_wstring((int)m_bHeadOn), GetPos().x, GetPos().y + 100, GetPos().x + 100, GetPos().y + 200);

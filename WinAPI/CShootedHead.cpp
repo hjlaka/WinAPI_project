@@ -3,7 +3,7 @@
 
 CShootedHead::CShootedHead()
 {
-	m_strName = L"내 두개골";
+	//m_strName = L"내 두개골";
 	m_fAttack = 15.f;
 	m_fDuration = 0.f;
 
@@ -25,10 +25,13 @@ CRigidBody* CShootedHead::GetRigidBody()
 void CShootedHead::HeadInit()
 {
 	Logger::Debug(L"머리 초기화");
-	//m_pRigid->InitRigidBody();
+	
+	m_strName = L"PlayerAttack";
+	
+	m_vecPos = Vector(-100, -100);			// 이동하면 자동으로 Exit 되는 경우도 있다.
+	//m_pRigid->InitWallCollision();				// Exit이 잘못되는 경우도 있다. 왜 생각대로 안되지?? 왜 -2가 되지?
 	m_pRigid->SetIsGravity(false);
 	m_pRigid->SetIsFrictional(false);
-	m_vecPos = Vector(-100, -100);
 	
 }
 
@@ -65,6 +68,7 @@ void CShootedHead::OnCollisionEnter(CCollider* pOtherCollider)
 	{
 		m_pRigid->SetIsGravity(true);
 		m_pRigid->SetIsFrictional(true);
+		m_strName = L"내 두개골";
 		m_pRigid->GroundCollisionEnter(GetCollider(), pOtherCollider);
 
 	}
@@ -75,6 +79,7 @@ void CShootedHead::OnCollisionEnter(CCollider* pOtherCollider)
 		m_pRigid->SetIsFrictional(true);
 		Vector diff = GetCollider()->GetPos() - pOtherCollider->GetPos();
 		m_pRigid->PowerToX(diff.Normalized().x * 20.f);
+
 		m_pRigid->WallCollisionEnter(GetCollider(), pOtherCollider);
 
 	}

@@ -4,11 +4,13 @@
 enum class Dir { LEFT, RIGHT, UP, DOWN };
 class CPlayer;
 class CMonster01;
+class CSkulLittleBone;
 
 class CRigidBody : public CComponent
 {
 	friend CPlayer;
 	friend CMonster01;
+	friend CSkulLittleBone;
 private:
 
 public:
@@ -81,7 +83,7 @@ public:
 	void PowerToX(float x);
 	void Power(Vector force);
 
-	void InitRigidBody();
+	void InitWallCollision();
 
 public:
 

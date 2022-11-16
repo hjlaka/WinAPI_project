@@ -88,7 +88,7 @@ void CMonster01::OnCollisionEnter(CCollider* pOtherCollider)
 		//m_vecPos += (GetCollider()->GetPos() - pOtherCollider->GetPos()).Normalized() * 10;
 		//m_pRigid->Power((GetCollider()->GetPos() - pOtherCollider->GetPos()).Normalized() * 150);
 		Vector diff = (GetCollider()->GetPos() - pOtherCollider->GetPos());
-		m_pRigid->Power(Vector(1,10));
+		m_pRigid->Power( Vector(diff.Normalized().x * 1, 0)); //diff.Normalized().y * 10
 
 		m_iCurHp -= 10;
 

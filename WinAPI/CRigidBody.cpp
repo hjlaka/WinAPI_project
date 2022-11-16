@@ -152,13 +152,14 @@ void CRigidBody::Power(Vector force)
 	//m_vecVelocity += force;
 }
 
-void CRigidBody::InitRigidBody()
+void CRigidBody::InitWallCollision()
 {
-	for (int i = 0; i < 4; i++)
-	{
-		m_arrDirSpeed[i] = 1;
-		m_arrCollisionCount[i] = 0;
-	}
+
+	SetCollisionConunt(Dir::LEFT, m_arrCollisionCount[(int)Dir::LEFT] * -1);
+	SetCollisionConunt(Dir::RIGHT, m_arrCollisionCount[(int)Dir::RIGHT] * -1);
+	/*m_arrCollisionCount[(int)Dir::LEFT] = 0;
+	m_arrCollisionCount[(int)Dir::RIGHT] = 0;*/
+
 }
 
 

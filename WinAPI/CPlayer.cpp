@@ -412,17 +412,7 @@ void CPlayer::Render()
 
 	wstring groundCount = to_wstring(m_pRigid->GetGroundCount());
 
-	RENDERMESSAGE(L"오른쪽 충돌 갯수: " + to_wstring(m_pRigid->m_arrCollisionCount[(int)Dir::RIGHT]));
-	RENDERMESSAGE(L"왼쪽 충돌 갯수: " + to_wstring(m_pRigid->m_arrCollisionCount[(int)Dir::LEFT]));
-	RENDERMESSAGE(L"플레이어 체력: " + to_wstring(m_iCurHp));
-	RENDERMESSAGE(L"플레이어 상태: " + to_wstring((int)m_state));
-
-
-	RENDERMESSAGE(to_wstring(GetCollider()->GetPos().y));
-
-	RENDER->FillCircle(GetCollider()->GetPos().x, GetCollider()->GetPos().y, 5.f);
-
-	RENDER->Text(L"스컬:" + to_wstring((int)m_curSkulType), GetPos().x, GetPos().y + 80, GetPos().x + 100, GetPos().y + 180);
+	
 
 
 }
