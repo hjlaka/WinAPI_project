@@ -11,6 +11,7 @@
 
 #include "CPlayer.h"
 #include "CSkulLittleBone.h"
+#include "CSkulHunter.h"
 #include "CMonster01.h"
 #include "CCameraController.h"
 #include "CButton.h"
@@ -20,6 +21,7 @@
 #include "CUIHp.h"
 #include "CUIHpMonster.h"
 #include "CUISkill.h"
+#include "CUIFrame.h"
 
 #include "CGameManager.h"
 #include "Skill.h"
@@ -84,33 +86,54 @@ void CSceneStage01::Enter()
 	AddGameObject(pPlayer);
 	GAME->SetPlayer(pPlayer);
 
+	CPlayer* pPlayer2 = new CSkulHunter;
+	pPlayer2->SetPos(400, WINSIZEY * 0.5f);
+	pPlayer2->SetImgRate(1.2f);
+	GAME->SetPlayer(pPlayer, pPlayer2);
+
 	CMonster01* pMonster = new CMonster01;
 	pMonster->SetPos(900, WINSIZEY * 0.2f);
 	pMonster->SetImgRate(1.2f);
 	AddGameObject(pMonster);
 
-	CUIHp* pPlayerHpUI = new CUIHp;
-	pPlayerHpUI->SetPos(100.f, WINSIZEY * 0.8f);
-	pPlayerHpUI->SetOwner(pPlayer);
-	pPlayerHpUI->SetScale(Vector(100.f, 60.f));
-	AddGameObject(pPlayerHpUI);
+
+	CUIFrame* pPlayerUI = new CUIFrame;
+	CImage* pPlayerFrameImg = RESOURCE->LoadImg(L"PlayerFrame", L"Image\\Player_Normal_Frame.png");
+	pPlayerFrameImg->SetImageRate(2.f);
+	pPlayerUI->SetImage(pPlayerFrameImg);
+	pPlayerUI->SetPos(180.f, 650.f);
+	pPlayerUI->SetScale(Vector(300.f, 100.f));
+	AddGameObject(pPlayerUI);
 
 	CUIHpMonster* pMonsterUI = new CUIHpMonster;
 	pMonsterUI->SetOwner(pMonster);
 	pMonsterUI->SetScale(Vector(80.f, 10.f));
 	AddGameObject(pMonsterUI);
 
+	CUIHp* pPlayerHpUI = new CUIHp;
+	pPlayerHpUI->SetPos(-60.f, 25.f);
+	pPlayerHpUI->SetOwner(pPlayer);
+	pPlayerHpUI->SetScale(Vector(250.f, 30.f));
+	pPlayerUI->AddChildUI(pPlayerHpUI);
+	//AddGameObject(pPlayerHpUI);
+
+	
+
 	CUISkill* pPlayerSkillAUI = new CUISkill;
-	pPlayerSkillAUI->SetPos(100.f, WINSIZEY * 0.8f - 100.f);
-	pPlayerSkillAUI->SetScale(Vector(50.f, 50.f));
+	pPlayerSkillAUI->SetPos(-50.f, 30.f);
+	pPlayerSkillAUI->SetScale(Vector(50.f, -50.f));
 	pPlayerSkillAUI->SetLinkedSkill(pPlayer->GetSkillA());
-	AddGameObject(pPlayerSkillAUI);
+	pPlayerUI->AddChildUI(pPlayerSkillAUI);
+	//AddGameObject(pPlayerSkillAUI);
 
 	CUISkill* pPlayerSkillSUI = new CUISkill;
-	pPlayerSkillSUI->SetPos(160.f, WINSIZEY * 0.8f - 100.f);
-	pPlayerSkillSUI->SetScale(Vector(50.f, 50.f));
+	pPlayerSkillSUI->SetPos(0.f, 30.f);
+	pPlayerSkillSUI->SetScale(Vector(50.f, -50.f));
 	pPlayerSkillSUI->SetLinkedSkill(pPlayer->GetSkillS());
-	AddGameObject(pPlayerSkillSUI);
+	pPlayerUI->AddChildUI(pPlayerSkillSUI);
+	//AddGameObject(pPlayerSkillSUI);
+
+	
 
 
 	CCameraController* pCamController = new CCameraController;

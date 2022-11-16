@@ -7,13 +7,16 @@ class CAnimator;
 class CRigidBody;
 class CStatePlayer;
 class CPlayerJumping;
+class CGameManager;
 
 enum class STATE {IDLE, ATTACKA, ATTACKB, MOVE, DASH, JUMP, JUMPATTACK};
 enum class SKUL_TYPE {LITTLE_BONE, HUNTER};
 
 class CPlayer : public CUnit
 {
+	friend CGameManager;
 	friend CPlayerJumping;
+	
 
 public:
 	CPlayer();
@@ -96,6 +99,9 @@ protected:
 	void CreateMissile();
 	void Jump(float fJumpPower);
 	void Attack();
+
+	virtual void Enter() = 0;
+	virtual void Exit() = 0;
 
 
 	virtual void OnCollisionEnter(CCollider* pOtherCollider) override;

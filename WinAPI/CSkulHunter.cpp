@@ -20,3 +20,11 @@ void CSkulHunter::SkillA()
 void CSkulHunter::SkillS()
 {
 }
+
+void CSkulHunter::Enter()
+{
+}
+
+void CSkulHunter::Exit()
+{
+}

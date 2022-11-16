@@ -47,6 +47,9 @@ private:
 	void Update() override;
 	void Render() override;
 
+	void Enter() override;
+	void Exit() override;
+
 	//void OnCollisionEnter(CCollider* pOtherCollider) override;
 	void OnCollisionStay(CCollider* pOtherCollider) override;
 

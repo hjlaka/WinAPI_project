@@ -21,6 +21,9 @@ private:
 
 private:
 
+	void Enter() override;
+	void Exit() override;
+
 	//void Init() override;
 	//void Update() override;
 	//void Render() override;

@@ -135,6 +135,14 @@ void CSkulLittleBone::Render()
 	RENDER->Text(L"½ºÅ³AÄð:" + to_wstring((int)m_skillA.fCurCool), GetPos().x, GetPos().y + 120, GetPos().x + 100, GetPos().y + 220);
 }
 
+void CSkulLittleBone::Enter()
+{
+}
+
+void CSkulLittleBone::Exit()
+{
+}
+
 
 void CSkulLittleBone::OnCollisionStay(CCollider* pOtherCollider)
 {

@@ -16,6 +16,7 @@
 #include "CMissile.h"
 #include "CPlayerAttack.h"
 #include "CSmoke.h"
+#include "CGameManager.h"
 
 
 CPlayer::CPlayer()
@@ -27,6 +28,13 @@ CPlayer::CPlayer()
 
 	m_pIdleImage = nullptr;
 	m_pMoveImage = nullptr;
+	m_pAttackImage = nullptr;
+	m_pAttackBImage = nullptr;
+	m_pJumpImage = nullptr;
+	m_pFallImage = nullptr;
+	m_pFallRepeatImage = nullptr;
+	m_pDashImage = nullptr;
+	m_pJumpAttackImage = nullptr;
 
 	m_vecMoveDir = Vector(0, 0);
 	m_vecLookDir = Vector(1, 0);
@@ -115,24 +123,10 @@ void CPlayer::Init()
 	m_pJumpAttackImage = RESOURCE->LoadImg(L"PlayerJumpAttack", L"Image\\jumpattack_skul.png");
 
 	m_pAnimator = new CAnimator;
-	m_pAnimator->CreateAnimation(L"IdleUp", m_pIdleImage, Vector(25.f, 20.f), Vector(50.f, 75.f), Vector(96.f, 0.f), 0.5f, 4);
-	m_pAnimator->CreateAnimation(L"IdleRightUp", m_pIdleImage, Vector(0.f, 20.f), Vector(85.f, 75.f), Vector(96.f, 0.f), 0.5f, 4);
 	m_pAnimator->CreateAnimation(L"IdleRight", m_pIdleImage, Vector(0.f, 20.f), Vector(85.f, 75.f), Vector(96.f, 0.f), 0.5f, 4);
-	m_pAnimator->CreateAnimation(L"IdleRightDown", m_pIdleImage, Vector(0.f, 20.f), Vector(85.f, 75.f), Vector(96.f, 0.f), 0.5f, 4);
-	m_pAnimator->CreateAnimation(L"IdleDown", m_pIdleImage, Vector(0.f, 20.f), Vector(85.f, 75.f), Vector(96.f, 0.f), 0.5f, 4);
-	m_pAnimator->CreateAnimation(L"IdleLeftDown", m_pIdleImage, Vector(0.f, 20.f), Vector(85.f, 75.f), Vector(96.f, 0.f), 0.5f, 4);
 	m_pAnimator->CreateAnimation(L"IdleLeft", m_pIdleImage, Vector(0.f, 20.f), Vector(85.f, 75.f), Vector(96.f, 0.f), 0.5f, 4);
-	m_pAnimator->CreateAnimation(L"IdleLeftUp", m_pIdleImage, Vector(0.f, 20.f), Vector(85.f, 75.f), Vector(96.f, 0.f), 0.5f, 4);
-
-	m_pAnimator->CreateAnimation(L"MoveUp",			m_pMoveImage, Vector(0.f, 20.f), Vector(80.f, 75.f), Vector(96.f, 0.f), 0.05f, 8);
-	m_pAnimator->CreateAnimation(L"MoveRightUp",	m_pMoveImage, Vector(0.f, 20.f), Vector(80.f,  75.f), Vector(96.f, 0.f), 0.05f, 8);
 	m_pAnimator->CreateAnimation(L"MoveRight",		m_pMoveImage, Vector(0.f, 20.f), Vector(80.f, 75.f), Vector(96.f, 0.f), 0.05f, 8);
-	m_pAnimator->CreateAnimation(L"MoveRightDown",	m_pMoveImage, Vector(0.f, 20.f), Vector(80.f, 75.f), Vector(96.f, 0.f), 0.05f, 8);
-	m_pAnimator->CreateAnimation(L"MoveDown",		m_pMoveImage, Vector(0.f, 20.f), Vector(80.f, 75.f), Vector(96.f, 0.f), 0.05f, 8);
-	m_pAnimator->CreateAnimation(L"MoveLeftDown",	m_pMoveImage, Vector(0.f, 20.f), Vector(80.f, 75.f), Vector(96.f, 0.f), 0.05f, 8);
 	m_pAnimator->CreateAnimation(L"MoveLeft",		m_pMoveImage, Vector(0.f, 20.f), Vector(80.f, 75.f), Vector(96.f, 0.f), 0.05f, 8);
-	m_pAnimator->CreateAnimation(L"MoveLeftUp",		m_pMoveImage, Vector(0.f, 20.f), Vector(80.f, 75.f), Vector(96.f, 0.f), 0.05f, 8);
-	
 	m_pAnimator->CreateAnimation(L"AttackA", m_pAttackImage, Vector(0.f, 20.f), Vector(100.f, 75.f), Vector(96.f, 0.f), 0.1f, 5);
 	m_pAnimator->CreateAnimation(L"AttackB", m_pAttackBImage, Vector(0.f, 20.f), Vector(100.f, 75.f), Vector(96.f, 0.f), 0.1f, 4);
 	m_pAnimator->CreateAnimation(L"Jump", m_pJumpImage, Vector(20.f, 25.f), Vector(50.f, 50.f), Vector(96.f, 0.f), 0.15f, 2);
@@ -166,15 +160,10 @@ void CPlayer::Init()
 
 	
 	};
-
-	//m_pAnimator->SetAnimationCallBack(L"AttackA", attackEnd, (DWORD_PTR)this, 0);
-	//m_pAnimator->SetAnimationCallBack(L"AttackB", attackEnd, (DWORD_PTR)this, 0);
-	//m_pAnimator->SetAnimationCallBack(L"JumpAttack", attackEnd, (DWORD_PTR)this, 0);
-	//m_pAnimator->SetAnimationCallBack(L"Fall", falling, (DWORD_PTR)this, 0);
 	
 #pragma endregion
 
-	m_pAnimator->Play(L"IdleDown", false);
+	m_pAnimator->Play(L"IdleRight", false);
 	AddComponent(m_pAnimator);
 
 	AddCollider(ColliderType::Rect, Vector(30, 30), Vector(0, 0));
@@ -193,8 +182,6 @@ void CPlayer::Update()
 	m_bIsMove = false;
 	m_bIsDash = false;
 
-
-	//Logger::Debug(L"x, y: " + to_wstring(m_vecPos.x) + L", " + to_wstring(m_vecPos.y));
 	
 	
 	m_vecMoveDir.x = 0;
@@ -368,6 +355,9 @@ void CPlayer::Update()
 		SKUL_TYPE temp = m_curSkulType;
 		m_curSkulType = m_subSkulType;
 		m_subSkulType = temp;
+
+		GAME->SwitchSkul();
+		
 	}
 
 
@@ -509,9 +499,6 @@ void CPlayer::AnimatorUpdate()
 
 	if (m_vecLookDir.x > 0) str += L"Right";
 	else if (m_vecLookDir.x < 0) str += L"Left";
-
-	if (m_vecLookDir.y > 0) str += L"Up";
-	else if (m_vecLookDir.y < 0) str += L"Down";
 
 	m_pAnimator->Play(str, false);
 }

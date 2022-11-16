@@ -57,7 +57,7 @@ void CShootedHead::Init()
 	HeadInit();
 
 	m_pImg = RESOURCE->LoadImg(L"SkulHead", L"Image\\skul_head.png");
-	m_pImg->SetImageRate(1.2f);
+	m_pImg->SetImageRate(1.1f);
 
 }
 
