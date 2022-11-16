@@ -95,6 +95,11 @@ SkillInfo* CPlayer::GetSkillA()
 	return &m_skillA;
 }
 
+SkillInfo* CPlayer::GetSkillS()
+{
+	return &m_skillS;
+}
+
 void CPlayer::Init()
 {
 
@@ -347,6 +352,12 @@ void CPlayer::Update()
 	{
 		// 던지기 공격
 		SkillA();
+	}
+
+	if (BUTTONDOWN('S'))
+	{
+		// 던지기 공격
+		SkillS();
 	}
 
 

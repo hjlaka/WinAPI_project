@@ -80,6 +80,7 @@ protected:
 
 public:
 	SkillInfo* GetSkillA();
+	SkillInfo* GetSkillS();
 
 
 

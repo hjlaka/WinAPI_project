@@ -27,7 +27,8 @@ void CSkulLittleBone::Update()
 {
 	CPlayer::Update();
 
-	if (!m_bHeadOn)
+	//m_bHeadOn = m_pHead->GetHeadOn();
+	if (!(m_pHead->GetHeadOn()))
 	{
 		m_vecHeadPos = m_pHead->GetPos();
 	}
@@ -53,15 +54,15 @@ void CSkulLittleBone::SkillSetUp()
 	m_skillS = skillHeadIsI;
 }
 
-bool CSkulLittleBone::GetHeadOn()
-{
-	return m_bHeadOn;
-}
+//bool CSkulLittleBone::GetHeadOn()
+//{
+//	return m_bHeadOn;
+//}
 
-void CSkulLittleBone::SetHeadOn(bool headOn)
-{
-	m_bHeadOn = headOn;
-}
+//void CSkulLittleBone::SetHeadOn(bool headOn)
+//{
+//	m_bHeadOn = headOn;
+//}
 
 void CSkulLittleBone::ReturnHead()
 {
@@ -78,13 +79,13 @@ void CSkulLittleBone::SkillA()
 		Logger::Debug(L"스킬 사용. 바라보는 곳: " + to_wstring(m_vecLookDir.x));
 		//Logger::Debug(L"")
 		m_pHead->GetRigidBody()->InitWallCollision();
-		m_pHead->SetPos(GetPos() + Vector(m_vecLookDir.x * 60, -10));
+		m_pHead->SetPos(GetPos() + Vector(m_vecLookDir.x * 10, -20));
 		//m_pHead->GetRigidBody()->PowerToX(m_vecLookDir.x * 400.f);
 		m_pHead->GetRigidBody()->SetVelocityX(m_vecLookDir.x * 400.f);
 		m_pHead->SetAttackDuration(6.f);
 		//m_pHead->GetRigidBody()->
 
-		m_bHeadOn = false;
+		m_pHead->SetHeadOn(false);
 		m_skillA.UseSkill();
 	}
 	
@@ -94,8 +95,19 @@ void CSkulLittleBone::SkillA()
 
 void CSkulLittleBone::SkillS()
 {
-	if (m_skillA.state == SKILL_STATE::READY)
+	if (m_skillS.state == SKILL_STATE::READY)
 	{
+		Logger::Debug(L"스킬 사용S " + to_wstring(m_vecLookDir.x));
+		// 머리가 플레이어에게 없을 경우만.
+		// 플레이어 순간 이동
+		// 순간 이동 애니메이션 재생
+		if (!(m_pHead->GetHeadOn()))
+		{
+			m_vecPos = m_vecHeadPos - Vector(0, m_vecScale.y);
+			m_skillS.UseSkill();
+			m_pRigid->SetGravitySpeed(0);
+			ReturnHead();
+		}
 		
 	}
 }
@@ -113,15 +125,19 @@ void CSkulLittleBone::Render()
 	RENDERMESSAGE(L"오른쪽 충돌 갯수: " + to_wstring(m_pHead->GetRigidBody()->m_arrCollisionCount[(int)Dir::RIGHT]	));
 	RENDERMESSAGE(L"위쪽 충돌 갯수: " + to_wstring(m_pHead->GetRigidBody()->m_arrCollisionCount[(int)Dir::UP]));
 	RENDERMESSAGE(L"아래쪽 충돌 갯수: " + to_wstring(m_pHead->GetRigidBody()->m_arrCollisionCount[(int)Dir::DOWN]));
-	RENDERMESSAGE(L"플레이어 체력: " + to_wstring(m_iCurHp));
-	RENDERMESSAGE(L"플레이어 상태: " + to_wstring((int)m_state));
+	RENDERMESSAGE(L"왼쪽 속도: " + to_wstring(m_pHead->GetRigidBody()->m_arrDirSpeed[(int)Dir::LEFT]));
+	RENDERMESSAGE(L"오른쪽 속도: " + to_wstring(m_pHead->GetRigidBody()->m_arrDirSpeed[(int)Dir::RIGHT]));
+	RENDERMESSAGE(L"위쪽 속도: " + to_wstring(m_pHead->GetRigidBody()->m_arrDirSpeed[(int)Dir::UP]));
+	RENDERMESSAGE(L"아래쪽 속도: " + to_wstring(m_pHead->GetRigidBody()->m_arrDirSpeed[(int)Dir::DOWN]));
+	RENDERMESSAGE(L"머리 상태: " + to_wstring(m_pHead->GetHeadOn()));
+	RENDERMESSAGE(L"머리 위치: " + to_wstring((int)(m_vecHeadPos.x)) + L", " + to_wstring((int)(m_vecHeadPos.y)));
 
 
 
 
 	CPlayer::Render();
 	RENDER->Text(L"플레이어 위치:" + to_wstring((int)GetPos().x) + L", " + to_wstring((int)GetPos().y), GetPos().x, GetPos().y + 90, GetPos().x + 200, GetPos().y + 190);
-	RENDER->Text(L"머리 상태:" + to_wstring((int)m_bHeadOn), GetPos().x, GetPos().y + 100, GetPos().x + 100, GetPos().y + 200);
+	RENDER->Text(L"머리 상태:" + to_wstring((int)m_pHead->GetHeadOn()), GetPos().x, GetPos().y + 100, GetPos().x + 100, GetPos().y + 200);
 	RENDER->Text(L"머리 위치:" + to_wstring((int)m_pHead->GetPos().x) + L", " + to_wstring((int)m_pHead->GetPos().y), GetPos().x, GetPos().y + 110, GetPos().x + 200, GetPos().y + 210);
 	RENDER->Text(L"스킬A쿨:" + to_wstring((int)m_skillA.fCurCool), GetPos().x, GetPos().y + 120, GetPos().x + 100, GetPos().y + 220);
 }
@@ -129,10 +145,19 @@ void CSkulLittleBone::Render()
 void CSkulLittleBone::OnCollisionEnter(CCollider* pOtherCollider)
 {
 	CPlayer::OnCollisionEnter(pOtherCollider);
+	
+}
+
+void CSkulLittleBone::OnCollisionStay(CCollider* pOtherCollider)
+{
+	CPlayer::OnCollisionStay(pOtherCollider);
 
 	if (pOtherCollider->GetObjName() == L"내 두개골")
 	{
-		Logger::Debug(L"두개골 습득");
-		ReturnHead();
+		if (!(m_pHead->GetHeadOn()))
+		{
+			Logger::Debug(L"두개골 습득");
+			ReturnHead();
+		}
 	}
 }

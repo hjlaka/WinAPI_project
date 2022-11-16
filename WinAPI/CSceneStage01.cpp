@@ -100,12 +100,17 @@ void CSceneStage01::Enter()
 	pMonsterUI->SetScale(Vector(80.f, 10.f));
 	AddGameObject(pMonsterUI);
 
-	CUISkill* pPlayerSkillUI = new CUISkill;
-	pPlayerSkillUI->SetPos(100.f, WINSIZEY * 0.8f - 100.f);
-	pPlayerSkillUI->SetScale(Vector(50.f, 50.f));
+	CUISkill* pPlayerSkillAUI = new CUISkill;
+	pPlayerSkillAUI->SetPos(100.f, WINSIZEY * 0.8f - 100.f);
+	pPlayerSkillAUI->SetScale(Vector(50.f, 50.f));
+	pPlayerSkillAUI->SetLinkedValue(pPlayer->GetSkillA());
+	AddGameObject(pPlayerSkillAUI);
 
-	pPlayerSkillUI->SetLinkedValue(pPlayer->GetSkillA());
-	AddGameObject(pPlayerSkillUI);
+	CUISkill* pPlayerSkillSUI = new CUISkill;
+	pPlayerSkillSUI->SetPos(160.f, WINSIZEY * 0.8f - 100.f);
+	pPlayerSkillSUI->SetScale(Vector(50.f, 50.f));
+	pPlayerSkillSUI->SetLinkedValue(pPlayer->GetSkillS());
+	AddGameObject(pPlayerSkillSUI);
 
 
 	CCameraController* pCamController = new CCameraController;

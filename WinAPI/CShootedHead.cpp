@@ -9,6 +9,8 @@ CShootedHead::CShootedHead()
 
 	m_pRigid = new CRigidBody;
 	AddComponent(m_pRigid);
+
+	m_bHeadOn = true;
 	
 	
 }
@@ -22,6 +24,16 @@ CRigidBody* CShootedHead::GetRigidBody()
 	return m_pRigid;
 }
 
+void CShootedHead::SetHeadOn(bool value)
+{
+	m_bHeadOn = value;
+}
+
+bool CShootedHead::GetHeadOn()
+{
+	return m_bHeadOn;
+}
+
 void CShootedHead::HeadInit()
 {
 	Logger::Debug(L"머리 초기화");
@@ -32,6 +44,7 @@ void CShootedHead::HeadInit()
 	//m_pRigid->InitWallCollision();				// Exit이 잘못되는 경우도 있다. 왜 생각대로 안되지?? 왜 -2가 되지?
 	m_pRigid->SetIsGravity(false);
 	m_pRigid->SetIsFrictional(false);
+	m_bHeadOn = true;
 	
 }
 

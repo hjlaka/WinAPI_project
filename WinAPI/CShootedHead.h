@@ -10,9 +10,12 @@ public:
 private:
 	Vector m_vecDir;
 	CRigidBody* m_pRigid;
+	bool m_bHeadOn;
 
 public:
 	CRigidBody* GetRigidBody();
+	void SetHeadOn(bool value);
+	bool GetHeadOn();
 
 public:
 	void HeadInit();

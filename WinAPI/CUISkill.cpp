@@ -3,6 +3,7 @@
 
 CUISkill::CUISkill()
 {
+	m_pLinkedValue = nullptr;
 }
 
 CUISkill::~CUISkill()
@@ -23,6 +24,10 @@ void CUISkill::Update()
 
 void CUISkill::Render()
 {
+	if (nullptr == m_pLinkedValue || SKILL_STATE::NONE == m_pLinkedValue->state)
+		return;
+
+
 	RENDER->FillRect(
 		m_vecRenderPos.x,
 		m_vecRenderPos.y,
