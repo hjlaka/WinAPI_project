@@ -9,10 +9,10 @@ public:
 
 private:
 
-	const SkillInfo* m_pLinkedValue;
+	const SkillInfo* m_pLinkedSkill;
 
 public:
-	void SetLinkedValue(const SkillInfo* skill);
+	void SetLinkedSkill(const SkillInfo* skill);
 
 protected:
 	virtual void Init() override;

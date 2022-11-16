@@ -3,16 +3,16 @@
 
 CUISkill::CUISkill()
 {
-	m_pLinkedValue = nullptr;
+	m_pLinkedSkill = nullptr;
 }
 
 CUISkill::~CUISkill()
 {
 }
 
-void CUISkill::SetLinkedValue(const SkillInfo* skill)
+void CUISkill::SetLinkedSkill(const SkillInfo* skill)
 {
-	m_pLinkedValue = skill;
+	m_pLinkedSkill = skill;
 }
 
 void CUISkill::Init()
@@ -24,7 +24,7 @@ void CUISkill::Update()
 
 void CUISkill::Render()
 {
-	if (nullptr == m_pLinkedValue || SKILL_STATE::NONE == m_pLinkedValue->state)
+	if (nullptr == m_pLinkedSkill || SKILL_STATE::NONE == m_pLinkedSkill->state)
 		return;
 
 
@@ -37,7 +37,7 @@ void CUISkill::Render()
 	);
 
 
-	RENDER->Text(to_wstring(m_pLinkedValue->fCurCool),
+	RENDER->Text(to_wstring(m_pLinkedSkill->fCurCool),
 		m_vecRenderPos.x,
 		m_vecRenderPos.y,
 		m_vecRenderPos.x + m_vecScale.x,

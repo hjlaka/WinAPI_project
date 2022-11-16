@@ -103,13 +103,13 @@ void CSceneStage01::Enter()
 	CUISkill* pPlayerSkillAUI = new CUISkill;
 	pPlayerSkillAUI->SetPos(100.f, WINSIZEY * 0.8f - 100.f);
 	pPlayerSkillAUI->SetScale(Vector(50.f, 50.f));
-	pPlayerSkillAUI->SetLinkedValue(pPlayer->GetSkillA());
+	pPlayerSkillAUI->SetLinkedSkill(pPlayer->GetSkillA());
 	AddGameObject(pPlayerSkillAUI);
 
 	CUISkill* pPlayerSkillSUI = new CUISkill;
 	pPlayerSkillSUI->SetPos(160.f, WINSIZEY * 0.8f - 100.f);
 	pPlayerSkillSUI->SetScale(Vector(50.f, 50.f));
-	pPlayerSkillSUI->SetLinkedValue(pPlayer->GetSkillS());
+	pPlayerSkillSUI->SetLinkedSkill(pPlayer->GetSkillS());
 	AddGameObject(pPlayerSkillSUI);
 
 
