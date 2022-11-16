@@ -186,12 +186,6 @@
     <ClInclude Include="CSoundManager.h">
       <Filter>Engine\Manager</Filter>
     </ClInclude>
-    <ClInclude Include="CRigidBody.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="CGameManager.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="CMonster01.h">
       <Filter>GameObject\Stage01</Filter>
     </ClInclude>
@@ -211,9 +205,6 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="CUIHp.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="CBackGround.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="CMainUI.h">
@@ -250,6 +241,18 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="CSkulHunter.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="CBackGround.h">
+      <Filter>GameObject\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="CGameManager.h">
+      <Filter>Engine\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="CRigidBody.h">
+      <Filter>Engine\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Item.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
@@ -365,12 +368,6 @@
     <ClCompile Include="CSoundManager.cpp">
       <Filter>Engine\Manager</Filter>
     </ClCompile>
-    <ClCompile Include="CRigidBody.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="CGameManager.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="CMonster01.cpp">
       <Filter>GameObject\Stage01</Filter>
     </ClCompile>
@@ -390,9 +387,6 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="CUIHp.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="CBackGround.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="CMainUI.cpp">
@@ -427,6 +421,15 @@
     </ClCompile>
     <ClCompile Include="CSkulHunter.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="CBackGround.cpp">
+      <Filter>GameObject\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="CGameManager.cpp">
+      <Filter>Engine\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="CRigidBody.cpp">
+      <Filter>Engine\Component</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

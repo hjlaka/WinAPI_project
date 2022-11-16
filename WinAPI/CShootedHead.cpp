@@ -1,9 +1,10 @@
 #include "framework.h"
 #include "CShootedHead.h"
+#include "CRigidBody.h"
 
 CShootedHead::CShootedHead()
 {
-	//m_strName = L"내 두개골";
+
 	m_fAttack = 15.f;
 	m_fDuration = 0.f;
 
@@ -12,7 +13,8 @@ CShootedHead::CShootedHead()
 
 	m_bHeadOn = true;
 	m_type = ATTACK_TYPE::RANGED;
-	
+
+	m_pImg = nullptr;
 	
 }
 
@@ -41,8 +43,7 @@ void CShootedHead::HeadInit()
 	
 	m_strName = L"PlayerAttack";
 	
-	m_vecPos = Vector(-100, -100);			// 이동하면 자동으로 Exit 되는 경우도 있다.
-	//m_pRigid->InitWallCollision();				// Exit이 잘못되는 경우도 있다. 왜 생각대로 안되지?? 왜 -2가 되지?
+	m_vecPos = Vector(-100, -100);		
 	m_pRigid->SetIsGravity(false);
 	m_pRigid->SetIsFrictional(false);
 	m_bHeadOn = true;
@@ -54,6 +55,10 @@ void CShootedHead::Init()
 	CPlayerAttack::Init();
 
 	HeadInit();
+
+	m_pImg = RESOURCE->LoadImg(L"SkulHead", L"Image\\skul_head.png");
+	m_pImg->SetImageRate(1.2f);
+
 }
 
 void CShootedHead::Update()
@@ -69,8 +74,24 @@ void CShootedHead::Update()
 			HeadInit();
 		}
 	}
+}
 
-	
+void CShootedHead::Render()
+{
+	if (nullptr == m_pImg)
+		return;
+
+	RENDER->FrameImage(
+		m_pImg,
+		m_vecPos.x - m_pImg->GetWidth() * 0.5f,
+		m_vecPos.y - m_pImg->GetHeight() * 0.5f,
+		m_vecPos.x + m_pImg->GetWidth() * 0.5f,
+		m_vecPos.y + m_pImg->GetHeight() * 0.5f,
+		0,
+		0,
+		m_pImg->GetWidth(),
+		m_pImg->GetHeight()
+	);
 }
 
 void CShootedHead::OnCollisionEnter(CCollider* pOtherCollider)
@@ -120,19 +141,3 @@ void CShootedHead::OnCollisionExit(CCollider* pOtherCollider)
 
 	}
 }
-
-//void CShootedHead::Init()
-//{
-//}
-//
-//void CShootedHead::Update()
-//{
-//}
-//
-//void CShootedHead::Render()
-//{
-//}
-//
-//void CShootedHead::Release()
-//{
-//}

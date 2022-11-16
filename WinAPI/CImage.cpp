@@ -6,6 +6,7 @@
 CImage::CImage()
 {
 	m_pBitmap = nullptr;
+	m_fImgRate = 1.f;
 }
 
 CImage::~CImage()
@@ -22,12 +23,12 @@ ID2D1Bitmap* CImage::GetImage()
 
 int CImage::GetWidth()
 {
-	return (int)m_pBitmap->GetSize().width;
+	return (int)(m_pBitmap->GetSize().width * m_fImgRate);
 }
 
 int CImage::GetHeight()
 {
-	return (int)m_pBitmap->GetSize().height;
+	return (int)(m_pBitmap->GetSize().height * m_fImgRate);
 }
 
 void CImage::Load(const wstring& filePath)
@@ -61,4 +62,9 @@ void CImage::Load(const wstring& filePath)
 	p_converter->Release();		// 이미지 변환 객체 제거
 	p_frame->Release();			// 그림파일에 있는 이미지를 선택하기 위해 사용한 객체 제거
 	p_decoder->Release();		// 압축을 해제하기 위해 생성한 객체 제거
+}
+
+void CImage::SetImageRate(float fRate)
+{
+	m_fImgRate = fRate;
 }

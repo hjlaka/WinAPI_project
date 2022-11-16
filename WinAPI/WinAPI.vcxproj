@@ -197,6 +197,7 @@
     <ClInclude Include="CUnit.h" />
     <ClInclude Include="CWallTile.h" />
     <ClInclude Include="framework.h" />
+    <ClInclude Include="Item.h" />
     <ClInclude Include="Logger.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="SingleTon.h" />
