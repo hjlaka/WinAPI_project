@@ -18,8 +18,7 @@ public:
 	virtual ~CSkulLittleBone();
 
 private:
-	//bool m_bHeadOn;
-	Vector m_vecHeadPos;
+
 	CShootedHead* m_pHead;
 
 public:
@@ -27,7 +26,7 @@ public:
 
 	//bool GetHeadOn();
 
-	void SetHeadOn(bool headOn);
+	//void SetHeadOn(bool headOn);
 
 
 private:
@@ -48,7 +47,7 @@ private:
 	void Update() override;
 	void Render() override;
 
-	void OnCollisionEnter(CCollider* pOtherCollider) override;
+	//void OnCollisionEnter(CCollider* pOtherCollider) override;
 	void OnCollisionStay(CCollider* pOtherCollider) override;
 
 };

@@ -124,7 +124,6 @@ void CRigidBody::Update()
 	}
 
 	m_vecVelocity += m_vecForce * 500 * DT;
-	//m_vecVelocity.Normalized();		// 2차원 조작이어서 필요 없는 것 같다.
 	UpdateVelocityX();
 	UpdateVelocityY();
 
@@ -175,12 +174,8 @@ void CRigidBody::Render()
 
 void CRigidBody::Release()
 {
+	//
 }
-
-
-
-
-
 
 void CRigidBody::SetSpeed(float spd)
 {
@@ -248,9 +243,7 @@ bool CRigidBody::GroundCollisionEnter(CCollider* myCollider, CCollider* pOtherCo
 
 	if (myCollider->GetPos().y + myCollider->GetScale().y/2 < pOtherCollider->GetPos().y - pOtherCollider->GetScale().y/2 + 2.f && GetGravitySpeed() >= 0)
 		//캐릭터가 장애물 위에 있고, 아래로 떨어지는 속도가 0 이상일 때
-		//if (groundToMe.Normalized().y >= 0.690f)			// 굳이 바닥 아래 옆 타일과 미리 상하충돌 중일 필요가 있을까. 다만 업데이트가 안된다는 게 문제다. 
 	{
-		//Logger::Debug(L"상하충돌");
 		isUpDownCol = true;
 
 		GetOwner()->SetPos(GetOwner()->GetPos().x, pOtherCollider->GetPos().y - pOtherCollider->GetScale().y/2 - myCollider->GetScale().y/2 + 0.1f) ;
@@ -276,23 +269,17 @@ void CRigidBody::WallCollisionEnter(CCollider* myCollider, CCollider* pOtherColl
 {
 	Vector ground = Vector(pOtherCollider->GetPos().x, pOtherCollider->GetPos().y);
 	Vector groundToMe = ground - myCollider->GetPos();
-	//if (groundToMe.Normalized().y < 0.70f)	// 방향으로 충돌 종류를 감지
 	{
-		//Logger::Debug(L"좌우충돌");
 
 		if (/*m_vecMoveDir.x < 0 &&*/ groundToMe.x < 0)
 		{
-			//m_pRigid->SetDirSpeed(Dir::LEFT, 0);
 			SetCollisionConunt(Dir::LEFT, +1);
-			//SetPos(Vector(pOtherCollider->GetPos().x + pOtherCollider->GetScale().x / 2 + GetCollider()->GetScale().x / 2 + 0.1f, GetCollider()->GetPos().y));
 		}
 
 
 		if (/*m_vecMoveDir.x > 0 &&*/ groundToMe.x > 0)
 		{
-			//m_pRigid->SetDirSpeed(Dir::RIGHT, 0);
 			SetCollisionConunt(Dir::RIGHT, +1);
-			//SetPos(Vector(pOtherCollider->GetPos().x - pOtherCollider->GetScale().x / 2 - GetCollider()->GetScale().x / 2 - 0.1f, GetCollider()->GetPos().y));
 		}
 	}
 }
@@ -313,13 +300,13 @@ void CRigidBody::GroundCollisionExit(CCollider* myCollider, CCollider* pOtherCol
 
 void CRigidBody::WallCollisionExit(CCollider* myCollider, CCollider* pOtherCollider)
 {
-	//if (pOtherCollider->GetPos().x + pOtherCollider->GetScale().x/2 < myCollider->GetPos().x - myCollider->GetScale().x/2)
+
 	if (pOtherCollider->GetPos().x< myCollider->GetPos().x)
-		//m_pRigid->SetDirSpeed(Dir::LEFT, 1);
+
 		SetCollisionConunt(Dir::LEFT, -1);
-	//else if (pOtherCollider->GetPos().x - pOtherCollider->GetScale().x / 2 > myCollider->GetPos().x + myCollider->GetScale().x / 2)
+
 	else if (pOtherCollider->GetPos().x > myCollider->GetPos().x)
-		//m_pRigid->SetDirSpeed(Dir::RIGHT, 1);
+
 		SetCollisionConunt(Dir::RIGHT, -1);
 }
 void CRigidBody::WallCollisionStay(CCollider* myCollider, CCollider* pOtherCollider)

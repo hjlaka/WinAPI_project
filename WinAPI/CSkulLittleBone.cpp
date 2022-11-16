@@ -2,6 +2,7 @@
 #include "CSkulLittleBone.h"
 
 #include "CShootedHead.h"
+#include "CRigidBody.h"
 
 CSkulLittleBone::CSkulLittleBone()
 {
@@ -28,10 +29,10 @@ void CSkulLittleBone::Update()
 	CPlayer::Update();
 
 	//m_bHeadOn = m_pHead->GetHeadOn();
-	if (!(m_pHead->GetHeadOn()))
+	/*if (!(m_pHead->GetHeadOn()))
 	{
 		m_vecHeadPos = m_pHead->GetPos();
-	}
+	}*/
 }
 
 void CSkulLittleBone::SkillSetUp()
@@ -54,15 +55,7 @@ void CSkulLittleBone::SkillSetUp()
 	m_skillS = skillHeadIsI;
 }
 
-//bool CSkulLittleBone::GetHeadOn()
-//{
-//	return m_bHeadOn;
-//}
 
-//void CSkulLittleBone::SetHeadOn(bool headOn)
-//{
-//	m_bHeadOn = headOn;
-//}
 
 void CSkulLittleBone::ReturnHead()
 {
@@ -103,7 +96,8 @@ void CSkulLittleBone::SkillS()
 		// 순간 이동 애니메이션 재생
 		if (!(m_pHead->GetHeadOn()))
 		{
-			m_vecPos = m_vecHeadPos - Vector(0, m_vecScale.y);
+			//m_vecPos = m_vecHeadPos - Vector(0, m_vecScale.y);
+			m_vecPos = m_pHead->GetPos() - Vector(0, m_vecScale.y * 0.5f);
 			m_skillS.UseSkill();
 			m_pRigid->SetGravitySpeed(0);
 			ReturnHead();
@@ -130,7 +124,6 @@ void CSkulLittleBone::Render()
 	RENDERMESSAGE(L"위쪽 속도: " + to_wstring(m_pHead->GetRigidBody()->m_arrDirSpeed[(int)Dir::UP]));
 	RENDERMESSAGE(L"아래쪽 속도: " + to_wstring(m_pHead->GetRigidBody()->m_arrDirSpeed[(int)Dir::DOWN]));
 	RENDERMESSAGE(L"머리 상태: " + to_wstring(m_pHead->GetHeadOn()));
-	RENDERMESSAGE(L"머리 위치: " + to_wstring((int)(m_vecHeadPos.x)) + L", " + to_wstring((int)(m_vecHeadPos.y)));
 
 
 
@@ -142,11 +135,6 @@ void CSkulLittleBone::Render()
 	RENDER->Text(L"스킬A쿨:" + to_wstring((int)m_skillA.fCurCool), GetPos().x, GetPos().y + 120, GetPos().x + 100, GetPos().y + 220);
 }
 
-void CSkulLittleBone::OnCollisionEnter(CCollider* pOtherCollider)
-{
-	CPlayer::OnCollisionEnter(pOtherCollider);
-	
-}
 
 void CSkulLittleBone::OnCollisionStay(CCollider* pOtherCollider)
 {
