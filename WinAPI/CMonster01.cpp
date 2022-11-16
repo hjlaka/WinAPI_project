@@ -93,11 +93,11 @@ void CMonster01::OnCollisionEnter(CCollider* pOtherCollider)
 		if (pAttack->GetAttackType() == ATTACK_TYPE::RANGED)
 		{
 			Vector diff = (GetCollider()->GetPos() - pOtherCollider->GetPos());
-			m_pRigid->Power(diff.Normalized() * 3.f); //diff.Normalized().y * 10
+			m_pRigid->PowerToX(diff.Normalized().x * 3.f); //diff.Normalized().y * 10
 		}
 		else if (pAttack->GetAttackType() == ATTACK_TYPE::MELEE)
 		{
-			m_pRigid->Power(Vector(pAttack->GetOwner()->GetLookDir().x * 3, 3)); //diff.Normalized().y * 10
+			m_pRigid->Power(Vector(pAttack->GetOwner()->GetLookDir().x * 2.5f, 1)); //diff.Normalized().y * 10 // 가속도가 되어버리는 문제가 있다.
 		}
 		
 

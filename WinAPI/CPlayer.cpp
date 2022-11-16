@@ -252,7 +252,7 @@ void CPlayer::Update()
 					m_state = STATE::ATTACKB;		// 공격 전환.
 					m_fAttackBTime = 0.4f;
 					m_bAttackContinue = false;
-					//Attack();
+					Attack();
 					if (BUTTONSTAY(VK_RIGHT))
 					{
 						// 앞으로 가면서 공격
@@ -263,9 +263,9 @@ void CPlayer::Update()
 					else if(BUTTONSTAY(VK_LEFT))
 					{
 						// 앞으로 가면서 공격
-						m_pRigid->SetDirectionX(+1);
+						m_pRigid->SetDirectionX(-1);
 						m_pRigid->PowerToX(-4500.f);
-						m_vecMoveDir.x = +1;
+						m_vecMoveDir.x = -1;
 					}
 				}
 			}
@@ -286,7 +286,7 @@ void CPlayer::Update()
 					m_state = STATE::ATTACKA;		// 공격 전환.
 					m_fAttackATime = 0.5f;
 					m_bAttackContinue = false;
-					//Attack();
+					Attack();
 					if (BUTTONSTAY(VK_RIGHT))
 					{
 						// 앞으로 가면서 공격
@@ -297,9 +297,9 @@ void CPlayer::Update()
 					else if (BUTTONSTAY(VK_LEFT))
 					{
 						// 앞으로 가면서 공격
-						m_pRigid->SetDirectionX(+1);
+						m_pRigid->SetDirectionX(-1);
 						m_pRigid->PowerToX(-4500.f);
-						m_vecMoveDir.x = +1;
+						m_vecMoveDir.x = -1;
 					}
 				}
 			}
@@ -341,9 +341,9 @@ void CPlayer::Update()
 		else if (BUTTONSTAY(VK_LEFT))
 		{
 			// 앞으로 가면서 공격
-			m_pRigid->SetDirectionX(+1);
+			m_pRigid->SetDirectionX(-1);
 			m_pRigid->PowerToX(-4500.f);
-			m_vecMoveDir.x = +1;
+			m_vecMoveDir.x = -1;
 		}
 	}
 
