@@ -74,6 +74,8 @@ void CRigidBody::SetGravitySpeed(float speed)
 
 void CRigidBody::Init()
 {
+	//√ ±‚»≠
+
 }
 
 void CRigidBody::Update()
@@ -148,6 +150,15 @@ void CRigidBody::Power(Vector force)
 {
 	m_vecForce = force;
 	//m_vecVelocity += force;
+}
+
+void CRigidBody::InitRigidBody()
+{
+	for (int i = 0; i < 4; i++)
+	{
+		m_arrDirSpeed[i] = 1;
+		m_arrCollisionCount[i] = 0;
+	}
 }
 
 

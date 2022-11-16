@@ -75,9 +75,12 @@ void CSkulLittleBone::SkillA()
 {
 	if (m_skillA.state == SKILL_STATE::READY)
 	{
-		m_pHead->SetPos(GetPos() + Vector(m_vecLookDir.x * 40, -10));
-		m_pHead->GetRigidBody()->PowerToX(m_vecLookDir.x * 400.f);
+		Logger::Debug(L"스킬 사용. 바라보는 곳: " + to_wstring(m_vecLookDir.x));
+		m_pHead->SetPos(GetPos() + Vector(m_vecLookDir.x * 60, -10));
+		//m_pHead->GetRigidBody()->PowerToX(m_vecLookDir.x * 400.f);
+		m_pHead->GetRigidBody()->SetVelocityX(m_vecLookDir.x * 400.f);
 		m_pHead->SetAttackDuration(6.f);
+		//m_pHead->GetRigidBody()->
 
 		m_bHeadOn = false;
 		m_skillA.UseSkill();

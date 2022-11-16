@@ -39,6 +39,7 @@ private:
 	Vector m_vecForce;
 	
 	Vector m_vecVelocity;
+	Vector m_vecDir;				// 유닛에도 존재한다.
 
 	bool isUpDownCol;
 
@@ -79,6 +80,8 @@ public:
 	void PowerToY(float y);
 	void PowerToX(float x);
 	void Power(Vector force);
+
+	void InitRigidBody();
 
 public:
 

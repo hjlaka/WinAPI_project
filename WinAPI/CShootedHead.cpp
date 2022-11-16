@@ -25,9 +25,11 @@ CRigidBody* CShootedHead::GetRigidBody()
 void CShootedHead::HeadInit()
 {
 	Logger::Debug(L"머리 초기화");
+	//m_pRigid->InitRigidBody();
 	m_pRigid->SetIsGravity(false);
 	m_pRigid->SetIsFrictional(false);
 	m_vecPos = Vector(-100, -100);
+	
 }
 
 void CShootedHead::Init()
@@ -40,16 +42,18 @@ void CShootedHead::Init()
 void CShootedHead::Update()
 {
 	
-	if (m_fDuration > 0)
+	if (m_fDuration > 0)			// 머리가 활성화된 시간
 	{
 		m_fDuration -= DT;
+
+		if (m_fDuration <= 0)
+		{
+			Logger::Debug(L"머리 돌아감");
+			HeadInit();
+		}
 	}
 
-	if (m_fDuration <= 0)
-	{
-		HeadInit();
-		//DELETEOBJECT(this);
-	}
+	
 }
 
 void CShootedHead::OnCollisionEnter(CCollider* pOtherCollider)
@@ -69,7 +73,8 @@ void CShootedHead::OnCollisionEnter(CCollider* pOtherCollider)
 		Logger::Debug(L"벽충돌");
 		m_pRigid->SetIsGravity(true);
 		m_pRigid->SetIsFrictional(true);
-		m_pRigid->PowerToX(-20.f);
+		Vector diff = GetCollider()->GetPos() - pOtherCollider->GetPos();
+		m_pRigid->PowerToX(diff.Normalized().x * 20.f);
 		m_pRigid->WallCollisionEnter(GetCollider(), pOtherCollider);
 
 	}

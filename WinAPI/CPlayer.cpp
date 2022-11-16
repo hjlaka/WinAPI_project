@@ -196,7 +196,7 @@ void CPlayer::Update()
 	m_pRigid->SetDirectionX(0);
 
 
-	if (m_state == STATE::IDLE)
+	if (m_state == STATE::IDLE)					// 중립 상태가 아니어도 MoveDir는 수정되어야 한다.
 	{
 		if (BUTTONSTAY(VK_LEFT))
 		{
