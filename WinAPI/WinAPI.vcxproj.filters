@@ -258,6 +258,18 @@
     <ClInclude Include="CUIFrame.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="CPlayerIdle.h">
+      <Filter>헤더 파일\PlayerState</Filter>
+    </ClInclude>
+    <ClInclude Include="CPlayerJumpAttack.h">
+      <Filter>헤더 파일\PlayerState</Filter>
+    </ClInclude>
+    <ClInclude Include="CPlayerFalling.h">
+      <Filter>헤더 파일\PlayerState</Filter>
+    </ClInclude>
+    <ClInclude Include="CPlayerSkillA.h">
+      <Filter>헤더 파일\PlayerState</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinAPI.cpp">
@@ -435,6 +447,18 @@
       <Filter>Engine\Component</Filter>
     </ClCompile>
     <ClCompile Include="CUIFrame.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="CPlayerIdle.cpp">
+      <Filter>헤더 파일\PlayerState</Filter>
+    </ClCompile>
+    <ClCompile Include="CPlayerSkillA.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="CPlayerJumpAttack.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="CPlayerFalling.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

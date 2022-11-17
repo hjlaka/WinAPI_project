@@ -2,21 +2,44 @@
 #include "CUnit.h"
 #include "Skill.h"
 
+
+
 class CImage;
 class CAnimator;
 class CRigidBody;
 class CStatePlayer;
+
+
+class CPlayerIdle;
+class CPlayerMoving;
 class CPlayerJumping;
+class CPlayerDashing;
+class CPlayerAttacking;
+class CPlayerJumpAttack;
+class CPlayerSkillA;
+class CPlayerFalling;
+
+
+
+
+
+
 class CGameManager;
 
-enum class STATE {IDLE, ATTACKA, ATTACKB, MOVE, DASH, JUMP, JUMPATTACK};
+enum class STATE {IDLE, ATTACK, ATTACKA, ATTACKB, MOVE, DASH, JUMP, JUMPATTACK};
 enum class SKUL_TYPE {LITTLE_BONE, HUNTER};
 
 class CPlayer : public CUnit
 {
 	friend CGameManager;
 	friend CPlayerJumping;
-	
+	friend CPlayerDashing;
+	friend CPlayerIdle;
+	friend CPlayerMoving;
+	friend CPlayerAttacking;
+	friend CPlayerSkillA;
+	friend CPlayerFalling;
+
 
 public:
 	CPlayer();
@@ -25,6 +48,17 @@ public:
 public:
 	CStatePlayer* m_pPlayerState;
 	STATE m_state;
+
+private:
+
+	//CPlayerJumping jump;
+	//CPlayerDashing dash;
+	//CPlayerIdle idle;
+	//CPlayerMoving move;
+	//CPlayerAttacking attack;
+	//CPlayerSkillA skillA;
+	//CPlayerFalling fall;
+
 
 protected:
 	SKUL_TYPE m_curSkulType;
@@ -54,6 +88,7 @@ protected:
 	Vector m_vecMoveDir;
 	
 	bool m_bIsMove;
+	bool m_bIsCanMove;
 	bool m_bIsAttack;
 	bool m_bAttackContinue;
 	int m_iAttackCount;
@@ -67,6 +102,7 @@ protected:
 	float m_fFallTime;
 	float m_fAttackATime;
 	float m_fAttackBTime;
+	float m_fAttackJTime;
 
 	float m_fJumpPower = 100.f;
 

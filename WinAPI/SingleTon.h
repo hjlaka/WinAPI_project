@@ -33,7 +33,7 @@ template <typename T>
 class SingleTon
 {
 protected:
-	static T* instance;
+	//static T* instance;
 
 	SingleTon() {};
 	virtual ~SingleTon() {};

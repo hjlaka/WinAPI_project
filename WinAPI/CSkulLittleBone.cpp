@@ -77,17 +77,16 @@ void CSkulLittleBone::AnimatorUpdate()
 		//return;
 	}
 
+	else if (m_state == STATE::JUMPATTACK)
+	{
+		str += L"JumpAttack";
+		//m_pAnimator->Play(str, false);
+		//return;
+	}
 	else if (m_pRigid->GetGroundCount() == 0)
 	{
-
-		if (m_bIsAttack)
-		{
-			str += L"JumpAttack";
-			//m_pAnimator->Play(str, false);
-			//return;
-		}
-
-		else if (m_pRigid->GetGravitySpeed() < 0)
+		
+		if (m_pRigid->GetGravitySpeed() < 0)
 		{
 			str += L"Jump";
 			//m_pAnimator->Play(str, false);
@@ -112,7 +111,7 @@ void CSkulLittleBone::AnimatorUpdate()
 
 	else if (m_bIsAttack)
 	{
-
+		
 		if (m_state == STATE::ATTACKA)
 		{
 			str += L"AttackA";

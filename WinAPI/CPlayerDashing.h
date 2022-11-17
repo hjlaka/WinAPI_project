@@ -7,9 +7,11 @@ public:
 	virtual ~CPlayerDashing();
 
 public:
-	virtual CStatePlayer* HandleInput(CPlayer* player);
-	virtual void Update(CPlayer* player) {};
-	virtual void Enter(CPlayer* player) {};
-	virtual void Exit(CPlayer* player) {};
+	//static CStatePlayer* Instance();
+
+	virtual CStatePlayer* HandleInput(CPlayer* pPlayer);
+	virtual void Update(CPlayer* pPlayer);
+	virtual void Enter(CPlayer* pPlayer);
+	virtual void Exit(CPlayer* pPlayer);
 };
 

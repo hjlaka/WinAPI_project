@@ -1,29 +1,22 @@
 #pragma once
-#include "CComponent.h"
-class CPlayer;
-class CPlayerMoving;
-class CPlayerJumping;
-class CPlayerDashing;
-class CPlayerAttacking;
+#include "CPlayer.h"
+#include "CRigidBody.h"
 
-class CStatePlayer : public CComponent
+
+class CPlayer;
+
+
+class CStatePlayer
 {
+	friend CPlayer;
+
 public:
 	CStatePlayer();
 	virtual ~CStatePlayer();
 
-protected:
-	static CPlayerMoving* moving;
-	static CPlayerJumping* jumping;
-	static CPlayerDashing* dashing;
-	static CPlayerAttacking* attacking;
-
-
-
-
 
 public:
-	virtual CStatePlayer* HandleInput(CPlayer* player) { return this; };
+	virtual CStatePlayer* HandleInput(CPlayer* player) { return nullptr; };
 	virtual void Update(CPlayer* player) {};
 	virtual void Enter(CPlayer* player) {};
 	virtual void Exit(CPlayer* player) {};

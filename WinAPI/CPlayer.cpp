@@ -18,6 +18,11 @@
 #include "CSmoke.h"
 #include "CGameManager.h"
 
+#include "CStatePlayer.h"
+#include "CPlayerIdle.h"
+
+
+
 
 CPlayer::CPlayer()
 {
@@ -39,6 +44,7 @@ CPlayer::CPlayer()
 	m_vecMoveDir = Vector(0, 0);
 	m_vecLookDir = Vector(1, 0);
 	m_bIsMove = false;
+	m_bIsCanMove = false;
 	m_bIsAttack = false;
 	m_iAttackCount = 0;
 	m_iJumpCount = 0;
@@ -47,13 +53,14 @@ CPlayer::CPlayer()
 	m_bAttackContinue = false;
 
 	m_fAttackContinue = 0;
-	
+
 	m_fFallTime = 0;
 	m_fAttackATime = 0;
 	m_fAttackBTime = 0;
+	m_fAttackJTime = 0;
 
 	m_fDashClock = 0;
-	
+
 	m_pPlayerState = nullptr;
 	m_state = STATE::IDLE;
 
@@ -75,21 +82,20 @@ CPlayer::CPlayer()
 	//
 
 
+	//
+
+
 	m_iHp = 100;
 	m_iCurHp = 100;
 	m_iAtt = 10;
 
 	m_fSpeed = 300.f;
-
-
-	//
-
 }
+
 
 CPlayer::~CPlayer()
 {
-	if (nullptr != m_pPlayerState)
-		delete m_pPlayerState;
+
 }
 
 void CPlayer::UpdateSkill()
@@ -181,6 +187,8 @@ void CPlayer::Init()
 
 	
 	};
+
+
 	
 #pragma endregion
 
@@ -194,12 +202,48 @@ void CPlayer::Init()
 	m_bIsRigidBody = true;
 
 
+	// 상태 생성 및 초기화 (상태도 컴포넌트로 만들어야 하나?)
+	m_pPlayerState = new CPlayerIdle;
 
 }
 
 void CPlayer::Update()
 {
 	
+	CStatePlayer* nextState = m_pPlayerState->HandleInput(this);
+	if (nullptr != nextState)
+	{
+		m_pPlayerState->Exit(this);
+
+		delete m_pPlayerState;
+		m_pPlayerState = nextState;
+
+		m_pPlayerState->Enter(this);
+	}
+
+	m_pPlayerState->Update(this);
+
+	if (m_bIsCanMove)			// 키보드 조작대로 움직일 수 있는 경우
+	{
+		if (BUTTONSTAY(VK_LEFT))
+		{
+			m_vecMoveDir.x = -1;
+
+		}
+		else if (BUTTONSTAY(VK_RIGHT))
+		{
+
+			m_vecMoveDir.x = +1;
+		}
+		else
+		{
+			m_vecMoveDir.x = 0;
+		}
+		m_pRigid->SetVelocityX(m_vecMoveDir.x * m_fSpeed);
+	}
+
+
+	/*
 	m_bIsMove = false;
 	m_bIsDash = false;
 
@@ -213,7 +257,7 @@ void CPlayer::Update()
 	{
 		if (BUTTONSTAY(VK_LEFT))
 		{
-			m_pRigid->SetDirectionX(-1);
+			//m_pRigid->SetDirectionX(-1);
 			m_pRigid->SetVelocityX(-1 * m_fSpeed);
 			m_bIsMove = true;
 			m_vecMoveDir.x = -1;
@@ -221,7 +265,7 @@ void CPlayer::Update()
 		}
 		else if (BUTTONSTAY(VK_RIGHT))
 		{
-			m_pRigid->SetDirectionX(+1);
+			//m_pRigid->SetDirectionX(+1);
 			m_pRigid->SetVelocityX(m_fSpeed);
 			m_bIsMove = true;
 			m_vecMoveDir.x = +1;
@@ -236,15 +280,31 @@ void CPlayer::Update()
 	
 
 
-
-	if (m_bIsAttack)	//공격중일 때
+	if (BUTTONDOWN('X') && m_pRigid->GetGravitySpeed() != 0)
 	{
-		if (BUTTONDOWN('X') && !m_bAttackContinue)
+		m_state = STATE::JUMPATTACK;
+		m_bIsAttack = true;
+		Attack();
+		m_fAttackJTime = 0.5f;
+	}
+	else if (m_bIsAttack)	//공격중일 때
+	{
+		if (BUTTONDOWN('X') && !m_bAttackContinue )
 		{
 			m_bAttackContinue = true;
 		}
 
-		if (m_state == STATE::ATTACKA)
+		if (m_state == STATE::JUMPATTACK)
+		{
+			m_fAttackJTime -= DT;
+			if (m_fAttackJTime <= 0)
+			{
+				m_bIsAttack = false;
+				m_state = STATE::IDLE;
+			}
+		}
+
+		else if (m_state == STATE::ATTACKA)
 		{
 			m_fAttackATime -= DT;
 			if (m_fAttackATime <= 0)
@@ -253,7 +313,6 @@ void CPlayer::Update()
 				{
 					m_bIsAttack = false;
 					m_state = STATE::IDLE;
-					return;
 				}
 				else
 				{
@@ -396,10 +455,10 @@ void CPlayer::Update()
 		m_pRigid->PowerToX(m_vecLookDir.x * 500.f);
 	}
 
-	if (BUTTONSTAY('R'))
-	{
-		m_vecPos = Vector(100, 100);
-	}
+	
+
+
+	
 
 	if (BUTTONDOWN('C') && m_iJumpCount < 2)
 	{
@@ -418,9 +477,17 @@ void CPlayer::Update()
 		}
 	}
 
+	
+
+	*/
 	if (m_pRigid->GetGroundCount() == 0 && m_pRigid->GetGravitySpeed() >= 0)
 	{
 		m_fFallTime += DT;
+	}
+
+	if (BUTTONSTAY('R'))
+	{
+		m_vecPos = Vector(100, 100);
 	}
 
 	UpdateInState();
@@ -441,6 +508,8 @@ void CPlayer::Render()
 
 void CPlayer::Release()
 {
+	if (nullptr != m_pPlayerState)
+		delete m_pPlayerState;
 }
 
 void CPlayer::UpdateInState()
@@ -454,7 +523,7 @@ void CPlayer::AnimatorUpdate()
 
 	wstring str = L"";
 
-	if (m_bIsDash)
+	if (m_state == STATE::DASH)
 	{
 		str += L"Dash";
 		m_pAnimator->Play(str, false);
@@ -464,12 +533,7 @@ void CPlayer::AnimatorUpdate()
 	if (m_pRigid->GetGroundCount() == 0)
 	{
 		
-		if (m_bIsAttack)
-		{
-			str += L"JumpAttack";
-			m_pAnimator->Play(str, false);
-			return;
-		}
+		
 
 		if (m_pRigid->GetGravitySpeed() < 0)
 		{
@@ -494,24 +558,27 @@ void CPlayer::AnimatorUpdate()
 	}
 	
 
-	if (m_bIsAttack)
-	{
-		
-		if (m_state == STATE::ATTACKA)
+	
+		if (m_state == STATE::JUMPATTACK)
+		{
+			str += L"JumpAttack";
+			m_pAnimator->Play(str, false);
+			return;
+		}
+		else if (m_state == STATE::ATTACK && m_iAttackCount == 0)
 		{
 			str += L"AttackA";
 			m_pAnimator->Play(str, false);
 			
 			return;
 		}
-		else if(m_state == STATE::ATTACKB)
+		else if(m_state == STATE::ATTACK && m_iAttackCount == 1)
 		{
 			str += L"AttackB";
 			m_pAnimator->Play(str, false);
 			
 			return;
 		}
-	}
 		
 	
 

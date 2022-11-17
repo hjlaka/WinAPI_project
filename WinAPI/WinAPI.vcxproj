@@ -166,8 +166,12 @@
     <ClInclude Include="CPlayerAttack.h" />
     <ClInclude Include="CPlayerAttacking.h" />
     <ClInclude Include="CPlayerDashing.h" />
+    <ClInclude Include="CPlayerFalling.h" />
+    <ClInclude Include="CPlayerIdle.h" />
+    <ClInclude Include="CPlayerJumpAttack.h" />
     <ClInclude Include="CPlayerJumping.h" />
     <ClInclude Include="CPlayerMoving.h" />
+    <ClInclude Include="CPlayerSkillA.h" />
     <ClInclude Include="CRenderManager.h" />
     <ClInclude Include="CResource.h" />
     <ClInclude Include="CResourceManager.h" />
@@ -235,8 +239,12 @@
     <ClCompile Include="CPlayerAttack.cpp" />
     <ClCompile Include="CPlayerAttacking.cpp" />
     <ClCompile Include="CPlayerDashing.cpp" />
+    <ClCompile Include="CPlayerFalling.cpp" />
+    <ClCompile Include="CPlayerIdle.cpp" />
+    <ClCompile Include="CPlayerJumpAttack.cpp" />
     <ClCompile Include="CPlayerJumping.cpp" />
     <ClCompile Include="CPlayerMoving.cpp" />
+    <ClCompile Include="CPlayerSkillA.cpp" />
     <ClCompile Include="CRenderManager.cpp" />
     <ClCompile Include="CResource.cpp" />
     <ClCompile Include="CResourceManager.cpp" />

@@ -1,14 +1,13 @@
 #pragma once
 #include "CStatePlayer.h"
-class CPlayerJumping : public CStatePlayer
+
+class CPlayerSkillA : public CStatePlayer
 {
 public:
-	CPlayerJumping();
-	virtual ~CPlayerJumping();
+	CPlayerSkillA();
+	virtual ~CPlayerSkillA();
 
 public:
-	//static CStatePlayer* Instance();
-
 	virtual CStatePlayer* HandleInput(CPlayer* player);
 	virtual void Update(CPlayer* player);
 	virtual void Enter(CPlayer* player);
