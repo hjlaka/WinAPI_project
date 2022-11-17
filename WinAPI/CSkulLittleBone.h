@@ -32,7 +32,7 @@ public:
 private:
 
 	void ReturnHead();
-
+	void AnimatorUpdate();
 
 private:
 

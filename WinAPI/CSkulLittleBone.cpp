@@ -63,6 +63,91 @@ void CSkulLittleBone::ReturnHead()
 	m_skillA.ReadySkill();
 }
 
+void CSkulLittleBone::AnimatorUpdate()
+{
+	if (m_vecMoveDir.Length() > 0)
+		m_vecLookDir = m_vecMoveDir;
+
+	wstring str = L"";
+
+	if (m_bIsDash)
+	{
+		str += L"Dash";
+		//m_pAnimator->Play(str, false);
+		//return;
+	}
+
+	else if (m_pRigid->GetGroundCount() == 0)
+	{
+
+		if (m_bIsAttack)
+		{
+			str += L"JumpAttack";
+			//m_pAnimator->Play(str, false);
+			//return;
+		}
+
+		else if (m_pRigid->GetGravitySpeed() < 0)
+		{
+			str += L"Jump";
+			//m_pAnimator->Play(str, false);
+			//return;
+		}
+		//else if(!m_bOverPeak)
+		else if (m_fFallTime <= 0.3f)
+		{
+			str += L"Fall";
+			//m_pAnimator->Play(str, false);
+			//m_bOverPeak = true;				// 다 재생되고 바뀌어야 한다.
+			//return;
+		}
+		else
+		{
+			str += L"FallRepeat";
+			//m_pAnimator->Play(str, false);
+			//return;
+		}
+	}
+
+
+	else if (m_bIsAttack)
+	{
+
+		if (m_state == STATE::ATTACKA)
+		{
+			str += L"AttackA";
+			//m_pAnimator->Play(str, false);
+
+			//return;
+		}
+		else if (m_state == STATE::ATTACKB)
+		{
+			str += L"AttackB";
+			//m_pAnimator->Play(str, false);
+
+			//return;
+		}
+	}
+
+
+
+	else
+	{
+		if (m_bIsMove)	str += L"Move";
+		else			str += L"Idle";
+
+		if (m_vecLookDir.x > 0) str += L"Right";
+		else if (m_vecLookDir.x < 0) str += L"Left";
+	}
+
+	if (!(m_pHead->GetHeadOn()))
+	{
+		str += L"_Headless";
+	}
+
+	m_pAnimator->Play(str, false);
+}
+
 
 
 void CSkulLittleBone::SkillA()

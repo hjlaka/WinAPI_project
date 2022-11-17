@@ -26,7 +26,7 @@ public:
 	CStatePlayer* m_pPlayerState;
 	STATE m_state;
 
-private:
+protected:
 	SKUL_TYPE m_curSkulType;
 	SKUL_TYPE m_subSkulType;
 
@@ -40,6 +40,16 @@ private:
 	CImage* m_pFallRepeatImage;
 	CImage* m_pDashImage;
 	CImage* m_pJumpAttackImage;
+
+	CImage* m_pIdleHeadlessImage;
+	CImage* m_pMoveHeadlessImage;
+	CImage* m_pAttackHeadlessImage;
+	CImage* m_pAttackBHeadlessImage;
+	CImage* m_pJumpHeadlessImage;
+	CImage* m_pFallHeadlessImage;
+	CImage* m_pFallRepeatHeadlessImage;
+	CImage* m_pDashHeadlessImage;
+	CImage* m_pJumpAttackHeadlessImage;
 
 	Vector m_vecMoveDir;
 	
@@ -95,7 +105,7 @@ protected:
 	void Release() override;
 
 	void UpdateInState();
-	void AnimatorUpdate();
+	virtual void AnimatorUpdate();
 	void CreateMissile();
 	void Jump(float fJumpPower);
 	void Attack();
