@@ -6,6 +6,7 @@
 class CPlayer;
 
 
+
 class CStatePlayer
 {
 	friend CPlayer;
@@ -22,5 +23,6 @@ public:
 	virtual void Update(CPlayer* pPlayer) {};
 	virtual void Enter(CPlayer* pPlayer) {};
 	virtual void Exit(CPlayer* pPlayer) {};
+
 };
 

@@ -119,86 +119,7 @@ SkillInfo* CPlayer::GetSkillS()
 void CPlayer::Init()
 {
 
-#pragma region Animation Setting
-	m_pIdleImage = RESOURCE->LoadImg(L"PlayerIdle", L"Image\\idle_skul.png");
-	m_pMoveImage = RESOURCE->LoadImg(L"PlayerMove", L"Image\\move_skul.png");
-	m_pAttackImage = RESOURCE->LoadImg(L"PlayerAttack", L"Image\\attackA_skul.png");
-	m_pAttackBImage = RESOURCE->LoadImg(L"PlayerAttackB", L"Image\\attackB_skul.png");
-	m_pJumpImage = RESOURCE->LoadImg(L"PlayerJump", L"Image\\jump_skul.png");
-	m_pFallImage = RESOURCE->LoadImg(L"PlayerFall", L"Image\\fall_skul.png");
-	m_pFallRepeatImage = RESOURCE->LoadImg(L"PlayerFallRepeat", L"Image\\fallrepeat_skul.png");
-	m_pDashImage = RESOURCE->LoadImg(L"PlayerDash", L"Image\\dash_skul.png");
-	m_pJumpAttackImage = RESOURCE->LoadImg(L"PlayerJumpAttack", L"Image\\jumpattack_skul.png");
-	m_pShootHead = RESOURCE->LoadImg(L"PlayerSkillA", L"Image\\skillA_skul.png");
-	m_pHeadIsI = RESOURCE->LoadImg(L"PlayerSkillB", L"Image\\skillB_skul.png");
-
-	m_pIdleHeadlessImage = RESOURCE->LoadImg(L"PlayerIdle_Headless", L"Image\\idle_headless_skul.png");
-	m_pMoveHeadlessImage = RESOURCE->LoadImg(L"PlayerMove_Headless", L"Image\\move_headless_skul.png");
-	m_pAttackHeadlessImage = RESOURCE->LoadImg(L"PlayerAttack_Headless", L"Image\\attackA_headless_skul.png");
-	m_pAttackBHeadlessImage = RESOURCE->LoadImg(L"PlayerAttackB_Headless", L"Image\\attackB_headless_skul.png");
-	m_pJumpHeadlessImage = RESOURCE->LoadImg(L"PlayerJump_Headless", L"Image\\jump_headless_skul.png");
-	m_pFallHeadlessImage = RESOURCE->LoadImg(L"PlayerFall_Headless", L"Image\\fall_headless_skul.png");
-	m_pFallRepeatHeadlessImage = RESOURCE->LoadImg(L"PlayerFallRepeat_Headless", L"Image\\fallrepeat_headless_skul.png");
-	m_pDashHeadlessImage = RESOURCE->LoadImg(L"PlayerDash_Headless", L"Image\\dash_headless_skul.png");
-	m_pJumpAttackHeadlessImage = RESOURCE->LoadImg(L"PlayerJumpAttack_Headless", L"Image\\jumpattack_headless_skul.png");
-
 	m_pAnimator = new CAnimator;
-	m_pAnimator->CreateAnimation(L"IdleRight", m_pIdleImage, Vector(0.f, 20.f), Vector(85.f, 75.f), Vector(96.f, 0.f), 0.5f, 4);
-	m_pAnimator->CreateAnimation(L"IdleLeft", m_pIdleImage, Vector(0.f, 20.f), Vector(85.f, 75.f), Vector(96.f, 0.f), 0.5f, 4);
-	m_pAnimator->CreateAnimation(L"MoveRight",		m_pMoveImage, Vector(0.f, 20.f), Vector(80.f, 75.f), Vector(96.f, 0.f), 0.05f, 8);
-	m_pAnimator->CreateAnimation(L"MoveLeft",		m_pMoveImage, Vector(0.f, 20.f), Vector(80.f, 75.f), Vector(96.f, 0.f), 0.05f, 8);
-	m_pAnimator->CreateAnimation(L"AttackA", m_pAttackImage, Vector(0.f, 20.f), Vector(100.f, 75.f), Vector(96.f, 0.f), 0.1f, 5);
-	m_pAnimator->CreateAnimation(L"AttackB", m_pAttackBImage, Vector(0.f, 20.f), Vector(100.f, 75.f), Vector(96.f, 0.f), 0.1f, 4);
-	m_pAnimator->CreateAnimation(L"Jump", m_pJumpImage, Vector(20.f, 25.f), Vector(50.f, 50.f), Vector(96.f, 0.f), 0.15f, 2);
-	m_pAnimator->CreateAnimation(L"Fall", m_pFallImage, Vector(20.f, 25.f), Vector(50.f, 50.f), Vector(96.f, 0.f), 0.15f, 2);
-	m_pAnimator->CreateAnimation(L"FallRepeat", m_pFallRepeatImage, Vector(20.f, 25.f), Vector(50.f, 50.f), Vector(96.f, 0.f), 0.15f, 3);
-	m_pAnimator->CreateAnimation(L"Dash", m_pDashImage, Vector(0.f, 25.f), Vector(75.f, 50.f), Vector(96.f, 0.f), 0.15f, 1);
-	m_pAnimator->CreateAnimation(L"JumpAttack", m_pJumpAttackImage, Vector(0.f, 20.f), Vector(100.f, 75.f), Vector(96.f, 0.f), 0.1f, 4);
-	m_pAnimator->CreateAnimation(L"ShootHead", m_pShootHead, Vector(0.f, 20.f), Vector(100.f, 75.f), Vector(96.f, 0.f), 0.1f, 4);
-	m_pAnimator->CreateAnimation(L"HeadIsI", m_pHeadIsI, Vector(0.f, 20.f), Vector(100.f, 75.f), Vector(96.f, 0.f), 0.05f, 9);
-
-	m_pAnimator->CreateAnimation(L"IdleRight_Headless", m_pIdleHeadlessImage, Vector(0.f, 20.f), Vector(85.f, 75.f), Vector(96.f, 0.f), 0.5f, 4);
-	m_pAnimator->CreateAnimation(L"IdleLeft_Headless", m_pIdleHeadlessImage, Vector(0.f, 20.f), Vector(85.f, 75.f), Vector(96.f, 0.f), 0.5f, 4);
-	m_pAnimator->CreateAnimation(L"MoveRight_Headless", m_pMoveHeadlessImage, Vector(0.f, 20.f), Vector(80.f, 75.f), Vector(96.f, 0.f), 0.05f, 8);
-	m_pAnimator->CreateAnimation(L"MoveLeft_Headless", m_pMoveHeadlessImage, Vector(0.f, 20.f), Vector(80.f, 75.f), Vector(96.f, 0.f), 0.05f, 8);
-	m_pAnimator->CreateAnimation(L"AttackA_Headless", m_pAttackHeadlessImage, Vector(0.f, 20.f), Vector(100.f, 75.f), Vector(96.f, 0.f), 0.1f, 5);
-	m_pAnimator->CreateAnimation(L"AttackB_Headless", m_pAttackBHeadlessImage, Vector(0.f, 20.f), Vector(100.f, 75.f), Vector(96.f, 0.f), 0.1f, 4);
-	m_pAnimator->CreateAnimation(L"Jump_Headless", m_pJumpHeadlessImage, Vector(20.f, 25.f), Vector(50.f, 50.f), Vector(96.f, 0.f), 0.15f, 2);
-	m_pAnimator->CreateAnimation(L"Fall_Headless", m_pFallHeadlessImage, Vector(20.f, 25.f), Vector(50.f, 50.f), Vector(96.f, 0.f), 0.15f, 2);
-	m_pAnimator->CreateAnimation(L"FallRepeat_Headless", m_pFallRepeatHeadlessImage, Vector(20.f, 25.f), Vector(50.f, 50.f), Vector(96.f, 0.f), 0.15f, 3);
-	m_pAnimator->CreateAnimation(L"Dash_Headless", m_pDashHeadlessImage, Vector(0.f, 25.f), Vector(75.f, 50.f), Vector(96.f, 0.f), 0.15f, 1);
-	m_pAnimator->CreateAnimation(L"JumpAttack_Headless", m_pJumpAttackHeadlessImage, Vector(0.f, 20.f), Vector(100.f, 75.f), Vector(96.f, 0.f), 0.1f, 4);
-	auto attackEnd = [](DWORD_PTR pMe, DWORD_PTR pParam2)
-	{
-		CPlayer* pPlayer = (CPlayer*)pMe;
-
-		//플레이어의 공격 상태를 해제한다.
-
-		if (pPlayer->m_iAttackCount > 1)
-		{
-
-		}
-
-		pPlayer->m_bIsAttack = false;
-		pPlayer->m_iAttackCount++;
-		
-	};
-
-	auto falling = [](DWORD_PTR pMe, DWORD_PTR pParam2)
-	{
-		CPlayer* pPlayer = (CPlayer*)pMe;
-
-
-		pPlayer->m_bOverPeak = true;
-
-	
-	};
-
-
-	
-#pragma endregion
-
-	m_pAnimator->Play(L"IdleRight", false);
 	AddComponent(m_pAnimator);
 
 	AddCollider(ColliderType::Rect, Vector(30, 30), Vector(0, 0));
@@ -531,77 +452,77 @@ void CPlayer::UpdateInState()
 
 void CPlayer::AnimatorUpdate()
 {
-	if (m_vecMoveDir.Length() > 0)
-		m_vecLookDir = m_vecMoveDir;
+	//if (m_vecMoveDir.Length() > 0)
+	//	m_vecLookDir = m_vecMoveDir;
 
-	wstring str = L"";
+	//wstring str = L"";
 
-	if (m_state == STATE::DASH)
-	{
-		str += L"Dash";
-		m_pAnimator->Play(str, false);
-		return;
-	}
+	//if (m_state == STATE::DASH)
+	//{
+	//	str += L"Dash";
+	//	m_pAnimator->Play(str, false);
+	//	return;
+	//}
 
-	if (m_pRigid->GetGroundCount() == 0)
-	{
-		
-		
+	//if (m_pRigid->GetGroundCount() == 0)
+	//{
+	//	
+	//	
 
-		if (m_pRigid->GetGravitySpeed() < 0)
-		{
-			str += L"Jump";
-			m_pAnimator->Play(str, false);
-			return;
-		}
-		//else if(!m_bOverPeak)
-		else if(m_fFallTime <= 0.3f)
-		{
-			str += L"Fall";
-			m_pAnimator->Play(str, false);
-			//m_bOverPeak = true;				// 다 재생되고 바뀌어야 한다.
-			return;
-		}
-		else
-		{
-			str += L"FallRepeat";
-			m_pAnimator->Play(str, false);
-			return;
-		}
-	}
-	
+	//	if (m_pRigid->GetGravitySpeed() < 0)
+	//	{
+	//		str += L"Jump";
+	//		m_pAnimator->Play(str, false);
+	//		return;
+	//	}
+	//	//else if(!m_bOverPeak)
+	//	else if(m_fFallTime <= 0.3f)
+	//	{
+	//		str += L"Fall";
+	//		m_pAnimator->Play(str, false);
+	//		//m_bOverPeak = true;				// 다 재생되고 바뀌어야 한다.
+	//		return;
+	//	}
+	//	else
+	//	{
+	//		str += L"FallRepeat";
+	//		m_pAnimator->Play(str, false);
+	//		return;
+	//	}
+	//}
+	//
 
-	
-		if (m_state == STATE::JUMPATTACK)
-		{
-			str += L"JumpAttack";
-			m_pAnimator->Play(str, false);
-			return;
-		}
-		else if (m_state == STATE::ATTACKA)
-		{
-			str += L"AttackA";
-			m_pAnimator->Play(str, false);
-			
-			return;
-		}
-		else if(m_state == STATE::ATTACKB)
-		{
-			str += L"AttackB";
-			m_pAnimator->Play(str, false);
-			
-			return;
-		}
-		
-	
+	//
+	//	if (m_state == STATE::JUMPATTACK)
+	//	{
+	//		str += L"JumpAttack";
+	//		m_pAnimator->Play(str, false);
+	//		return;
+	//	}
+	//	else if (m_state == STATE::ATTACKA)
+	//	{
+	//		str += L"AttackA";
+	//		m_pAnimator->Play(str, false);
+	//		
+	//		return;
+	//	}
+	//	else if(m_state == STATE::ATTACKB)
+	//	{
+	//		str += L"AttackB";
+	//		m_pAnimator->Play(str, false);
+	//		
+	//		return;
+	//	}
+	//	
+	//
 
-	if (m_bIsMove)	str += L"Move";
-	else			str += L"Idle";
+	//if (m_bIsMove)	str += L"Move";
+	//else			str += L"Idle";
 
-	if (m_vecLookDir.x > 0) str += L"Right";
-	else if (m_vecLookDir.x < 0) str += L"Left";
+	//if (m_vecLookDir.x > 0) str += L"Right";
+	//else if (m_vecLookDir.x < 0) str += L"Left";
 
-	m_pAnimator->Play(str, false);
+	//m_pAnimator->Play(str, false);
 }
 
 
