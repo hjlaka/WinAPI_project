@@ -2,6 +2,7 @@
 #include "CPlayerJumpAttack.h"
 #include "CPlayerIdle.h"
 #include "CPlayerDashing.h"
+#include "CPlayerJumping.h"
 
 CPlayerJumpAttack::CPlayerJumpAttack()
 {
@@ -17,6 +18,9 @@ CStatePlayer* CPlayerJumpAttack::HandleInput(CPlayer* pPlayer)
 	{
 		return new CPlayerDashing;
 	}
+
+	if (BUTTONDOWN('C') && pPlayer->m_iJumpCount < 2)		// 점프를 입력 받으면 행동을 캔슬한다.
+		return new CPlayerJumping;
 
 	if (pPlayer->m_fAttackJTime <= 0)
 	{

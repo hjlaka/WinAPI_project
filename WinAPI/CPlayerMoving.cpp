@@ -6,6 +6,7 @@
 #include "CPlayerAttackA.h"
 #include "CPlayerSkillA.h"
 #include "CPlayerSkillS.h"
+#include "CPlayerFalling.h"
 
 CPlayerMoving::CPlayerMoving()
 {
@@ -29,6 +30,14 @@ CStatePlayer* CPlayerMoving::HandleInput(CPlayer* pPlayer)
 	{
 		return new CPlayerIdle;
 	}
+
+	// ¶³¾îÁü
+
+	if (pPlayer->m_pRigid->GetGroundCount() == 0 && pPlayer->m_pRigid->GetGravitySpeed() >= 0)
+	{
+		return new CPlayerFalling;
+	}
+
 
 	// °ø°Ý
 	if (BUTTONDOWN('X'))
