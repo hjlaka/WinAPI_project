@@ -24,6 +24,24 @@ CPlayerIdle::~CPlayerIdle()
 
 CStatePlayer* CPlayerIdle::HandleInput(CPlayer* pPlayer)
 {
+	// ¹æÇâ ÀüÈ¯
+
+	if (BUTTONSTAY(VK_LEFT))
+	{
+		pPlayer->m_vecMoveDir.x = -1;
+
+	}
+	else if (BUTTONSTAY(VK_RIGHT))
+	{
+
+		pPlayer->m_vecMoveDir.x = +1;
+	}
+	else
+	{
+		pPlayer->m_vecMoveDir.x = 0;
+	}
+
+
 	// ¶³¾îÁü
 
 	if (pPlayer->m_pRigid->GetGroundCount() == 0 && pPlayer->m_pRigid->GetGravitySpeed() >= 0)
@@ -69,11 +87,11 @@ CStatePlayer* CPlayerIdle::HandleInput(CPlayer* pPlayer)
 	}
 
 	// ½ºÅ³
-	if (BUTTONDOWN('A') && pPlayer->m_skillA->state == SKILL_STATE::READY)
+	if (BUTTONDOWN('A') && pPlayer->m_skillA != nullptr && pPlayer->m_skillA->state == SKILL_STATE::READY)
 	{
 		return new CPlayerSkillA;
 	}
-	if (BUTTONDOWN('S') && pPlayer->m_skillS->state == SKILL_STATE::READY)
+	if (BUTTONDOWN('S') && pPlayer->m_skillS != nullptr && pPlayer->m_skillS->state == SKILL_STATE::READY)
 	{
 		return new CPlayerSkillS;
 	}
