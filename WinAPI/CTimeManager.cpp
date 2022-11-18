@@ -5,6 +5,9 @@ CTimeManager::CTimeManager()
 {
 	m_uiFPS = 1;
 	m_fDT = 1;
+
+	m_fTimeScale = 1.f;
+
 	updateCount = 0;
 	updateOneSecond = 0;
 
@@ -54,5 +57,10 @@ UINT CTimeManager::GetFPS()
 
 float CTimeManager::GetDT()
 {
-	return m_fDT;
+	return m_fDT * m_fTimeScale;
+}
+
+void CTimeManager::SetTimeScale(float scale)
+{
+	m_fTimeScale = scale;
 }
