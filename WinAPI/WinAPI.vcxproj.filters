@@ -213,7 +213,7 @@
     <ClInclude Include="CUIHpMonster.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="CPlayerAttacking.h">
+    <ClInclude Include="CPlayerAttackB.h">
       <Filter>헤더 파일\PlayerState</Filter>
     </ClInclude>
     <ClInclude Include="CPlayerDashing.h">
@@ -269,6 +269,9 @@
     </ClInclude>
     <ClInclude Include="CPlayerSkillA.h">
       <Filter>헤더 파일\PlayerState</Filter>
+    </ClInclude>
+    <ClInclude Include="CPlayerAttackA.h">
+      <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -410,7 +413,7 @@
     <ClCompile Include="CUIHpMonster.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="CPlayerAttacking.cpp">
+    <ClCompile Include="CPlayerAttackB.cpp">
       <Filter>헤더 파일\PlayerState</Filter>
     </ClCompile>
     <ClCompile Include="CPlayerDashing.cpp">
@@ -460,6 +463,9 @@
     </ClCompile>
     <ClCompile Include="CPlayerFalling.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="CPlayerAttackA.cpp">
+      <Filter>헤더 파일\PlayerState</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -480,10 +480,10 @@ void CPlayer::Update()
 	
 
 	*/
-	if (m_pRigid->GetGroundCount() == 0 && m_pRigid->GetGravitySpeed() >= 0)
+	/*if (m_pRigid->GetGroundCount() == 0 && m_pRigid->GetGravitySpeed() >= 0)
 	{
 		m_fFallTime += DT;
-	}
+	}*/
 
 	if (BUTTONSTAY('R'))
 	{
@@ -565,14 +565,14 @@ void CPlayer::AnimatorUpdate()
 			m_pAnimator->Play(str, false);
 			return;
 		}
-		else if (m_state == STATE::ATTACK && m_iAttackCount == 0)
+		else if (m_state == STATE::ATTACKA)
 		{
 			str += L"AttackA";
 			m_pAnimator->Play(str, false);
 			
 			return;
 		}
-		else if(m_state == STATE::ATTACK && m_iAttackCount == 1)
+		else if(m_state == STATE::ATTACKB)
 		{
 			str += L"AttackB";
 			m_pAnimator->Play(str, false);
@@ -638,7 +638,7 @@ void CPlayer::Attack()
 	pAttack->SetPos(m_vecPos);
 	pAttack->SetOffset(Vector(m_vecLookDir.x * 30, -10));
 	pAttack->SetOwner(this);
-	pAttack->SetAttackDuration(0.8f);
+	pAttack->SetAttackDuration(0.4f);
 	//pAttack->SetDir(m_vecLookDir);
 	ADDOBJECT(pAttack);
 }

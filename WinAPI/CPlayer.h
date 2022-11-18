@@ -14,7 +14,8 @@ class CPlayerIdle;
 class CPlayerMoving;
 class CPlayerJumping;
 class CPlayerDashing;
-class CPlayerAttacking;
+class CPlayerAttackA;
+class CPlayerAttackB;
 class CPlayerJumpAttack;
 class CPlayerSkillA;
 class CPlayerFalling;
@@ -24,9 +25,10 @@ class CPlayerFalling;
 
 
 
+
 class CGameManager;
 
-enum class STATE {IDLE, ATTACK, ATTACKA, ATTACKB, MOVE, DASH, JUMP, JUMPATTACK};
+enum class STATE {IDLE, ATTACK, ATTACKA, ATTACKB, MOVE, DASH, JUMP, JUMPATTACK, FALL};
 enum class SKUL_TYPE {LITTLE_BONE, HUNTER};
 
 class CPlayer : public CUnit
@@ -36,9 +38,12 @@ class CPlayer : public CUnit
 	friend CPlayerDashing;
 	friend CPlayerIdle;
 	friend CPlayerMoving;
-	friend CPlayerAttacking;
+	friend CPlayerAttackA;
+	friend CPlayerAttackB;
+	friend CPlayerJumpAttack;
 	friend CPlayerSkillA;
 	friend CPlayerFalling;
+
 
 
 public:
@@ -55,7 +60,7 @@ private:
 	//CPlayerDashing dash;
 	//CPlayerIdle idle;
 	//CPlayerMoving move;
-	//CPlayerAttacking attack;
+	//CPlayerAttackB attack;
 	//CPlayerSkillA skillA;
 	//CPlayerFalling fall;
 

@@ -3,6 +3,7 @@
 #include "CPlayerIdle.h"
 #include "CPlayerJumping.h"
 #include "CPlayerDashing.h"
+#include "CPlayerAttackA.h"
 
 CPlayerMoving::CPlayerMoving()
 {
@@ -12,11 +13,7 @@ CPlayerMoving::~CPlayerMoving()
 {
 }
 
-//CStatePlayer* CPlayerMoving::Instance()
-//{
-//	static CPlayerMoving instance;
-//	return &instance;
-//}
+
 
 CStatePlayer* CPlayerMoving::HandleInput(CPlayer* pPlayer)
 {
@@ -31,8 +28,14 @@ CStatePlayer* CPlayerMoving::HandleInput(CPlayer* pPlayer)
 		return new CPlayerIdle;
 	}
 
+	// 공격
+	if (BUTTONDOWN('X'))
+	{
+		return new CPlayerAttackA;
+	}
+
 	// 점프
-	if (BUTTONDOWN('C'))
+	if (BUTTONDOWN('C') && pPlayer->m_iJumpCount < 2)
 	{
 		return new CPlayerJumping;
 	}

@@ -14,11 +14,13 @@ public:
 	CStatePlayer();
 	virtual ~CStatePlayer();
 
+protected:
+	CStatePlayer* ActionFromIdle(CPlayer* pPlayer);
 
 public:
-	virtual CStatePlayer* HandleInput(CPlayer* player) { return nullptr; };
-	virtual void Update(CPlayer* player) {};
-	virtual void Enter(CPlayer* player) {};
-	virtual void Exit(CPlayer* player) {};
+	virtual CStatePlayer* HandleInput(CPlayer* pPlayer) { return nullptr; };
+	virtual void Update(CPlayer* pPlayer) {};
+	virtual void Enter(CPlayer* pPlayer) {};
+	virtual void Exit(CPlayer* pPlayer) {};
 };
 

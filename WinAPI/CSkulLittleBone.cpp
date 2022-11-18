@@ -70,75 +70,42 @@ void CSkulLittleBone::AnimatorUpdate()
 
 	wstring str = L"";
 
-	if (m_bIsDash)
-	{
-		str += L"Dash";
-		//m_pAnimator->Play(str, false);
-		//return;
-	}
 
-	else if (m_state == STATE::JUMPATTACK)
+	switch (m_state)
 	{
+	case STATE::JUMPATTACK:
 		str += L"JumpAttack";
-		//m_pAnimator->Play(str, false);
-		//return;
-	}
-	else if (m_pRigid->GetGroundCount() == 0)
-	{
-		
-		if (m_pRigid->GetGravitySpeed() < 0)
-		{
-			str += L"Jump";
-			//m_pAnimator->Play(str, false);
-			//return;
-		}
-		//else if(!m_bOverPeak)
-		else if (m_fFallTime <= 0.3f)
-		{
-			str += L"Fall";
-			//m_pAnimator->Play(str, false);
-			//m_bOverPeak = true;				// 다 재생되고 바뀌어야 한다.
-			//return;
-		}
-		else
-		{
-			str += L"FallRepeat";
-			//m_pAnimator->Play(str, false);
-			//return;
-		}
-	}
-
-
-	else if (m_bIsAttack)
-	{
-		
-		if (m_state == STATE::ATTACKA)
-		{
-			str += L"AttackA";
-			//m_pAnimator->Play(str, false);
-
-			//return;
-		}
-		else if (m_state == STATE::ATTACKB)
-		{
-			str += L"AttackB";
-			//m_pAnimator->Play(str, false);
-
-			//return;
-		}
-	}
-
-
-
-	else
-	{
-		if (m_bIsMove)	str += L"Move";
-		else			str += L"Idle";
-
+		break;
+	case STATE::ATTACKA:
+		str += L"AttackA";
+		break;
+	case STATE::ATTACKB:
+		str += L"AttackB";
+		break;
+	case STATE::DASH:
+		str += L"Dash";
+		break;
+	case STATE::IDLE:
+		str += L"Idle";
 		if (m_vecLookDir.x > 0) str += L"Right";
 		else if (m_vecLookDir.x < 0) str += L"Left";
+		break;
+	case STATE::JUMP:
+		str += L"Jump";
+		break;
+	case STATE::MOVE:
+		str += L"Move";
+		if (m_vecLookDir.x > 0) str += L"Right";
+		else if (m_vecLookDir.x < 0) str += L"Left";
+		break;
+	case STATE::FALL:
+		if (m_fFallTime <= 0.3f)
+			str += L"Fall";
+		else
+			str += L"FallRepeat";
+		break;		
+		
 	}
-
 	if (!(m_pHead->GetHeadOn()))
 	{
 		str += L"_Headless";

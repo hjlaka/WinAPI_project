@@ -3,7 +3,8 @@
 #include "CPlayerMoving.h"
 #include "CPlayerJumping.h"
 #include "CPlayerDashing.h"
-#include "CPlayerAttacking.h"
+#include "CPlayerAttackA.h"
+#include "CPlayerFalling.h"
 
 
 
@@ -18,22 +19,25 @@ CPlayerIdle::~CPlayerIdle()
 {
 }
 
-//CStatePlayer* CPlayerIdle::Instance()
-//{
-//	static CPlayerIdle instance;
-//	return &instance;
-//}
 
 CStatePlayer* CPlayerIdle::HandleInput(CPlayer* pPlayer)
 {
+	// ¶³¾îÁü
+
+	if (pPlayer->m_pRigid->GetGroundCount() == 0 && pPlayer->m_pRigid->GetGravitySpeed() >= 0)
+	{
+		return new CPlayerFalling;
+	}
+
+
 	Logger::Debug(L"¾ÆÀÌµé ÇÚµéÀÎÇ² ÁøÀÔ");
     // ÀÌµ¿
-	if (BUTTONDOWN(VK_LEFT))
+	if (BUTTONSTAY(VK_LEFT))
 	{
 		pPlayer->m_vecMoveDir.x = -1;
 		return new CPlayerMoving;
 	}
-	else if (BUTTONDOWN(VK_RIGHT))
+	else if (BUTTONSTAY(VK_RIGHT))
 	{
 		pPlayer->m_vecMoveDir.x = 1;
 		return new CPlayerMoving;
@@ -49,11 +53,6 @@ CStatePlayer* CPlayerIdle::HandleInput(CPlayer* pPlayer)
 		return new CPlayerJumping;
 	}
 
-	//// ¶³¾îÁü
-	//if (pPlayer->m_pRigid->GetGravitySpeed() > 0)
-	//{
-	//	return pPlayer->fall;
-	//}
 
 	// ´ë½¬
 	if (BUTTONDOWN('Z'))
@@ -64,7 +63,7 @@ CStatePlayer* CPlayerIdle::HandleInput(CPlayer* pPlayer)
 	// °ø°Ý
 	if (BUTTONDOWN('X'))
 	{
-		return new CPlayerAttacking;
+		return new CPlayerAttackA;
 	}
 
 	//// ½ºÅ³

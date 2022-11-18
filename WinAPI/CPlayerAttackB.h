@@ -1,10 +1,10 @@
 #pragma once
 #include "CStatePlayer.h"
-class CPlayerAttacking : public CStatePlayer
+class CPlayerAttackB : public CStatePlayer
 {
 public:
-	CPlayerAttacking();
-	virtual ~CPlayerAttacking();
+	CPlayerAttackB();
+	virtual ~CPlayerAttackB();
 
 public:
 	//static CStatePlayer* Instance();

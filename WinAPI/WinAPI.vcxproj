@@ -164,7 +164,8 @@
     <ClInclude Include="CPathManager.h" />
     <ClInclude Include="CPlayer.h" />
     <ClInclude Include="CPlayerAttack.h" />
-    <ClInclude Include="CPlayerAttacking.h" />
+    <ClInclude Include="CPlayerAttackA.h" />
+    <ClInclude Include="CPlayerAttackB.h" />
     <ClInclude Include="CPlayerDashing.h" />
     <ClInclude Include="CPlayerFalling.h" />
     <ClInclude Include="CPlayerIdle.h" />
@@ -237,7 +238,8 @@
     <ClCompile Include="CPathManager.cpp" />
     <ClCompile Include="CPlayer.cpp" />
     <ClCompile Include="CPlayerAttack.cpp" />
-    <ClCompile Include="CPlayerAttacking.cpp" />
+    <ClCompile Include="CPlayerAttackA.cpp" />
+    <ClCompile Include="CPlayerAttackB.cpp" />
     <ClCompile Include="CPlayerDashing.cpp" />
     <ClCompile Include="CPlayerFalling.cpp" />
     <ClCompile Include="CPlayerIdle.cpp" />

@@ -18,7 +18,7 @@ private:
 
 		OutputDebugStringW(str);
 		OutputDebugStringW(L" ");
-		OutputDebugStringW(tag);
+ 		OutputDebugStringW(tag);
 		OutputDebugStringW(L" ");
 		OutputDebugStringW(content);
 		OutputDebugStringW(L"\n");

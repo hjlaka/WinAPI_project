@@ -2,6 +2,8 @@
 #include "CPlayerJumping.h"
 #include "CPlayerIdle.h"
 #include "CPlayerDashing.h"
+#include "CPlayerFalling.h"
+#include "CPlayerJumpAttack.h"
 
 #include "CSmoke.h"
 
@@ -21,6 +23,11 @@ CPlayerJumping::~CPlayerJumping()
 
 CStatePlayer* CPlayerJumping::HandleInput(CPlayer* pPlayer)
 {
+	// 떨어지는 속도로 전환
+	if (pPlayer->m_pRigid->GetGravitySpeed() > 0)
+	{
+		return new CPlayerFalling;
+	}
 
 	// 더블 점프를 안 한 상태에서 한번 더 점프키를 누르면 (다시 점프 상태로 이동?)
 
@@ -28,7 +35,8 @@ CStatePlayer* CPlayerJumping::HandleInput(CPlayer* pPlayer)
 		return new CPlayerJumping;
 
 	// 점프 상태에서 공격키를 누르면 점프어택
-
+	if (BUTTONDOWN('X'))
+		return new CPlayerJumpAttack;
 
 
 	// 땅에 닿으면...
