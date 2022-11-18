@@ -7,6 +7,9 @@
 CSkulLittleBone::CSkulLittleBone()
 {
 	m_pHead = nullptr;
+
+	m_pShootHead = nullptr;
+	m_pHeadIsI = nullptr;
 }
 
 CSkulLittleBone::~CSkulLittleBone()
@@ -80,6 +83,9 @@ void CSkulLittleBone::Init()
 
 void CSkulLittleBone::Update()
 {
+	if (!m_bIsActive)
+		return;
+
 	CPlayer::Update();
 
 	//m_bHeadOn = m_pHead->GetHeadOn();
@@ -89,6 +95,10 @@ void CSkulLittleBone::Update()
 	}*/
 
 	if (m_pHead->GetHeadOn())
+	{
+		skillHeadIsI.bCondition = false;
+	}
+	else
 	{
 		skillHeadIsI.bCondition = true;
 	}

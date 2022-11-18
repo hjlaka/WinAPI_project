@@ -19,17 +19,25 @@ public:
 
 private:
 
+	CImage* m_pShootHead;
+	CImage* m_pHeadIsI;
+
+	CImage* m_pIdleHeadlessImage;
+	CImage* m_pMoveHeadlessImage;
+	CImage* m_pAttackHeadlessImage;
+	CImage* m_pAttackBHeadlessImage;
+	CImage* m_pJumpHeadlessImage;
+	CImage* m_pFallHeadlessImage;
+	CImage* m_pFallRepeatHeadlessImage;
+	CImage* m_pDashHeadlessImage;
+	CImage* m_pJumpAttackHeadlessImage;
+
+private:
+
 	CShootedHead* m_pHead;
 
 	SkillInfo skillShootHead;
 	SkillInfo skillHeadIsI;
-
-public:
-
-
-	//bool GetHeadOn();
-
-	//void SetHeadOn(bool headOn);
 
 
 private:

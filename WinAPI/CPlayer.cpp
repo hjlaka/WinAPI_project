@@ -40,9 +40,7 @@ CPlayer::CPlayer()
 	m_pFallRepeatImage = nullptr;
 	m_pDashImage = nullptr;
 	m_pJumpAttackImage = nullptr;
-	m_pShootHead = nullptr;
-	m_pHeadIsI = nullptr;
-
+	
 	m_vecMoveDir = Vector(0, 0);
 	m_vecLookDir = Vector(1, 0);
 	m_bIsMove = false;
@@ -150,7 +148,9 @@ void CPlayer::Update()
 
 	m_pPlayerState->Update(this);
 
-	if (m_bIsCanMove)			// 키보드 조작대로 움직일 수 있는 경우
+
+
+	if (m_bIsCanMove)			// 키보드 조작대로 움직일 수 있는 상태일 경우
 	{
 		if (BUTTONSTAY(VK_LEFT))
 		{
@@ -170,250 +170,13 @@ void CPlayer::Update()
 	}
 	
 
-
-	/*
-	m_bIsMove = false;
-	m_bIsDash = false;
-
-	
-	
-	m_vecMoveDir.x = 0;
-	m_pRigid->SetDirectionX(0);
-
-
-	if (m_state == STATE::IDLE)					// 중립 상태가 아니어도 MoveDir는 수정되어야 한다.
+	if (BUTTONDOWN('W'))
 	{
-		if (BUTTONSTAY(VK_LEFT))
-		{
-			//m_pRigid->SetDirectionX(-1);
-			m_pRigid->SetVelocityX(-1 * m_fSpeed);
-			m_bIsMove = true;
-			m_vecMoveDir.x = -1;
-
-		}
-		else if (BUTTONSTAY(VK_RIGHT))
-		{
-			//m_pRigid->SetDirectionX(+1);
-			m_pRigid->SetVelocityX(m_fSpeed);
-			m_bIsMove = true;
-			m_vecMoveDir.x = +1;
-		}
-		else
-		{
-			m_vecMoveDir.x = 0;
-			m_pRigid->SetDirectionX(0);
-		}
-	}
-	
-	
-
-
-	if (BUTTONDOWN('X') && m_pRigid->GetGravitySpeed() != 0)
-	{
-		m_state = STATE::JUMPATTACK;
-		m_bIsAttack = true;
-		Attack();
-		m_fAttackJTime = 0.5f;
-	}
-	else if (m_bIsAttack)	//공격중일 때
-	{
-		if (BUTTONDOWN('X') && !m_bAttackContinue )
-		{
-			m_bAttackContinue = true;
-		}
-
-		if (m_state == STATE::JUMPATTACK)
-		{
-			m_fAttackJTime -= DT;
-			if (m_fAttackJTime <= 0)
-			{
-				m_bIsAttack = false;
-				m_state = STATE::IDLE;
-			}
-		}
-
-		else if (m_state == STATE::ATTACKA)
-		{
-			m_fAttackATime -= DT;
-			if (m_fAttackATime <= 0)
-			{
-				if (!m_bAttackContinue)
-				{
-					m_bIsAttack = false;
-					m_state = STATE::IDLE;
-				}
-				else
-				{
-					m_state = STATE::ATTACKB;		// 공격 전환.
-					m_fAttackBTime = 0.4f;
-					m_bAttackContinue = false;
-					Attack();
-					if (BUTTONSTAY(VK_RIGHT))
-					{
-						// 앞으로 가면서 공격
-						m_pRigid->SetDirectionX(+1);
-						m_pRigid->PowerToX(4500.f);
-						m_vecMoveDir.x = +1;
-					}
-					else if(BUTTONSTAY(VK_LEFT))
-					{
-						// 앞으로 가면서 공격
-						m_pRigid->SetDirectionX(-1);
-						m_pRigid->PowerToX(-4500.f);
-						m_vecMoveDir.x = -1;
-					}
-				}
-			}
-		}
-		else if (m_state == STATE::ATTACKB )
-		{
-			m_fAttackBTime -= DT;
-			if (m_fAttackBTime <= 0)
-			{
-				if (!m_bAttackContinue)
-				{
-					m_bIsAttack = false;
-					m_state = STATE::IDLE;
-					return;
-				}
-				else
-				{
-					m_state = STATE::ATTACKA;		// 공격 전환.
-					m_fAttackATime = 0.5f;
-					m_bAttackContinue = false;
-					Attack();
-					if (BUTTONSTAY(VK_RIGHT))
-					{
-						// 앞으로 가면서 공격
-						m_pRigid->SetDirectionX(+1);
-						m_pRigid->PowerToX(4500.f);
-						m_vecMoveDir.x = +1;
-					}
-					else if (BUTTONSTAY(VK_LEFT))
-					{
-						// 앞으로 가면서 공격
-						m_pRigid->SetDirectionX(-1);
-						m_pRigid->PowerToX(-4500.f);
-						m_vecMoveDir.x = -1;
-					}
-				}
-			}
-			
-		}
-	}
-	else if (m_fAttackContinue > 0)	// 공격중은 아니나 연속 공격 타이머가 돌아가고 있을때
-	{
-		m_fAttackContinue -= DT;
-		//if (BUTTONDOWN('X'))
-		//{
-		//	if (m_state == STATE::ATTACKA)
-		//	{
-		//		m_fAttackATime = 0.5f;
-		//		m_bAttackContinue = false;
-		//	}
-		//	else if (m_state == STATE::ATTACKB)
-		//	{
-		//		m_fAttackBTime = 0.4f;
-		//		m_bAttackContinue = false;
-		//	}
-
-		//}
-
-	}
-	else if (BUTTONDOWN('X'))
-	{
-		m_state = STATE::ATTACKA;
-		m_bIsAttack = true;
-		Attack();
-		m_fAttackATime = 0.5f;
-		if (BUTTONSTAY(VK_RIGHT))
-		{
-			// 앞으로 가면서 공격
-			m_pRigid->SetDirectionX(+1);
-			m_pRigid->PowerToX(4500.f);
-			m_vecMoveDir.x = +1;
-		}
-		else if (BUTTONSTAY(VK_LEFT))
-		{
-			// 앞으로 가면서 공격
-			m_pRigid->SetDirectionX(-1);
-			m_pRigid->PowerToX(-4500.f);
-			m_vecMoveDir.x = -1;
-		}
-	}
-
-
-	if (BUTTONDOWN('A'))
-	{
-		// 던지기 공격
-		SkillA();
-	}
-
-	if (BUTTONDOWN('S'))
-	{
-		// 던지기 공격
-		SkillS();
-	}
-
-
-
-	if (BUTTONDOWN(VK_SPACE))
-	{
-		Logger::Debug(L"스컬 변경");
-		SKUL_TYPE temp = m_curSkulType;
-		m_curSkulType = m_subSkulType;
-		m_subSkulType = temp;
-
 		GAME->SwitchSkul();
-		
 	}
 
 
-
-
-	if (BUTTONDOWN('Z') && m_fDashClock <= 0)
-	{
-		m_fDashClock = 0.3f;
-	}
-	if (m_fDashClock > 0)
-	{
-		m_fDashClock -= DT;
-		m_bIsDash = true;
-		m_pRigid->SetGravitySpeed(0);
-		m_pRigid->PowerToX(m_vecLookDir.x * 500.f);
-	}
-
-	
-
-
-	
-
-	if (BUTTONDOWN('C') && m_iJumpCount < 2)
-	{
-		
-		m_bOverPeak = false;
-		m_pRigid->PowerToY(-550.f);
-		m_iJumpCount++;
-
-		Logger::Debug(L"Jump!");
-		if (m_iJumpCount == 2)
-		{
-			CSmoke* pSmoke = new CSmoke();
-			pSmoke->SetPos(m_vecPos.x, m_vecPos.y);
-			pSmoke->SetImgRate(1.2f);
-			ADDOBJECT(pSmoke);
-		}
-	}
-
-	
-
-	*/
-	/*if (m_pRigid->GetGroundCount() == 0 && m_pRigid->GetGravitySpeed() >= 0)
-	{
-		m_fFallTime += DT;
-	}*/
-
-	if (BUTTONSTAY('R'))
+	if (BUTTONDOWN('R'))
 	{
 		m_vecPos = Vector(100, 100);
 	}

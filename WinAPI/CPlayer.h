@@ -69,6 +69,7 @@ private:
 
 
 protected:
+
 	SKUL_TYPE m_curSkulType;
 	SKUL_TYPE m_subSkulType;
 
@@ -82,18 +83,7 @@ protected:
 	CImage* m_pFallRepeatImage;
 	CImage* m_pDashImage;
 	CImage* m_pJumpAttackImage;
-	CImage* m_pShootHead;
-	CImage* m_pHeadIsI;
-
-	CImage* m_pIdleHeadlessImage;
-	CImage* m_pMoveHeadlessImage;
-	CImage* m_pAttackHeadlessImage;
-	CImage* m_pAttackBHeadlessImage;
-	CImage* m_pJumpHeadlessImage;
-	CImage* m_pFallHeadlessImage;
-	CImage* m_pFallRepeatHeadlessImage;
-	CImage* m_pDashHeadlessImage;
-	CImage* m_pJumpAttackHeadlessImage;
+	
 
 	Vector m_vecMoveDir;
 	
@@ -118,8 +108,12 @@ protected:
 
 	float m_fDashClock;
 
+public:
+
 
 protected:
+
+
 	// ½ºÅ³
 	SkillInfo* m_skillA;
 	SkillInfo* m_skillS;
