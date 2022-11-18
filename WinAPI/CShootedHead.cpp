@@ -46,6 +46,7 @@ void CShootedHead::HeadInit()
 	m_vecPos = Vector(-100, -100);		
 	m_pRigid->SetIsGravity(false);
 	m_pRigid->SetIsFrictional(false);
+	m_pRigid->SetVelocityX(0);
 	m_bHeadOn = true;
 	
 }

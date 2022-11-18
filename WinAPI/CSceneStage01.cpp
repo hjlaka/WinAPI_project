@@ -27,6 +27,8 @@
 #include "Skill.h"
 #include "CMainUI.h"
 
+#include "CGate.h"
+
 CSceneStage01::CSceneStage01()
 {
 	pPlayer = nullptr;
@@ -101,6 +103,11 @@ void CSceneStage01::Enter()
 	pMonster->SetPos(900, WINSIZEY * 0.2f);
 	pMonster->SetImgRate(1.2f);
 	AddGameObject(pMonster);
+
+	CGate* pGate = new CGate;
+	pGate->SetPos(2100, 1250);
+	pGate->SetImgRate(1.2f);
+	AddGameObject(pGate);
 
 	
 

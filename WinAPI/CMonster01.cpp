@@ -50,24 +50,7 @@ void CMonster01::Init()
 void CMonster01::Update()
 {
 	CUnit::Update();
-	//if (BUTTONSTAY(VK_LEFT))
-	//{
-	//	m_pRigid->SetDirectionX(-1);
-	//	//m_vecPos.x -= m_fSpeed * DT;
-	//	m_vecMoveDir.x = -1;
 
-	//}
-	//else if (BUTTONSTAY(VK_RIGHT))
-	//{
-	//	m_pRigid->SetDirectionX(+1);
-	//	//m_vecPos.x += m_fSpeed * DT;
-	//	m_vecMoveDir.x = +1;
-	//}
-	//else
-	//{
-	//	m_vecMoveDir.x = 0;
-	//	m_pRigid->SetDirectionX(0);
-	//}
 }
 
 void CMonster01::Render()
