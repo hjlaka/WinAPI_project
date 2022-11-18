@@ -2,6 +2,7 @@
 #include "CPlayerAttackA.h"
 #include "CPlayerIdle.h"
 #include "CPlayerAttackB.h"
+#include "CPlayerDashing.h"
 
 CPlayerAttackA::CPlayerAttackA()
 {
@@ -13,6 +14,11 @@ CPlayerAttackA::~CPlayerAttackA()
 
 CStatePlayer* CPlayerAttackA::HandleInput(CPlayer* pPlayer)
 {
+	if (BUTTONDOWN('Z') && pPlayer->m_fDashCoolTime <= 0)		// 대쉬를 입력 받으면 행동을 캔슬한다.
+	{
+		return new CPlayerDashing;
+	}
+
 	if (BUTTONDOWN('X'))								// 공격진입으로 연결되는 버튼 눌리기 이후에 버튼이 또 눌리는지 확인해야 한다.
 	{
 		pPlayer->m_bAttackContinue = true;

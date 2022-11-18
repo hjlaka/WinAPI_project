@@ -53,4 +53,5 @@ void CPlayerDashing::Enter(CPlayer* pPlayer)
 void CPlayerDashing::Exit(CPlayer* pPlayer)
 {
 	//pPlayer->m_bIsDash = false;
+	pPlayer->m_fDashCoolTime = 0.5f;
 }

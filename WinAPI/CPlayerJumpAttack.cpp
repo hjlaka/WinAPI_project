@@ -1,6 +1,7 @@
 #include "framework.h"
 #include "CPlayerJumpAttack.h"
 #include "CPlayerIdle.h"
+#include "CPlayerDashing.h"
 
 CPlayerJumpAttack::CPlayerJumpAttack()
 {
@@ -12,6 +13,11 @@ CPlayerJumpAttack::~CPlayerJumpAttack()
 
 CStatePlayer* CPlayerJumpAttack::HandleInput(CPlayer* pPlayer)
 {
+	if (BUTTONDOWN('Z') && pPlayer->m_fDashCoolTime <= 0)		// 대쉬를 입력 받으면 행동을 캔슬한다.
+	{
+		return new CPlayerDashing;
+	}
+
 	if (pPlayer->m_fAttackJTime <= 0)
 	{
 		return ActionFromIdle(pPlayer);

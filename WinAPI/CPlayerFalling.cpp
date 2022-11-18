@@ -36,7 +36,7 @@ CStatePlayer* CPlayerFalling::HandleInput(CPlayer* pPlayer)
         return new CPlayerJumpAttack;
 
     // ´ë½¬
-    if (BUTTONDOWN('Z'))
+    if (BUTTONDOWN('Z') && pPlayer->m_fDashCoolTime <= 0)
     {
         return new CPlayerDashing;
     }
