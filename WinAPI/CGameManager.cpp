@@ -6,6 +6,7 @@
 #include "CUIFrame.h"
 #include "CUIHp.h"
 #include "CUISkill.h"
+#include "CUIImage.h"
 
 CGameManager::CGameManager()
 {
@@ -44,6 +45,11 @@ CMainUI* CGameManager::GetMainUI()
 	return m_pMainUI;
 }
 
+GAME_STATUS CGameManager::GetGameStatue()
+{
+	return m_gameStatus;
+}
+
 void CGameManager::SetPlayer(CPlayer* pPlayer)
 {
 	m_pPlayer = pPlayer;
@@ -68,6 +74,18 @@ void CGameManager::SetMainUI(CMainUI* pMainUI)
 void CGameManager::AddToMainUI(CUI* pUI)
 {
 	m_pMainUI->AddChildUI(pUI);
+}
+
+void CGameManager::PauseGame()
+{
+	m_gameStatus = GAME_STATUS::PAUSE;
+	TIME->SetTimeScale(0);
+}
+
+void CGameManager::ResumeGame()
+{
+	m_gameStatus = GAME_STATUS::ACT;
+	TIME->SetTimeScale(1.f);
 }
 
 void CGameManager::SwitchSkul()
@@ -101,6 +119,7 @@ void CGameManager::EnterSkul()
 	if (nullptr == m_pPlayer)
 		return;
 
+	m_pMainUI->pPlayerPortrait->SetImage(m_pPlayer->m_pPortrait);
 	m_pMainUI->pPlayerHpUI->SetOwner(m_pPlayer);
 	m_pMainUI->pPlayerSkillAUI->SetLinkedSkill(m_pPlayer->GetSkillA());
 	m_pMainUI->pPlayerSkillSUI->SetLinkedSkill(m_pPlayer->GetSkillS());

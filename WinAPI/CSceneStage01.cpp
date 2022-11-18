@@ -129,10 +129,18 @@ void CSceneStage01::Enter()
 
 void CSceneStage01::Update()
 {
-	if (BUTTONDOWN(VK_ESCAPE))
+	if (BUTTONDOWN('1'))
 	{
 		CAMERA->FadeOut(0.25f);
 		DELAYCHANGESCENE(GroupScene::Title, 0.25f);
+	}
+
+	if (BUTTONDOWN(VK_ESCAPE))
+	{
+		if (GAME->GetGameStatue() == GAME_STATUS::ACT)
+			GAME->PauseGame();
+		else if (GAME->GetGameStatue() == GAME_STATUS::PAUSE)
+			GAME->ResumeGame();
 	}
 
 	CAMERA->SetTargetPos(GAME->GetPlayer()->GetPos() + Vector(0, -100.f), .1f);

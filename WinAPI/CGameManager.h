@@ -8,6 +8,14 @@ class CUI;
 class CUIHp;
 class CUISkill;
 
+struct PlayerInfo
+{
+	// 스컬 공통으로 공유할 플레이어 스탯
+
+};
+
+enum class GAME_STATUS {ACT, PAUSE};
+
 class CGameManager : public SingleTon<CGameManager>
 {
 	friend CCore;
@@ -18,6 +26,9 @@ private:
 	virtual ~CGameManager();
 
 private:
+
+	GAME_STATUS m_gameStatus;
+
 	CPlayer* m_pPlayer;
 	CPlayer* m_pPlayer2;
 
@@ -33,6 +44,7 @@ public:
 	CPlayer* GetPlayer();
 	float GetBGEndX();
 	CMainUI* GetMainUI();
+	GAME_STATUS GetGameStatue();
 
 
 	void SetPlayer(CPlayer* pPlayer);
@@ -41,6 +53,10 @@ public:
 	void SetMainUI(CMainUI* pMainUI);
 
 	void AddToMainUI(CUI* pUI);
+
+	void PauseGame();
+	void ResumeGame();
+
 
 
 	void SwitchSkul();
