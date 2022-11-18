@@ -6,6 +6,7 @@
 
 CGameObject::CGameObject()
 {
+	m_bIsActive = true;
 	m_vecPos = Vector(0, 0);
 	m_vecScale = Vector(0, 0);
 	m_layer = Layer::Default;
@@ -20,6 +21,16 @@ CGameObject::CGameObject()
 
 CGameObject::~CGameObject()
 {
+}
+
+bool CGameObject::GetIsActive()
+{
+	return m_bIsActive;
+}
+
+void CGameObject::SetIsActive(bool value)
+{
+	m_bIsActive = value;
 }
 
 Vector CGameObject::GetPos()
@@ -171,6 +182,9 @@ void CGameObject::GameObjectInit()
 
 void CGameObject::GameObjectUpdate()
 {
+	if (!m_bIsActive)
+		return;
+
 	// 상속한 자식 로직갱신
 	Update();
 
@@ -192,6 +206,9 @@ void CGameObject::GameObjectPhysicsUpdate()
 
 void CGameObject::GameObjectRender()
 {
+	if (!m_bIsActive)
+		return;
+
 	// 상속한 자식 표현갱신
 	Render();
 

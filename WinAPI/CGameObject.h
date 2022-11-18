@@ -23,12 +23,16 @@ public:
 	virtual ~CGameObject();
 
 protected:
+	bool m_bIsActive;	// 게임오브젝트 활성화 여부
 	Vector m_vecPos;	// 게임오브젝트의 위치
 	Vector m_vecScale;	// 게임오브젝트의 크기
 	Layer m_layer;		// 게임오브젝트의 레이어
 	wstring m_strName;	// 게임오브젝트의 이름
 
 public:
+
+	bool GetIsActive();
+	void SetIsActive(bool value);
 	Vector GetPos();
 	void SetPos(Vector pos);
 	void SetPos(float x, float y);
