@@ -7,6 +7,9 @@ public:
 	CPlayerSkillA();
 	virtual ~CPlayerSkillA();
 
+private:
+	float m_fSkillAClock;
+
 public:
 	virtual CStatePlayer* HandleInput(CPlayer* player);
 	virtual void Update(CPlayer* player);

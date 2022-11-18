@@ -18,7 +18,9 @@ class CPlayerAttackA;
 class CPlayerAttackB;
 class CPlayerJumpAttack;
 class CPlayerSkillA;
+class CPlayerSkillS;
 class CPlayerFalling;
+
 
 
 
@@ -28,7 +30,7 @@ class CPlayerFalling;
 
 class CGameManager;
 
-enum class STATE {IDLE, ATTACK, ATTACKA, ATTACKB, MOVE, DASH, JUMP, JUMPATTACK, FALL};
+enum class STATE {IDLE, ATTACK, ATTACKA, ATTACKB, MOVE, DASH, JUMP, JUMPATTACK, FALL, SKILLA, SKILLS};
 enum class SKUL_TYPE {LITTLE_BONE, HUNTER};
 
 class CPlayer : public CUnit
@@ -42,6 +44,7 @@ class CPlayer : public CUnit
 	friend CPlayerAttackB;
 	friend CPlayerJumpAttack;
 	friend CPlayerSkillA;
+	friend CPlayerSkillS;
 	friend CPlayerFalling;
 
 
@@ -79,6 +82,8 @@ protected:
 	CImage* m_pFallRepeatImage;
 	CImage* m_pDashImage;
 	CImage* m_pJumpAttackImage;
+	CImage* m_pShootHead;
+	CImage* m_pHeadIsI;
 
 	CImage* m_pIdleHeadlessImage;
 	CImage* m_pMoveHeadlessImage;
@@ -116,8 +121,8 @@ protected:
 
 protected:
 	// ½ºÅ³
-	SkillInfo m_skillA;
-	SkillInfo m_skillS;
+	SkillInfo* m_skillA;
+	SkillInfo* m_skillS;
 
 	int m_iSkillCount;
 

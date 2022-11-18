@@ -12,7 +12,7 @@ public:
 
 private:
 	CPlayer* pPlayer;
-	CBackGround* pBG;
+	//CBackGround* pBG;
 
 private:
 	void Init()		override;

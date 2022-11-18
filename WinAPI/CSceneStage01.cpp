@@ -57,7 +57,7 @@ void CSceneStage01::Init()
 	pBG3->SetZPos(0.2f);
 	AddGameObject(pBG3);
 
-	pBG = new CBackGround;
+	CBackGround* pBG = new CBackGround;
 	pBG->SetImage(RESOURCE->LoadImg(L"BGStage01", L"Image\\stage01_map.png"));
 	pBG->SetPos(0, 0);
 	AddGameObject(pBG);

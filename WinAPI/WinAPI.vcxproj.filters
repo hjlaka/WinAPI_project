@@ -273,6 +273,9 @@
     <ClInclude Include="CPlayerAttackA.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="CPlayerSkillS.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinAPI.cpp">
@@ -466,6 +469,9 @@
     </ClCompile>
     <ClCompile Include="CPlayerAttackA.cpp">
       <Filter>헤더 파일\PlayerState</Filter>
+    </ClCompile>
+    <ClCompile Include="CPlayerSkillS.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

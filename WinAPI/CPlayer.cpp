@@ -40,6 +40,8 @@ CPlayer::CPlayer()
 	m_pFallRepeatImage = nullptr;
 	m_pDashImage = nullptr;
 	m_pJumpAttackImage = nullptr;
+	m_pShootHead = nullptr;
+	m_pHeadIsI = nullptr;
 
 	m_vecMoveDir = Vector(0, 0);
 	m_vecLookDir = Vector(1, 0);
@@ -69,11 +71,11 @@ CPlayer::CPlayer()
 
 	//
 
-	SkillInfo skillEmpty;
-	skillEmpty.state = SKILL_STATE::NONE;
+	/*SkillInfo skillEmpty;
+	skillEmpty.state = SKILL_STATE::NONE;*/
 
-	m_skillA = skillEmpty;
-	m_skillS = skillEmpty;
+	m_skillA = nullptr;
+	m_skillS = nullptr;
 
 	m_iSkillCount = 2;
 	m_fSkillACoolClock = 0;
@@ -100,18 +102,18 @@ CPlayer::~CPlayer()
 
 void CPlayer::UpdateSkill()
 {
-	m_skillA.UpdateCool();
-	m_skillS.UpdateCool();
+	m_skillA->UpdateCool();
+	m_skillS->UpdateCool();
 }
 
 SkillInfo* CPlayer::GetSkillA()
 {
-	return &m_skillA;
+	return m_skillA;
 }
 
 SkillInfo* CPlayer::GetSkillS()
 {
-	return &m_skillS;
+	return m_skillS;
 }
 
 void CPlayer::Init()
@@ -127,6 +129,8 @@ void CPlayer::Init()
 	m_pFallRepeatImage = RESOURCE->LoadImg(L"PlayerFallRepeat", L"Image\\fallrepeat_skul.png");
 	m_pDashImage = RESOURCE->LoadImg(L"PlayerDash", L"Image\\dash_skul.png");
 	m_pJumpAttackImage = RESOURCE->LoadImg(L"PlayerJumpAttack", L"Image\\jumpattack_skul.png");
+	m_pShootHead = RESOURCE->LoadImg(L"PlayerSkillA", L"Image\\skillA_skul.png");
+	m_pHeadIsI = RESOURCE->LoadImg(L"PlayerSkillB", L"Image\\skillB_skul.png");
 
 	m_pIdleHeadlessImage = RESOURCE->LoadImg(L"PlayerIdle_Headless", L"Image\\idle_headless_skul.png");
 	m_pMoveHeadlessImage = RESOURCE->LoadImg(L"PlayerMove_Headless", L"Image\\move_headless_skul.png");
@@ -150,6 +154,8 @@ void CPlayer::Init()
 	m_pAnimator->CreateAnimation(L"FallRepeat", m_pFallRepeatImage, Vector(20.f, 25.f), Vector(50.f, 50.f), Vector(96.f, 0.f), 0.15f, 3);
 	m_pAnimator->CreateAnimation(L"Dash", m_pDashImage, Vector(0.f, 25.f), Vector(75.f, 50.f), Vector(96.f, 0.f), 0.15f, 1);
 	m_pAnimator->CreateAnimation(L"JumpAttack", m_pJumpAttackImage, Vector(0.f, 20.f), Vector(100.f, 75.f), Vector(96.f, 0.f), 0.1f, 4);
+	m_pAnimator->CreateAnimation(L"ShootHead", m_pShootHead, Vector(0.f, 20.f), Vector(100.f, 75.f), Vector(96.f, 0.f), 0.1f, 4);
+	m_pAnimator->CreateAnimation(L"HeadIsI", m_pHeadIsI, Vector(0.f, 20.f), Vector(100.f, 75.f), Vector(96.f, 0.f), 0.05f, 9);
 
 	m_pAnimator->CreateAnimation(L"IdleRight_Headless", m_pIdleHeadlessImage, Vector(0.f, 20.f), Vector(85.f, 75.f), Vector(96.f, 0.f), 0.5f, 4);
 	m_pAnimator->CreateAnimation(L"IdleLeft_Headless", m_pIdleHeadlessImage, Vector(0.f, 20.f), Vector(85.f, 75.f), Vector(96.f, 0.f), 0.5f, 4);
@@ -241,6 +247,7 @@ void CPlayer::Update()
 		}
 		m_pRigid->SetVelocityX(m_vecMoveDir.x * m_fSpeed);
 	}
+	
 
 
 	/*
@@ -510,6 +517,12 @@ void CPlayer::Release()
 {
 	if (nullptr != m_pPlayerState)
 		delete m_pPlayerState;
+
+	/*if (nullptr != m_skillA)
+		delete m_skillA;
+
+	if (nullptr != m_skillS)
+		delete m_skillS;*/
 }
 
 void CPlayer::UpdateInState()

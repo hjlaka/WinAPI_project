@@ -21,6 +21,9 @@ private:
 
 	CShootedHead* m_pHead;
 
+	SkillInfo skillShootHead;
+	SkillInfo skillHeadIsI;
+
 public:
 
 

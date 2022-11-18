@@ -4,6 +4,8 @@
 #include "CPlayerDashing.h"
 #include "CPlayerFalling.h"
 #include "CPlayerJumpAttack.h"
+#include "CPlayerSkillA.h"
+#include "CPlayerSkillS.h"
 
 #include "CSmoke.h"
 
@@ -49,6 +51,16 @@ CStatePlayer* CPlayerJumping::HandleInput(CPlayer* pPlayer)
 	if (BUTTONDOWN('Z'))
 	{
 		return new CPlayerDashing;
+	}
+
+	// ½ºÅ³
+	if (BUTTONDOWN('A') && pPlayer->m_skillA->state == SKILL_STATE::READY)
+	{
+		return new CPlayerSkillA;
+	}
+	if (BUTTONDOWN('S') && pPlayer->m_skillS->state == SKILL_STATE::READY)
+	{
+		return new CPlayerSkillS;
 	}
 
 

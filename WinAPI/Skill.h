@@ -12,10 +12,13 @@ struct SkillInfo
 	float fCool;
 	float fCurCool;
 	SKILL_STATE state;
+	float fMotionTime;
+	wstring strAniName;
 	wstring strDescription;
+	bool bCondition;
 	//CGameObject* pObj;	
 
-	SkillInfo() { strName = L""; fCool = 0; fCurCool = 0; state = SKILL_STATE::NONE; strDescription = L"";  }
+	SkillInfo() { strName = L""; fCool = 0; fCurCool = 0; state = SKILL_STATE::NONE; fMotionTime = 0; strAniName = L"", strDescription = L""; bCondition = true; }
 
 	void UseSkill()
 	{
@@ -35,7 +38,7 @@ struct SkillInfo
 		{
 			fCurCool -= DT;
 
-			if (fCurCool <= 0)
+			if (fCurCool <= 0 && bCondition)
 			{
 				state = SKILL_STATE::READY;
 				fCurCool = 0;

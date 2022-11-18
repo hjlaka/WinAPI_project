@@ -21,6 +21,8 @@ CAnimation::CAnimation()
 	m_pParam2 = 0;
 
 	m_fRate = 1.f;
+	m_fduration = 0;
+	m_uiFrameCount = 0;
 }
 
 CAnimation::~CAnimation()
@@ -44,6 +46,11 @@ void CAnimation::RunCallback()
 	m_pCallback(m_pParam1, m_pParam2);
 }
 
+float CAnimation::GetFullTime()
+{
+	return m_fduration * (float)m_uiFrameCount;
+}
+
 void CAnimation::SetName(const wstring& name)
 {
 	m_strName = name;
@@ -51,6 +58,9 @@ void CAnimation::SetName(const wstring& name)
 
 void CAnimation::Create(CImage* pImg, Vector lt, Vector slice, Vector step, float duration, UINT count, bool repeat)
 {
+	m_fduration = duration;	//프레임 공통 지속시간
+	m_uiFrameCount = count;	//프레임 개수
+
 	m_pImage = pImg;	// 프레임 이미지가 모여있는 이미지 파일
 	m_bRepeat = repeat;	// 반복여부
 

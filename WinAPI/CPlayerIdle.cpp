@@ -5,6 +5,8 @@
 #include "CPlayerDashing.h"
 #include "CPlayerAttackA.h"
 #include "CPlayerFalling.h"
+#include "CPlayerSkillA.h"
+#include "CPlayerSkillS.h"
 
 
 
@@ -66,11 +68,15 @@ CStatePlayer* CPlayerIdle::HandleInput(CPlayer* pPlayer)
 		return new CPlayerAttackA;
 	}
 
-	//// 스킬
-	//if (BUTTONDOWN('A'))
-	//{
-	//	return pPlayer->skillA;
-	//}
+	// 스킬
+	if (BUTTONDOWN('A') && pPlayer->m_skillA->state == SKILL_STATE::READY)
+	{
+		return new CPlayerSkillA;
+	}
+	if (BUTTONDOWN('S') && pPlayer->m_skillS->state == SKILL_STATE::READY)
+	{
+		return new CPlayerSkillS;
+	}
 
 
 

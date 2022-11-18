@@ -173,6 +173,7 @@
     <ClInclude Include="CPlayerJumping.h" />
     <ClInclude Include="CPlayerMoving.h" />
     <ClInclude Include="CPlayerSkillA.h" />
+    <ClInclude Include="CPlayerSkillS.h" />
     <ClInclude Include="CRenderManager.h" />
     <ClInclude Include="CResource.h" />
     <ClInclude Include="CResourceManager.h" />
@@ -247,6 +248,7 @@
     <ClCompile Include="CPlayerJumping.cpp" />
     <ClCompile Include="CPlayerMoving.cpp" />
     <ClCompile Include="CPlayerSkillA.cpp" />
+    <ClCompile Include="CPlayerSkillS.cpp" />
     <ClCompile Include="CRenderManager.cpp" />
     <ClCompile Include="CResource.cpp" />
     <ClCompile Include="CResourceManager.cpp" />

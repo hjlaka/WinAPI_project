@@ -33,26 +33,39 @@ void CSkulLittleBone::Update()
 	{
 		m_vecHeadPos = m_pHead->GetPos();
 	}*/
+
+	if (m_pHead->GetHeadOn())
+	{
+		skillHeadIsI.bCondition = true;
+	}
 }
 
 void CSkulLittleBone::SkillSetUp()
 {
-	SkillInfo skillShootHead;
+	//SkillInfo skillShootHead;
 	skillShootHead.strName = L"두개골 투척";
 	skillShootHead.fCool = 6.f;
 	skillShootHead.fCurCool = 0.f;
 	skillShootHead.state = SKILL_STATE::READY;
+	skillShootHead.strAniName = L"ShootHead";
+	skillShootHead.fMotionTime = m_pAnimator->FindAnimation(L"ShootHead")->GetFullTime();		// nullptr일 경우는?
+		/* m_pAnimator->FindAnimation(L"ShootHead"); 에서 duration과 count 를 가져온다.*/
 	skillShootHead.strDescription = L"자신의 머리를 던져 마법데미지를 입힙니다. \n던진 머리를 회수하면 쿨타임이 초기화됩니다.";
+	skillShootHead.bCondition = true;
 
-	SkillInfo skillHeadIsI;
+	//SkillInfo skillHeadIsI;
 	skillHeadIsI.strName = L"머리가 본체";
 	skillHeadIsI.fCool = 3.f;
 	skillHeadIsI.fCurCool = 0.f;
 	skillHeadIsI.state = SKILL_STATE::READY;
+	skillHeadIsI.strAniName = L"HeadIsI";
+	skillHeadIsI.fMotionTime = m_pAnimator->FindAnimation(L"HeadIsI")->GetFullTime();
 	skillHeadIsI.strDescription = L"머리가 없는 상태일 때 머리로 이동합니다.";
+	skillHeadIsI.bCondition = false;
 
-	m_skillA = skillShootHead;		// 값 복사 (?)
-	m_skillS = skillHeadIsI;
+
+	m_skillA = &skillShootHead;		// 원본 복사 (?)
+	m_skillS = &skillHeadIsI;
 }
 
 
@@ -60,7 +73,7 @@ void CSkulLittleBone::SkillSetUp()
 void CSkulLittleBone::ReturnHead()
 {
 	m_pHead->HeadInit();
-	m_skillA.ReadySkill();
+	m_skillA->ReadySkill();
 }
 
 void CSkulLittleBone::AnimatorUpdate()
@@ -104,6 +117,15 @@ void CSkulLittleBone::AnimatorUpdate()
 		else
 			str += L"FallRepeat";
 		break;		
+	case STATE::SKILLA:
+		str += m_skillA->strAniName;
+		m_pAnimator->Play(str, false);
+		return;
+	case STATE::SKILLS:
+		str += m_skillS->strAniName;
+		m_pAnimator->Play(str, false);
+		return;
+
 		
 	}
 	if (!(m_pHead->GetHeadOn()))
@@ -118,7 +140,7 @@ void CSkulLittleBone::AnimatorUpdate()
 
 void CSkulLittleBone::SkillA()
 {
-	if (m_skillA.state == SKILL_STATE::READY)
+	if (m_skillA->state == SKILL_STATE::READY)
 	{
 		Logger::Debug(L"스킬 사용. 바라보는 곳: " + to_wstring(m_vecLookDir.x));
 		//Logger::Debug(L"")
@@ -127,10 +149,11 @@ void CSkulLittleBone::SkillA()
 		//m_pHead->GetRigidBody()->PowerToX(m_vecLookDir.x * 400.f);
 		m_pHead->GetRigidBody()->SetVelocityX(m_vecLookDir.x * 400.f);
 		m_pHead->SetAttackDuration(6.f);
+		m_pRigid->SetGravitySpeed(0);
 		//m_pHead->GetRigidBody()->
 
 		m_pHead->SetHeadOn(false);
-		m_skillA.UseSkill();
+		m_skillA->UseSkill();
 	}
 	
 	// 몇초 후에 회복? SkillA로 생성된 오브젝트의 상태에 따라 회복?		- 나중에 어디서 변경이 되었는지 찾기가 어려울까?
@@ -139,7 +162,7 @@ void CSkulLittleBone::SkillA()
 
 void CSkulLittleBone::SkillS()
 {
-	if (m_skillS.state == SKILL_STATE::READY)
+	//if (m_skillS.state == SKILL_STATE::READY)
 	{
 		Logger::Debug(L"스킬 사용S " + to_wstring(m_vecLookDir.x));
 		// 머리가 플레이어에게 없을 경우만.
@@ -148,8 +171,8 @@ void CSkulLittleBone::SkillS()
 		if (!(m_pHead->GetHeadOn()))
 		{
 			//m_vecPos = m_vecHeadPos - Vector(0, m_vecScale.y);
-			m_vecPos = m_pHead->GetPos() - Vector(0, m_vecScale.y * 0.5f);
-			m_skillS.UseSkill();
+			m_vecPos = m_pHead->GetPos();
+			m_skillS->UseSkill();
 			m_pRigid->SetGravitySpeed(0);
 			ReturnHead();
 		}
@@ -183,7 +206,7 @@ void CSkulLittleBone::Render()
 	RENDER->Text(L"플레이어 위치:" + to_wstring((int)GetPos().x) + L", " + to_wstring((int)GetPos().y), GetPos().x, GetPos().y + 90, GetPos().x + 200, GetPos().y + 190);
 	RENDER->Text(L"머리 상태:" + to_wstring((int)m_pHead->GetHeadOn()), GetPos().x, GetPos().y + 100, GetPos().x + 100, GetPos().y + 200);
 	RENDER->Text(L"머리 위치:" + to_wstring((int)m_pHead->GetPos().x) + L", " + to_wstring((int)m_pHead->GetPos().y), GetPos().x, GetPos().y + 110, GetPos().x + 200, GetPos().y + 210);
-	RENDER->Text(L"스킬A쿨:" + to_wstring((int)m_skillA.fCurCool), GetPos().x, GetPos().y + 120, GetPos().x + 100, GetPos().y + 220);
+	RENDER->Text(L"스킬A쿨:" + to_wstring((int)m_skillA->fCurCool), GetPos().x, GetPos().y + 120, GetPos().x + 100, GetPos().y + 220);
 }
 
 void CSkulLittleBone::Enter()

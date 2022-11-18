@@ -4,6 +4,8 @@
 #include "CPlayerJumping.h"
 #include "CPlayerDashing.h"
 #include "CPlayerAttackA.h"
+#include "CPlayerSkillA.h"
+#include "CPlayerSkillS.h"
 
 CPlayerMoving::CPlayerMoving()
 {
@@ -44,6 +46,16 @@ CStatePlayer* CPlayerMoving::HandleInput(CPlayer* pPlayer)
 	if (BUTTONDOWN('Z'))
 	{
 		return new CPlayerDashing;
+	}
+
+	// ½ºÅ³
+	if (BUTTONDOWN('A') && pPlayer->m_skillA->state == SKILL_STATE::READY)
+	{
+		return new CPlayerSkillA;
+	}
+	if (BUTTONDOWN('S') && pPlayer->m_skillS->state == SKILL_STATE::READY)
+	{
+		return new CPlayerSkillS;
 	}
 
 	return nullptr;
