@@ -10,6 +10,17 @@ CSkulLittleBone::CSkulLittleBone()
 
 	m_pShootHead = nullptr;
 	m_pHeadIsI = nullptr;
+
+
+	m_pIdleHeadlessImage = nullptr;
+	m_pMoveHeadlessImage = nullptr;
+	m_pAttackHeadlessImage = nullptr;
+	m_pAttackBHeadlessImage = nullptr;
+	m_pJumpHeadlessImage = nullptr;
+	m_pFallHeadlessImage = nullptr;
+	m_pFallRepeatHeadlessImage = nullptr;
+	m_pDashHeadlessImage = nullptr;
+	m_pJumpAttackHeadlessImage = nullptr;
 }
 
 CSkulLittleBone::~CSkulLittleBone()
@@ -21,6 +32,8 @@ void CSkulLittleBone::Init()
 	CPlayer::Init();
 
 #pragma region Animation Setting
+	m_pPortrait = RESOURCE->LoadImg(L"LittleBonePortrait", L"Image\\Skul.png");
+
 	m_pIdleImage = RESOURCE->LoadImg(L"PlayerIdle", L"Image\\idle_skul.png");
 	m_pMoveImage = RESOURCE->LoadImg(L"PlayerMove", L"Image\\move_skul.png");
 	m_pAttackImage = RESOURCE->LoadImg(L"PlayerAttack", L"Image\\attackA_skul.png");
@@ -91,7 +104,7 @@ void CSkulLittleBone::Update()
 		m_vecHeadPos = m_pHead->GetPos();
 	}*/
 
-	if (m_pHead->GetHeadOn())
+	if (m_pHead->GetHeadOn())				// 적절할까?
 	{
 		skillHeadIsI.bCondition = false;
 	}
@@ -113,16 +126,19 @@ void CSkulLittleBone::SkillSetUp()
 		/* m_pAnimator->FindAnimation(L"ShootHead"); 에서 duration과 count 를 가져온다.*/
 	skillShootHead.strDescription = L"자신의 머리를 던져 마법데미지를 입힙니다. \n던진 머리를 회수하면 쿨타임이 초기화됩니다.";
 	skillShootHead.bCondition = true;
+	skillShootHead.pImg = RESOURCE->LoadImg(L"SkillShootHead", L"Image\\SkullThrowing.png");
+
 
 	//SkillInfo skillHeadIsI;
 	skillHeadIsI.strName = L"머리가 본체";
 	skillHeadIsI.fCool = 3.f;
 	skillHeadIsI.fCurCool = 0.f;
-	skillHeadIsI.state = SKILL_STATE::READY;
+	skillHeadIsI.state = SKILL_STATE::COOLING;
 	skillHeadIsI.strAniName = L"HeadIsI";
 	skillHeadIsI.fMotionTime = m_pAnimator->FindAnimation(L"HeadIsI")->GetFullTime();
 	skillHeadIsI.strDescription = L"머리가 없는 상태일 때 머리로 이동합니다.";
 	skillHeadIsI.bCondition = false;
+	skillHeadIsI.pImg = RESOURCE->LoadImg(L"SkillHeadIsI", L"Image\\Rebone.png");
 
 
 	m_skillA = &skillShootHead;		// 원본 복사 (?)
@@ -139,8 +155,8 @@ void CSkulLittleBone::ReturnHead()
 
 void CSkulLittleBone::AnimatorUpdate()
 {
-	if (m_vecMoveDir.Length() > 0)
-		m_vecLookDir = m_vecMoveDir;
+	/*if (m_vecMoveDir.Length() > 0)
+		m_vecLookDir = m_vecMoveDir;*/
 
 	wstring str = L"";
 
@@ -215,6 +231,7 @@ void CSkulLittleBone::SkillA()
 
 		m_pHead->SetHeadOn(false);
 		m_skillA->UseSkill();
+
 	}
 	
 	// 몇초 후에 회복? SkillA로 생성된 오브젝트의 상태에 따라 회복?		- 나중에 어디서 변경이 되었는지 찾기가 어려울까?

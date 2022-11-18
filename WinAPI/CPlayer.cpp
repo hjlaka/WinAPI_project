@@ -40,6 +40,9 @@ CPlayer::CPlayer()
 	m_pFallRepeatImage = nullptr;
 	m_pDashImage = nullptr;
 	m_pJumpAttackImage = nullptr;
+
+	m_pPortrait = nullptr;
+
 	
 	m_vecMoveDir = Vector(0, 0);
 	m_vecLookDir = Vector(1, 0);
@@ -58,6 +61,8 @@ CPlayer::CPlayer()
 	m_fAttackATime = 0;
 	m_fAttackBTime = 0;
 	m_fAttackJTime = 0;
+
+	m_fDashCoolTime - 0;
 
 	m_fDashClock = 0;
 
@@ -135,7 +140,10 @@ void CPlayer::Init()
 
 void CPlayer::Update()
 {
+	if (GAME->GetGameStatue() == GAME_STATUS::PAUSE)
+		return;
 	
+	// 상태
 	CStatePlayer* nextState = m_pPlayerState->HandleInput(this);
 	if (nullptr != nextState)
 	{
@@ -176,6 +184,14 @@ void CPlayer::Update()
 		m_vecPos = Vector(100, 100);
 	}
 
+
+	if (m_fDashCoolTime > 0)
+		m_fDashCoolTime -= DT;
+
+
+	if (m_vecMoveDir.Length() > 0)
+		m_vecLookDir = m_vecMoveDir;
+
 	UpdateInState();
 	UpdateSkill();
 
@@ -210,77 +226,7 @@ void CPlayer::UpdateInState()
 
 void CPlayer::AnimatorUpdate()
 {
-	//if (m_vecMoveDir.Length() > 0)
-	//	m_vecLookDir = m_vecMoveDir;
 
-	//wstring str = L"";
-
-	//if (m_state == STATE::DASH)
-	//{
-	//	str += L"Dash";
-	//	m_pAnimator->Play(str, false);
-	//	return;
-	//}
-
-	//if (m_pRigid->GetGroundCount() == 0)
-	//{
-	//	
-	//	
-
-	//	if (m_pRigid->GetGravitySpeed() < 0)
-	//	{
-	//		str += L"Jump";
-	//		m_pAnimator->Play(str, false);
-	//		return;
-	//	}
-	//	//else if(!m_bOverPeak)
-	//	else if(m_fFallTime <= 0.3f)
-	//	{
-	//		str += L"Fall";
-	//		m_pAnimator->Play(str, false);
-	//		//m_bOverPeak = true;				// 다 재생되고 바뀌어야 한다.
-	//		return;
-	//	}
-	//	else
-	//	{
-	//		str += L"FallRepeat";
-	//		m_pAnimator->Play(str, false);
-	//		return;
-	//	}
-	//}
-	//
-
-	//
-	//	if (m_state == STATE::JUMPATTACK)
-	//	{
-	//		str += L"JumpAttack";
-	//		m_pAnimator->Play(str, false);
-	//		return;
-	//	}
-	//	else if (m_state == STATE::ATTACKA)
-	//	{
-	//		str += L"AttackA";
-	//		m_pAnimator->Play(str, false);
-	//		
-	//		return;
-	//	}
-	//	else if(m_state == STATE::ATTACKB)
-	//	{
-	//		str += L"AttackB";
-	//		m_pAnimator->Play(str, false);
-	//		
-	//		return;
-	//	}
-	//	
-	//
-
-	//if (m_bIsMove)	str += L"Move";
-	//else			str += L"Idle";
-
-	//if (m_vecLookDir.x > 0) str += L"Right";
-	//else if (m_vecLookDir.x < 0) str += L"Left";
-
-	//m_pAnimator->Play(str, false);
 }
 
 

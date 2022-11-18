@@ -3,6 +3,7 @@
 
 class CUnit;
 class CGameObject;
+class CImage;
 
 enum class SKILL_STATE {NONE, COOLING, READY};
 
@@ -16,9 +17,21 @@ struct SkillInfo
 	wstring strAniName;
 	wstring strDescription;
 	bool bCondition;
+	CImage* pImg;
 	//CGameObject* pObj;	
 
-	SkillInfo() { strName = L""; fCool = 0; fCurCool = 0; state = SKILL_STATE::NONE; fMotionTime = 0; strAniName = L"", strDescription = L""; bCondition = true; }
+	SkillInfo() 
+	{ 
+		strName = L"";
+		fCool = 0; 
+		fCurCool = 0; 
+		state = SKILL_STATE::NONE; 
+		fMotionTime = 0; 
+		strAniName = L"";
+		strDescription = L""; 
+		bCondition = true;
+		pImg = nullptr; 
+	}
 
 	void UseSkill()
 	{

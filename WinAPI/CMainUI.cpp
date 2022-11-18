@@ -3,6 +3,7 @@
 #include "CUIFrame.h"
 #include "CUIHp.h"
 #include "CUISkill.h"
+#include "CUIImage.h"
 
 CMainUI::CMainUI()
 {
@@ -22,6 +23,11 @@ void CMainUI::Init()
 	pPlayerUI->SetScale(Vector(300.f, 100.f));
 	AddChildUI(pPlayerUI);
 
+	pPlayerPortrait = new CUIImage;
+	pPlayerPortrait->SetPos(-110.f, -20.f);
+	pPlayerPortrait->SetScale(Vector(80.f, 80.f));
+	pPlayerUI->AddChildUI(pPlayerPortrait);
+
 	pPlayerHpUI = new CUIHp;
 	pPlayerHpUI->SetPos(-80.f, 20.f);
 	pPlayerHpUI->SetScale(Vector(200.f, 25.f));
@@ -29,13 +35,13 @@ void CMainUI::Init()
 	//AddGameObject(pPlayerHpUI);
 
 	pPlayerSkillAUI = new CUISkill;
-	pPlayerSkillAUI->SetPos(-50.f, 30.f);
+	pPlayerSkillAUI->SetPos(-50.f, 10.f);
 	pPlayerSkillAUI->SetScale(Vector(50.f, -50.f));
 	pPlayerUI->AddChildUI(pPlayerSkillAUI);
 	//AddGameObject(pPlayerSkillAUI);
 
 	pPlayerSkillSUI = new CUISkill;
-	pPlayerSkillSUI->SetPos(0.f, 30.f);
+	pPlayerSkillSUI->SetPos(10.f, 10.f);
 	pPlayerSkillSUI->SetScale(Vector(50.f, -50.f));
 	pPlayerUI->AddChildUI(pPlayerSkillSUI);
 	//AddGameObject(pPlayerSkillSUI);

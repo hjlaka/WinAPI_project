@@ -279,6 +279,9 @@
     <ClInclude Include="CSceneStage02.h">
       <Filter>Scene</Filter>
     </ClInclude>
+    <ClInclude Include="CUIImage.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinAPI.cpp">
@@ -464,9 +467,6 @@
     <ClCompile Include="CPlayerSkillA.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="CPlayerJumpAttack.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="CPlayerAttackA.cpp">
       <Filter>헤더 파일\PlayerState</Filter>
     </ClCompile>
@@ -477,6 +477,12 @@
       <Filter>Scene</Filter>
     </ClCompile>
     <ClCompile Include="CPlayerFalling.cpp">
+      <Filter>헤더 파일\PlayerState</Filter>
+    </ClCompile>
+    <ClCompile Include="CUIImage.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="CPlayerJumpAttack.cpp">
       <Filter>헤더 파일\PlayerState</Filter>
     </ClCompile>
   </ItemGroup>

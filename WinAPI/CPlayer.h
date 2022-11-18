@@ -73,6 +73,8 @@ protected:
 	CImage* m_pFallRepeatImage;
 	CImage* m_pDashImage;
 	CImage* m_pJumpAttackImage;
+
+	CImage* m_pPortrait;
 	
 
 	Vector m_vecMoveDir;
@@ -93,6 +95,8 @@ protected:
 	float m_fAttackATime;
 	float m_fAttackBTime;
 	float m_fAttackJTime;
+
+	float m_fDashCoolTime;
 
 	float m_fJumpPower = 100.f;
 

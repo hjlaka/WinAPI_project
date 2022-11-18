@@ -198,6 +198,7 @@
     <ClInclude Include="CTimeManager.h" />
     <ClInclude Include="CUI.h" />
     <ClInclude Include="CUIHpMonster.h" />
+    <ClInclude Include="CUIImage.h" />
     <ClInclude Include="CUIManager.h" />
     <ClInclude Include="CUIHp.h" />
     <ClInclude Include="CUIFrame.h" />
@@ -274,6 +275,7 @@
     <ClCompile Include="CTimeManager.cpp" />
     <ClCompile Include="CUI.cpp" />
     <ClCompile Include="CUIHpMonster.cpp" />
+    <ClCompile Include="CUIImage.cpp" />
     <ClCompile Include="CUIManager.cpp" />
     <ClCompile Include="CUIHp.cpp" />
     <ClCompile Include="CUIFrame.cpp" />

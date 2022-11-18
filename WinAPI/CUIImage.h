@@ -1,25 +1,19 @@
 #pragma once
 #include "CUI.h"
-
-class CUIHp;
-class CUISkill;
 class CImage;
-class CUIImage;
 
-class CMainUI : public CUI
+
+class CUIImage : public CUI
 {
 public:
-	CMainUI();
-	virtual ~CMainUI();
+	CUIImage();
+	virtual ~CUIImage();
+
+private:
+	CImage* m_pImg;
 
 public:
-
-	CUIImage* pPlayerPortrait;
-
-
-	CUIHp* pPlayerHpUI;
-	CUISkill* pPlayerSkillAUI;
-	CUISkill* pPlayerSkillSUI;
+	void SetImage(CImage* pImg);
 
 private:
 	void Init() override;

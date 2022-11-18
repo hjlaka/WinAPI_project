@@ -27,15 +27,30 @@ void CUISkill::Render()
 	if (nullptr == m_pLinkedSkill || SKILL_STATE::NONE == m_pLinkedSkill->state)
 		return;
 
-
-	RENDER->FillRect(
-		m_vecRenderPos.x,
-		m_vecRenderPos.y,
-		m_vecRenderPos.x + m_vecScale.x,
-		m_vecRenderPos.y + m_vecScale.y,
-		Color(0, 255, 0, 1)
-	);
-
+	if (nullptr != m_pLinkedSkill->pImg)
+	{
+		RENDER->FrameImage(
+			m_pLinkedSkill->pImg,
+			m_vecRenderPos.x,
+			m_vecRenderPos.y,
+			m_vecRenderPos.x + m_vecScale.x,
+			m_vecRenderPos.y + m_vecScale.y,
+			0,
+			0,
+			m_pLinkedSkill->pImg->GetWidth(),
+			m_pLinkedSkill->pImg->GetHeight()
+		);
+	}
+	else
+	{
+		RENDER->FillRect(
+			m_vecRenderPos.x,
+			m_vecRenderPos.y,
+			m_vecRenderPos.x + m_vecScale.x,
+			m_vecRenderPos.y + m_vecScale.y,
+			Color(0, 255, 0, 1)
+		);
+	}
 
 	RENDER->Text(to_wstring(m_pLinkedSkill->fCurCool),
 		m_vecRenderPos.x,
