@@ -64,8 +64,8 @@ CPlayer::CPlayer()
 	m_pPlayerState = nullptr;
 	m_state = STATE::IDLE;
 
-	m_curSkulType = SKUL_TYPE::LITTLE_BONE;
-	m_subSkulType = SKUL_TYPE::HUNTER;
+	//m_curSkulType = SKUL_TYPE::LITTLE_BONE;
+	//m_subSkulType = SKUL_TYPE::HUNTER;
 
 	//
 
@@ -100,8 +100,9 @@ CPlayer::~CPlayer()
 
 void CPlayer::UpdateSkill()
 {
-	m_skillA->UpdateCool();
-	m_skillS->UpdateCool();
+	
+	if (m_skillA != nullptr) m_skillA->UpdateCool();
+	if (m_skillS != nullptr) m_skillS->UpdateCool();
 }
 
 SkillInfo* CPlayer::GetSkillA()
@@ -167,12 +168,6 @@ void CPlayer::Update()
 			m_vecMoveDir.x = 0;
 		}
 		m_pRigid->SetVelocityX(m_vecMoveDir.x * m_fSpeed);
-	}
-	
-
-	if (BUTTONDOWN('W'))
-	{
-		GAME->SwitchSkul();
 	}
 
 

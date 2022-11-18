@@ -83,9 +83,6 @@ void CSkulLittleBone::Init()
 
 void CSkulLittleBone::Update()
 {
-	if (!m_bIsActive)
-		return;
-
 	CPlayer::Update();
 
 	//m_bHeadOn = m_pHead->GetHeadOn();
@@ -279,6 +276,11 @@ void CSkulLittleBone::Enter()
 
 void CSkulLittleBone::Exit()
 {
+	ReturnHead();
+	// 쿨타임도 초기화 되어야 할까?
+	m_skillA->ReadySkill();
+	m_skillS->ReadySkill();
+	
 }
 
 

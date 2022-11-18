@@ -31,7 +31,7 @@ class CPlayerFalling;
 class CGameManager;
 
 enum class STATE {IDLE, ATTACK, ATTACKA, ATTACKB, MOVE, DASH, JUMP, JUMPATTACK, FALL, SKILLA, SKILLS};
-enum class SKUL_TYPE {LITTLE_BONE, HUNTER};
+//enum class SKUL_TYPE {LITTLE_BONE, HUNTER};
 
 class CPlayer : public CUnit
 {
@@ -57,21 +57,11 @@ public:
 	CStatePlayer* m_pPlayerState;
 	STATE m_state;
 
-private:
-
-	//CPlayerJumping jump;
-	//CPlayerDashing dash;
-	//CPlayerIdle idle;
-	//CPlayerMoving move;
-	//CPlayerAttackB attack;
-	//CPlayerSkillA skillA;
-	//CPlayerFalling fall;
-
 
 protected:
 
-	SKUL_TYPE m_curSkulType;
-	SKUL_TYPE m_subSkulType;
+	//SKUL_TYPE m_curSkulType;
+	//SKUL_TYPE m_subSkulType;
 
 	CAnimator* m_pAnimator;
 	CImage* m_pIdleImage;
