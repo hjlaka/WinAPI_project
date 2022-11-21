@@ -2,11 +2,13 @@
 #include "CGameManager.h"
 
 #include "CMainUI.h"
-#include "CPlayer.h"
 #include "CUIFrame.h"
 #include "CUIHp.h"
 #include "CUISkill.h"
 #include "CUIImage.h"
+
+#include "CSkulLittleBone.h"
+#include "CSkulHunter.h"
 
 CGameManager::CGameManager()
 {
@@ -14,6 +16,8 @@ CGameManager::CGameManager()
 	m_pPlayer = nullptr;
 	m_pPlayer2 = nullptr;
 	m_fBGEndX = 0;
+
+	m_gameStatus = GAME_STATUS::ACT;
 
 	/*pPlayerHpUI = nullptr;
 	pPlayerSkillAUI = nullptr;
@@ -26,7 +30,8 @@ CGameManager::~CGameManager()
 
 void CGameManager::Init()
 {
-
+	m_playerInfo.type1 = SKUL_TYPE::LITTLE_BONE;
+	m_playerInfo.type2 = SKUL_TYPE::NONE;
 
 }
 
@@ -48,6 +53,58 @@ CMainUI* CGameManager::GetMainUI()
 GAME_STATUS CGameManager::GetGameStatue()
 {
 	return m_gameStatus;
+}
+
+void CGameManager::SavePlayerInfo()
+{
+	// 스컬 타입 저장
+	m_playerInfo.type1 = m_pPlayer->m_skulType;
+	m_playerInfo.type2 = m_pPlayer2->m_skulType;
+
+	// 체력 저장
+	m_playerInfo.m_iHp = m_pPlayer->m_iHp;
+	m_playerInfo.m_iCurHp = m_pPlayer->m_iCurHp;
+}
+
+PlayerInfo& CGameManager::LoadPlayerInfo()
+{
+	return m_playerInfo;
+}
+
+CPlayer* CGameManager::CreateSkul()
+{
+	
+	switch (m_playerInfo.type1)
+	{
+	case SKUL_TYPE::NONE:
+		break;
+	case SKUL_TYPE::LITTLE_BONE:
+		m_pPlayer = new CSkulLittleBone;
+		//ADDOBJECT(m_pPlayer);					// 한 프레임 뒤에 생성.
+		break;
+	case SKUL_TYPE::HUNTER:
+		m_pPlayer = new CSkulHunter;
+		break;
+	}
+
+	return m_pPlayer;
+}
+
+CPlayer* CGameManager::CreateSecondSkul()
+{
+	switch (m_playerInfo.type2)
+	{
+	case SKUL_TYPE::NONE:
+		break;
+	case SKUL_TYPE::LITTLE_BONE:
+		m_pPlayer2 = new CSkulLittleBone;
+		break;
+	case SKUL_TYPE::HUNTER:
+		m_pPlayer2 = new CSkulHunter;
+		break;
+	}
+
+	return m_pPlayer2;
 }
 
 void CGameManager::SetPlayer(CPlayer* pPlayer)

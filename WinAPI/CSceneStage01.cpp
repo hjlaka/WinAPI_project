@@ -202,8 +202,10 @@ void CSceneStage01::Render()
 
 void CSceneStage01::Exit()
 {
-	// 현재씬에 추가된 오브젝트들 삭제.
+	// 플레이어 정보 저장
+	GAME->SavePlayerInfo();
 
+	// 현재씬에 추가된 오브젝트들 삭제.
 	DeleteAll();
 
 }

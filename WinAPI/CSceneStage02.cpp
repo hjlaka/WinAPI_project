@@ -57,13 +57,13 @@ void CSceneStage02::Enter()
 	GAME->SetMainUI(pMainUI);																// 메인 UI 생성
 	AddGameObject(pMainUI);
 
+	CPlayer* pPlayer = GAME->CreateSkul();
+	CPlayer* pPlayer2 = GAME->CreateSecondSkul();
+	pPlayer2->SetIsActive(false);
 
-	CPlayer* pPlayer = new CSkulLittleBone;
-	pPlayer->SetPos(200, WINSIZEY * 0.5f);
-	pPlayer->SetImgRate(1.2f);
 	AddGameObject(pPlayer);
-	GAME->SetPlayer(pPlayer);
-	pPlayer->SetIsActive(true);
+	AddGameObject(pPlayer2);
+		
 
 	GAME->EnterSkul();
 }

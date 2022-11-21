@@ -1,4 +1,5 @@
 #pragma once
+#include "CPlayer.h"
 
 class CPlayer;
 
@@ -8,9 +9,17 @@ class CUI;
 class CUIHp;
 class CUISkill;
 
+
+
+
 struct PlayerInfo
 {
 	// 스컬 공통으로 공유할 플레이어 스탯
+	SKUL_TYPE type1;
+	SKUL_TYPE type2;
+
+	int		m_iHp;			// 최대 Hp
+	int		m_iCurHp;		// 현재 Hp
 
 };
 
@@ -32,6 +41,8 @@ private:
 	CPlayer* m_pPlayer;
 	CPlayer* m_pPlayer2;
 
+	PlayerInfo m_playerInfo;
+
 
 	float		m_fBGEndX;
 	CMainUI*	m_pMainUI;
@@ -45,6 +56,11 @@ public:
 	float GetBGEndX();
 	CMainUI* GetMainUI();
 	GAME_STATUS GetGameStatue();
+
+	void SavePlayerInfo();
+	PlayerInfo& LoadPlayerInfo();
+	CPlayer* CreateSkul();
+	CPlayer* CreateSecondSkul();
 
 
 	void SetPlayer(CPlayer* pPlayer);
