@@ -41,7 +41,7 @@ CSceneStage01::~CSceneStage01()
 void CSceneStage01::Init()
 {
 
-
+	// 게임 초기 설정
 	CBackGround* pBG1 = new CBackGround;
 	pBG1->SetImage(RESOURCE->LoadImg(L"BGStage01_1", L"Image\\stage01_1.png"));
 	pBG1->SetPos(0, 0);
@@ -64,12 +64,23 @@ void CSceneStage01::Init()
 	pBG->SetImage(RESOURCE->LoadImg(L"BGStage01", L"Image\\stage01_map.png"));
 	pBG->SetPos(0, 0);
 	AddGameObject(pBG);
-	GAME->SetBGEndX(pBG->GetEndX());
+	GAME->SetBGEndX(pBG->GetEndX());														// 배경 끝값 설정
 
 
 	CMainUI* pMainUI = new CMainUI;
-	GAME->SetMainUI(pMainUI);
+	GAME->SetMainUI(pMainUI);																// 메인 UI 생성
 	AddGameObject(pMainUI);
+
+
+	CCameraController* pCamController = new CCameraController;
+	AddGameObject(pCamController);
+
+
+
+	
+
+
+
 	
 	
 }
@@ -83,6 +94,7 @@ void CSceneStage01::Enter()
 
 	//CAMERA->SetTargetObj(pPlayer);
 	
+	// 씬에 필요한 오브젝트 생성
 	pPlayer = new CSkulLittleBone;
 	pPlayer->SetPos(200, WINSIZEY * 0.5f);
 	pPlayer->SetImgRate(1.2f);
@@ -129,8 +141,7 @@ void CSceneStage01::Enter()
 	
 
 
-	CCameraController* pCamController = new CCameraController;
-	AddGameObject(pCamController);
+	
 
 }
 
@@ -140,6 +151,12 @@ void CSceneStage01::Update()
 	{
 		CAMERA->FadeOut(0.25f);
 		DELAYCHANGESCENE(GroupScene::Title, 0.25f);
+	}
+
+	if (BUTTONDOWN('2'))
+	{
+		CAMERA->FadeOut(0.25f);
+		DELAYCHANGESCENE(GroupScene::Stage02, 0.25f);
 	}
 
 	if (BUTTONDOWN(VK_ESCAPE))
@@ -185,7 +202,6 @@ void CSceneStage01::Render()
 
 void CSceneStage01::Exit()
 {
-
 	// 현재씬에 추가된 오브젝트들 삭제.
 
 	DeleteAll();
@@ -194,4 +210,5 @@ void CSceneStage01::Exit()
 
 void CSceneStage01::Release()
 {
+
 }

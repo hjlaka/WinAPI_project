@@ -31,6 +31,8 @@ enum class GroupScene
 
 	Stage01,
 
+	Stage02,
+
 	Size,
 };
 

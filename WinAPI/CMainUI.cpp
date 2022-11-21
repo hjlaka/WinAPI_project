@@ -15,6 +15,7 @@ CMainUI::~CMainUI()
 
 void CMainUI::Init()
 {
+
 	CUIFrame* pPlayerUI = new CUIFrame;
 	CImage* pPlayerFrameImg = RESOURCE->LoadImg(L"PlayerFrame", L"Image\\Player_Normal_Frame.png");
 	pPlayerFrameImg->SetImageRate(2.f);
