@@ -29,8 +29,8 @@ void CMainUI::Init()
 	pPlayerUI->AddChildUI(pPlayerPortrait);
 
 	pPlayerHpUI = new CUIHp;
-	pPlayerHpUI->SetPos(-80.f, 20.f);
-	pPlayerHpUI->SetScale(Vector(200.f, 25.f));
+	pPlayerHpUI->SetPos(-81.f, 22.f);
+	pPlayerHpUI->SetScale(Vector(234.f, 20.f));
 	pPlayerUI->AddChildUI(pPlayerHpUI);
 	//AddGameObject(pPlayerHpUI);
 

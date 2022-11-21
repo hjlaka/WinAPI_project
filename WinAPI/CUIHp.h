@@ -2,6 +2,7 @@
 #include "CUI.h"
 
 class CUnit;
+class CImage;
 
 
 class CUIHp : public CUI
@@ -16,6 +17,7 @@ protected:
 
 	CUnit* m_pOwner;
 	float m_fHpRate;
+	CImage* m_pImg;	
 
 	/*int m_iHp;
 	int m_iCurHp;*/

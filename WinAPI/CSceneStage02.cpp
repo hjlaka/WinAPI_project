@@ -3,6 +3,7 @@
 #include "CBackGround.h"
 #include "CGameManager.h"
 #include "CPlayer.h"
+#include "CSkulLittleBone.h"
 
 CSceneStage02::CSceneStage02()
 {
@@ -42,15 +43,25 @@ void CSceneStage02::Init()
 void CSceneStage02::Enter()
 {
 	CAMERA->FadeIn(0.25f);
-	LoadTile(GETPATH + L"Tile\\Stage01.tile");
+	LoadTile(GETPATH + L"Tile\\Stage02.tile");
 
-	CPlayer* pPlayer = GAME->GetPlayer();
-	pPlayer->SetPos(100, 100);
+	CPlayer* pPlayer = new CSkulLittleBone;
+	pPlayer->SetPos(200, WINSIZEY * 0.5f);
+	pPlayer->SetImgRate(1.2f);
 	AddGameObject(pPlayer);
+	GAME->SetPlayer(pPlayer);
+	pPlayer->SetIsActive(true);
+
+	GAME->EnterSkul();
 }
 
 void CSceneStage02::Update()
 {
+	if (BUTTONDOWN('1'))
+	{
+		CAMERA->FadeOut(0.25f);
+		DELAYCHANGESCENE(GroupScene::Title, 0.25f);
+	}
 }
 
 void CSceneStage02::Render()

@@ -20,6 +20,7 @@ void CUIHp::SetOwner(CUnit* pOwner)
 
 void CUIHp::Init()
 {
+	m_pImg = RESOURCE->LoadImg(L"PlayerHp", L"Image\\Player_HealthBar.png");
 }
 
 
@@ -31,20 +32,34 @@ void CUIHp::Update()
 
 void CUIHp::Render()
 {
-	RENDER->FillRect(
-		m_vecRenderPos.x,
-		m_vecRenderPos.y,
-		m_vecRenderPos.x + m_vecScale.x,
-		m_vecRenderPos.y + m_vecScale.y,
-		Color(0, 255, 0, 1)
-	);
+	if (nullptr != m_pImg)
+	{
+		RENDER->Image(
+			m_pImg,
+			m_vecRenderPos.x,
+			m_vecRenderPos.y,
+			m_vecRenderPos.x + m_vecScale.x,
+			m_vecRenderPos.y + m_vecScale.y
+		);
+	}
+	else
+	{
+		RENDER->FillRect(
+			m_vecRenderPos.x,
+			m_vecRenderPos.y,
+			m_vecRenderPos.x + m_vecScale.x,
+			m_vecRenderPos.y + m_vecScale.y,
+			Color(0, 255, 0, 1)
+		);	
+	}
 
-
-	RENDER->Text(to_wstring(m_pOwner->GetCurHp()),
+	RENDER->Text(to_wstring(m_pOwner->GetCurHp()) + L"/" + to_wstring(m_pOwner->GetHp()),
 		m_vecRenderPos.x,
 		m_vecRenderPos.y,
 		m_vecRenderPos.x + m_vecScale.x,
 		m_vecRenderPos.y + m_vecScale.y);
+
+	
 }
 
 void CUIHp::Release()
