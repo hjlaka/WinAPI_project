@@ -49,8 +49,6 @@ CStatePlayer* CPlayerIdle::HandleInput(CPlayer* pPlayer)
 		return new CPlayerFalling;
 	}
 
-
-	Logger::Debug(L"아이들 핸들인풋 진입");
     // 이동
 	if (BUTTONSTAY(VK_LEFT))
 	{

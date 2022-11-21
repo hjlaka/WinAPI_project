@@ -77,7 +77,7 @@ protected:
 	CImage* m_pPortrait;
 	
 
-	Vector m_vecMoveDir;
+	
 	
 	bool m_bIsMove;
 	bool m_bIsCanMove;

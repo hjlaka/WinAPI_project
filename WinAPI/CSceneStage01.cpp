@@ -41,6 +41,27 @@ CSceneStage01::~CSceneStage01()
 void CSceneStage01::Init()
 {
 
+	
+
+
+
+	
+
+
+
+	
+	
+}
+
+void CSceneStage01::Enter()  
+{
+	CAMERA->FadeIn(0.25f);
+	LoadTile(GETPATH + L"Tile\\Stage01.tile");
+	//LoadBackGroundImage(GETPATH + L"Stage01_map.png");
+
+
+	//CAMERA->SetTargetObj(pPlayer);
+	
 	// 게임 초기 설정
 	CBackGround* pBG1 = new CBackGround;
 	pBG1->SetImage(RESOURCE->LoadImg(L"BGStage01_1", L"Image\\stage01_1.png"));
@@ -76,24 +97,6 @@ void CSceneStage01::Init()
 	AddGameObject(pCamController);
 
 
-
-	
-
-
-
-	
-	
-}
-
-void CSceneStage01::Enter()  
-{
-	CAMERA->FadeIn(0.25f);
-	LoadTile(GETPATH + L"Tile\\Stage01.tile");
-	//LoadBackGroundImage(GETPATH + L"Stage01_map.png");
-
-
-	//CAMERA->SetTargetObj(pPlayer);
-	
 	// 씬에 필요한 오브젝트 생성
 	pPlayer = new CSkulLittleBone;
 	pPlayer->SetPos(200, WINSIZEY * 0.5f);

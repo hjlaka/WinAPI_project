@@ -26,6 +26,7 @@ public:
 protected:
 
 	Vector m_vecLookDir;
+	Vector m_vecMoveDir;
 
 
 	CRigidBody* m_pRigid;

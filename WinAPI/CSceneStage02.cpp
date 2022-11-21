@@ -57,6 +57,9 @@ void CSceneStage02::Enter()
 	GAME->SetMainUI(pMainUI);																// 메인 UI 생성
 	AddGameObject(pMainUI);
 
+
+	// 스컬 생성 - 게임 매니저가 저장된 값을 기반으로 스컬을 생성한 후 반환한다.
+
 	CPlayer* pPlayer = GAME->CreateSkul();
 	CPlayer* pPlayer2 = GAME->CreateSecondSkul();
 	pPlayer2->SetIsActive(false);
