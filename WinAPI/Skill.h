@@ -64,7 +64,7 @@ struct SkillInfo
 
 	void ReadySkill()
 	{
-		if (SKILL_STATE::NONE == state)
+		if (SKILL_STATE::NONE == state || !bCondition)
 			return;
 
 		state = SKILL_STATE::READY;
