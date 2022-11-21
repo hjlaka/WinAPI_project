@@ -26,7 +26,7 @@ void CMainUI::Init()
 
 	pPlayerPortrait = new CUIImage;
 	pPlayerPortrait->SetPos(-110.f, -20.f);
-	pPlayerPortrait->SetScale(Vector(80.f, 80.f));
+	pPlayerPortrait->SetScale(Vector(90.f, 90.f));
 	pPlayerUI->AddChildUI(pPlayerPortrait);
 
 	pPlayerHpUI = new CUIHp;
@@ -36,13 +36,13 @@ void CMainUI::Init()
 	//AddGameObject(pPlayerHpUI);
 
 	pPlayerSkillAUI = new CUISkill;
-	pPlayerSkillAUI->SetPos(-50.f, 10.f);
+	pPlayerSkillAUI->SetPos(-53.f, 13.f);
 	pPlayerSkillAUI->SetScale(Vector(50.f, -50.f));
 	pPlayerUI->AddChildUI(pPlayerSkillAUI);
 	//AddGameObject(pPlayerSkillAUI);
 
 	pPlayerSkillSUI = new CUISkill;
-	pPlayerSkillSUI->SetPos(10.f, 10.f);
+	pPlayerSkillSUI->SetPos(10.f, 13.f);
 	pPlayerSkillSUI->SetScale(Vector(50.f, -50.f));
 	pPlayerUI->AddChildUI(pPlayerSkillSUI);
 	//AddGameObject(pPlayerSkillSUI);
