@@ -16,6 +16,12 @@ private:
 	map<wstring, CAnimation*>	m_mapAni;	// 애니메이션들을 담기 위한 자료구조
 	CAnimation* m_pCurAni;					// 현재 애니메이션
 
+	bool m_bFlip;							// 좌우반전 여부
+
+public:
+	void SetFlip(bool flip);				// 좌우반전 여부 설정
+
+
 private:
 	void Init() override;
 	void Update() override;

@@ -158,6 +158,8 @@ void CSkulLittleBone::AnimatorUpdate()
 	/*if (m_vecMoveDir.Length() > 0)
 		m_vecLookDir = m_vecMoveDir;*/
 
+	m_pAnimator->SetFlip(m_vecLookDir.x == -1);			// 왼쪽을 바라보고 있다면 애니메이션 좌우 반전
+
 	wstring str = L"";
 
 

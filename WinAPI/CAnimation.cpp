@@ -23,6 +23,9 @@ CAnimation::CAnimation()
 	m_fRate = 1.f;
 	m_fduration = 0;
 	m_uiFrameCount = 0;
+
+	m_bFlip = false;
+
 }
 
 CAnimation::~CAnimation()
@@ -49,6 +52,11 @@ void CAnimation::RunCallback()
 float CAnimation::GetFullTime()
 {
 	return m_fduration * (float)m_uiFrameCount;
+}
+
+void CAnimation::SetFlip(bool flip)
+{
+	m_bFlip = flip;
 }
 
 void CAnimation::SetName(const wstring& name)
@@ -136,7 +144,8 @@ void CAnimation::Render()
 		frame.lt.x,
 		frame.lt.y,
 		frame.lt.x + frame.slice.x,
-		frame.lt.y + frame.slice.y
+		frame.lt.y + frame.slice.y,
+		m_bFlip
 	);
 }
 

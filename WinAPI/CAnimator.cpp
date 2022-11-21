@@ -6,10 +6,16 @@
 CAnimator::CAnimator()
 {
 	m_pCurAni = nullptr;
+	m_bFlip = false;
 }
 
 CAnimator::~CAnimator()
 {
+}
+
+void CAnimator::SetFlip(bool flip)
+{
+	m_bFlip = flip;
 }
 
 void CAnimator::Init()
@@ -19,7 +25,10 @@ void CAnimator::Init()
 void CAnimator::Update()
 {
 	if (nullptr != m_pCurAni)
+	{
+		m_pCurAni->SetFlip(m_bFlip);
 		m_pCurAni->Update();
+	}
 }
 
 void CAnimator::Render()

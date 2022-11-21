@@ -519,7 +519,7 @@ void CRenderManager::Image(CImage* pImg, float startX, float startY, float endX,
 	m_pRenderTarget->DrawBitmap(pImg->GetImage(), imgRect);
 }
 
-void CRenderManager::FrameImage(CImage* pImg, float dstX, float dstY, float dstW, float dstH, float srcX, float srcY, float srcW, float srcH, float alpha)
+void CRenderManager::FrameImage(CImage* pImg, float dstX, float dstY, float dstW, float dstH, float srcX, float srcY, float srcW, float srcH, bool flip, float alpha)
 {
 	Vector dstStart = CAMERA->WorldToScreenPoint(Vector(dstX, dstY));
 	dstX = dstStart.x;
@@ -531,7 +531,19 @@ void CRenderManager::FrameImage(CImage* pImg, float dstX, float dstY, float dstW
 	D2D1_RECT_F imgRect = { dstX, dstY, dstW, dstH };
 	D2D1_RECT_F srcRect = { srcX, srcY, srcW, srcH };
 
+	if (flip)		// 좌우 반전
+	{
+		m_pRenderTarget->SetTransform(D2D1::Matrix3x2F::Scale(-1.f, 1.f,
+			D2D1_POINT_2F{ (dstX + dstW) / 2.f, (dstY + dstH) / 2.f }));		// 중심점이 있는 크기 조정 변환
+	}
+
 	m_pRenderTarget->DrawBitmap(pImg->GetImage(), imgRect, 1.0f, D2D1_BITMAP_INTERPOLATION_MODE_NEAREST_NEIGHBOR, srcRect);
+
+	if (flip)		// 좌우 반전 원복
+	{
+		m_pRenderTarget->SetTransform(D2D1::Matrix3x2F::Scale(1.f, 1.f,
+			D2D1_POINT_2F{ (dstX + dstW) / 2.f, (dstY + dstH) / 2.f }));
+	}
 }
 
 void CRenderManager::PrintSystemMessage(const wstring& str)

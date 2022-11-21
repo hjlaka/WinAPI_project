@@ -37,6 +37,8 @@ private:
 	float				m_fduration;		// 공통 프레임 지속시간
 	UINT				m_uiFrameCount;		// 프레임 개수
 
+	float				m_bFlip;			// 이미지 좌우반전 여부
+
 public:
 	const wstring& GetName();
 
@@ -44,6 +46,7 @@ public:
 	void RunCallback();
 
 	float GetFullTime();		// 애니메이션 총 재생시간
+	void SetFlip(bool flip);
 
 private:
 	void SetName(const wstring& name);
