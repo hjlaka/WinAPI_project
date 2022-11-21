@@ -3,6 +3,7 @@
 
 #include "CRigidBody.h"
 #include "CGameManager.h"
+#include "CPlayerAttack.h"
 
 
 
@@ -21,6 +22,7 @@ CMonster01::CMonster01()
 	m_fStatusTimer = 0;
 	m_fAttackACool = 0;
 	m_fThinkTime = 0;
+	m_bMakeAttack = false;
 
 	m_vecMoveDir = Vector(0, 0);
 	m_vecLookDir = Vector(0, -1);
@@ -89,7 +91,7 @@ void CMonster01::Update()
 	case STATUS::IDLE:
 		// 플레이어가 가까이 오는지 확인
 		if (abs(distance.y) < 100.f &&
-			abs(distance.x) < 300.f)
+			abs(distance.x) < 300.f && m_fAttackACool <= 0)
 		{
 			m_status = STATUS::MOVE;
 		}
@@ -97,7 +99,9 @@ void CMonster01::Update()
 		break;
 	case STATUS::MOVE:
 		// 플레이어쪽으로 이동
-		
+
+		MoveToTargetPos();
+
 		if (abs(distance.x) > 350.f)
 		{
 			m_status = STATUS::IDLE;
@@ -108,11 +112,12 @@ void CMonster01::Update()
 			{
 				m_status = STATUS::ATTACK;
 				m_fStatusTimer = m_fAttackAPlayTime;		// 상태 유지 시간 설정
+				m_bMakeAttack = false;
 			}
-		}
-		else
-		{
-			MoveToTargetPos();
+			else
+			{
+				m_status = STATUS::IDLE;
+			}
 		}
 
 		break;
@@ -121,7 +126,21 @@ void CMonster01::Update()
 	case STATUS::ATTACK:
 		m_pRigid->SetVelocityX(0);
 		m_fStatusTimer -= DT;
-		if (m_fStatusTimer <= 0)
+		if (m_fStatusTimer <= 1.f && !m_bMakeAttack)
+		{
+			Logger::Debug(L"공격 콜라이더");
+			// 공격 범위 생성
+			CAttack* pAttack = new CAttack;
+			pAttack->SetName(L"몬스터 어택");
+			pAttack->SetPos(m_vecPos + Vector(m_vecLookDir.x * 100, -5));
+			pAttack->SetScale(Vector(100, 100));
+			pAttack->SetOwner(this);
+			pAttack->SetAttackDuration(0.8f);
+			//pAttack->SetDir(m_vecLookDir);
+			ADDOBJECT(pAttack);
+			m_bMakeAttack = true;
+		}
+		else if (m_fStatusTimer <= 0)
 		{
 			m_status = STATUS::IDLE;
 			m_fAttackACool = 2.5f;
@@ -179,8 +198,6 @@ void CMonster01::OnCollisionEnter(CCollider* pOtherCollider)
 	if (pOtherCollider->GetObjName() == L"PlayerAttack" && !m_bGetHit)
 	{
 		Logger::Debug(L"몬스터 피격");
-		//m_vecPos += (GetCollider()->GetPos() - pOtherCollider->GetPos()).Normalized() * 10;
-		//m_pRigid->Power((GetCollider()->GetPos() - pOtherCollider->GetPos()).Normalized() * 150);
 
 		CAttack* pAttack = (CAttack*)(pOtherCollider->GetOwner());
 

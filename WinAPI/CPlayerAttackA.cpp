@@ -52,7 +52,7 @@ void CPlayerAttackA::Enter(CPlayer* pPlayer)
 	pPlayer->m_bIsCanMove = false;
 	pPlayer->m_bAttackContinue = false;
 
-	//pPlayer->Attack();
+	pPlayer->Attack();
 	pPlayer->m_fAttackATime = 0.5f;
 
 	if (BUTTONSTAY(VK_RIGHT))

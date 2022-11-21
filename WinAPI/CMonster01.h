@@ -25,6 +25,7 @@ private:
 	float m_fStatusTimer;
 	float m_fAttackACool;
 	float m_fThinkTime;
+	bool m_bMakeAttack;
 
 private:
 

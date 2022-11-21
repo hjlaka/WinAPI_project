@@ -193,7 +193,6 @@ void CPlayer::Update()
 	if (m_vecMoveDir.Length() > 0)
 		m_vecLookDir = m_vecMoveDir;
 
-	UpdateInState();
 	UpdateSkill();
 
 	AnimatorUpdate();
@@ -221,9 +220,6 @@ void CPlayer::Release()
 		delete m_skillS;*/
 }
 
-void CPlayer::UpdateInState()
-{
-}
 
 void CPlayer::AnimatorUpdate()
 {

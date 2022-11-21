@@ -6,6 +6,7 @@ CPlayerAttack::CPlayerAttack()
 {
 	m_layer = Layer::PlayerAttack;
 	m_strName = L"PlayerAttack";
+	m_vecScale = Vector(10, 10);
 }
 
 CPlayerAttack::~CPlayerAttack()
@@ -24,7 +25,7 @@ void CPlayerAttack::SetAttack(float attack)
 
 void CPlayerAttack::Init()
 {
-	AddCollider(ColliderType::Rect, Vector(10, 10), Vector(0, 0));
+	AddCollider(ColliderType::Rect, m_vecScale, Vector(0, 0));
 }
 
 void CPlayerAttack::Update()

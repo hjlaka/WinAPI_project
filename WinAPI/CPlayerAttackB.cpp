@@ -63,7 +63,7 @@ void CPlayerAttackB::Enter(CPlayer* pPlayer)
 	pPlayer->m_bIsCanMove = false;
 	pPlayer->m_bAttackContinue = false;
 
-	//pPlayer->Attack();
+	pPlayer->Attack();
 	pPlayer->m_fAttackBTime = 0.4f;
 
 

@@ -138,11 +138,10 @@ protected:
 	void Render() override;
 	void Release() override;
 
-	void UpdateInState();
 	virtual void AnimatorUpdate();
 	void CreateMissile();
 	void Jump(float fJumpPower);
-	void Attack();
+	virtual void Attack();
 
 	virtual void Enter() = 0;
 	virtual void Exit() = 0;

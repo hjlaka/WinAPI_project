@@ -28,13 +28,13 @@ public:
 	void SetOffset(Vector offset);
 
 protected:
-	void Init() override;
-	void Update() override;
-	void Render() override;
-	void Release() override;
+	virtual void Init() override;
+	virtual void Update() override;
+	virtual void Render() override;
+	virtual void Release() override;
 
-	void OnCollisionEnter(CCollider* pOtherCollider) override;
-	void OnCollisionStay(CCollider* pOtherCollider) override;
-	void OnCollisionExit(CCollider* pOtherCollider) override;
+	virtual void OnCollisionEnter(CCollider* pOtherCollider) override;
+	virtual void OnCollisionStay(CCollider* pOtherCollider) override;
+	virtual void OnCollisionExit(CCollider* pOtherCollider) override;
 };
 

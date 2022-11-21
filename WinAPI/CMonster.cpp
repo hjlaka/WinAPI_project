@@ -26,11 +26,7 @@ void CMonster::MoveToTargetPos()
 		m_pRigid->SetVelocityX(m_vecMoveDir.x * m_fSpeed);
 
 	}
-	else
-	{
-		m_vecMoveDir.x = (m_vecTargetPos.x - m_vecPos.x > 0) ? 1 : -1;
-		m_pRigid->SetVelocityX(m_vecMoveDir.x * m_fSpeed);
-	}
+
 }
 
 void CMonster::Init()
