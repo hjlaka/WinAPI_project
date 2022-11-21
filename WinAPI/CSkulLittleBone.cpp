@@ -6,6 +6,8 @@
 
 CSkulLittleBone::CSkulLittleBone()
 {
+	m_skulType = SKUL_TYPE::LITTLE_BONE;
+
 	m_pHead = nullptr;
 
 	m_pShootHead = nullptr;

@@ -31,7 +31,7 @@ class CPlayerFalling;
 class CGameManager;
 
 enum class STATE {IDLE, ATTACK, ATTACKA, ATTACKB, MOVE, DASH, JUMP, JUMPATTACK, FALL, SKILLA, SKILLS};
-//enum class SKUL_TYPE {LITTLE_BONE, HUNTER};
+enum class SKUL_TYPE {NONE, LITTLE_BONE, HUNTER};
 
 class CPlayer : public CUnit
 {
@@ -60,7 +60,7 @@ public:
 
 protected:
 
-	//SKUL_TYPE m_curSkulType;
+	SKUL_TYPE m_skulType;
 	//SKUL_TYPE m_subSkulType;
 
 	CAnimator* m_pAnimator;

@@ -30,6 +30,7 @@ CPlayer::CPlayer()
 	m_vecScale = Vector(100, 100);
 	m_layer = Layer::Player;
 	m_strName = L"플레이어";
+	m_skulType = SKUL_TYPE::NONE;
 
 	m_pIdleImage = nullptr;
 	m_pMoveImage = nullptr;

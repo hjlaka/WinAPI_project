@@ -11,6 +11,11 @@ public:
 	CSkulHunter();
 	virtual ~CSkulHunter();
 
+private:
+
+	SkillInfo ImmovableShot;
+	SkillInfo MultipleShot;
+	SkillInfo SiegeShot;
 
 private:
 
