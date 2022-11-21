@@ -5,6 +5,9 @@ class CImage;
 class CAnimator;
 class CRigidBody;
 
+
+
+
 class CMonster01 : public CMonster
 {
 public:
@@ -15,9 +18,18 @@ private:
 	CAnimator* m_pAnimator;
 	CImage* m_pIdleImage;
 	CImage* m_pMoveImage;
+	CImage* m_pAttackImage;
+	CImage* m_pAttackBImage;
 
-	Vector m_vecMoveDir;
-	Vector m_vecLookDir;
+	float m_fAttackAPlayTime;
+	float m_fStatusTimer;
+	float m_fAttackACool;
+	float m_fThinkTime;
+
+private:
+
+	void AnimatorUpdate() override;
+
 
 public:
 

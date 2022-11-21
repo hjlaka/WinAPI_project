@@ -2,6 +2,9 @@
 #include "CMonster01.h"
 
 #include "CRigidBody.h"
+#include "CGameManager.h"
+
+
 
 CMonster01::CMonster01()
 {
@@ -9,9 +12,15 @@ CMonster01::CMonster01()
 	m_vecScale = Vector(100, 100);
 	m_layer = Layer::Monster;
 	m_strName = L"몬스터1";
+	m_status = STATUS::IDLE;
 
 	m_pIdleImage = nullptr;
 	m_pMoveImage = nullptr;
+
+	m_fAttackAPlayTime = 0;
+	m_fStatusTimer = 0;
+	m_fAttackACool = 0;
+	m_fThinkTime = 0;
 
 	m_vecMoveDir = Vector(0, 0);
 	m_vecLookDir = Vector(0, -1);
@@ -20,19 +29,28 @@ CMonster01::CMonster01()
 	m_iHp = 200;
 	m_iCurHp = 200;
 	m_iAtt = 15;
+	m_fSpeed = 100.f;
 }
 
 CMonster01::~CMonster01()
 {
 }
 
+
 void CMonster01::Init()
 {
-	m_pIdleImage = RESOURCE->LoadImg(L"MonsterIdle", L"Image\\big_knight_idle.png");
-	m_pMoveImage = RESOURCE->LoadImg(L"MonsterMove", L"Image\\big_knight_move.png");
+	m_pIdleImage = RESOURCE->LoadImg(L"BigKnightIdle", L"Image\\big_knight_idle.png");
+	m_pMoveImage = RESOURCE->LoadImg(L"BigKnightMove", L"Image\\big_knight_move.png");
+	m_pAttackImage = RESOURCE->LoadImg(L"BigKnightAttack", L"Image\\big_knight_attackA.png");
+	m_pAttackBImage = RESOURCE->LoadImg(L"BigKnightAttackB", L"Image\\big_knight_attackB.png");
 
 	m_pAnimator = new CAnimator;
 	m_pAnimator->CreateAnimation(L"Idle", m_pIdleImage, Vector(0.f, 0.f), Vector(150.f, 145.f), Vector(160.f, 0.f), 0.5f, 4);
+	m_pAnimator->CreateAnimation(L"Move", m_pMoveImage, Vector(0.f, 0.f), Vector(150.f, 145.f), Vector(160.f, 0.f), 0.2f, 8);
+	m_pAnimator->CreateAnimation(L"AttackA", m_pAttackImage, Vector(0.f, 0.f), Vector(150.f, 145.f), Vector(160.f, 0.f), 0.1f, 20);
+	m_pAnimator->CreateAnimation(L"AttackB", m_pAttackBImage, Vector(0.f, 0.f), Vector(150.f, 145.f), Vector(160.f, 0.f), 0.1f, 2);
+
+	m_fAttackAPlayTime = m_pAnimator->FindAnimation(L"AttackA")->GetFullTime();
 	
 	m_pAnimator->Play(L"Idle", false);
 	AddComponent(m_pAnimator);
@@ -51,6 +69,99 @@ void CMonster01::Update()
 {
 	CUnit::Update();
 
+	CPlayer* pPlayer = GAME->GetPlayer();
+	m_TargetObj = pPlayer;
+
+	Vector distance = m_TargetObj->GetPos() - m_vecPos;
+
+	//m_fThinkTime += DT;
+	//if (m_fThinkTime >= 2.f)		// 일정 시간마다 플레이어와의 거리를 가늠
+	//{
+	//	m_vecTargetPos = pPlayer->GetPos();
+	//	//distance = m_TargetObj->GetPos() - m_vecPos;
+	//	distance = m_vecTargetPos - m_vecPos;
+	//	m_fThinkTime = 0;
+	//}
+
+
+	switch (m_status)
+	{
+	case STATUS::IDLE:
+		// 플레이어가 가까이 오는지 확인
+		if (abs(distance.y) < 100.f &&
+			abs(distance.x) < 300.f)
+		{
+			m_status = STATUS::MOVE;
+		}
+
+		break;
+	case STATUS::MOVE:
+		// 플레이어쪽으로 이동
+		
+		if (abs(distance.x) > 350.f)
+		{
+			m_status = STATUS::IDLE;
+		}
+		else if (abs(distance.x) < 100.f)
+		{
+			if (m_fAttackACool <= 0)			// 쿨타임 0이면
+			{
+				m_status = STATUS::ATTACK;
+				m_fStatusTimer = m_fAttackAPlayTime;		// 상태 유지 시간 설정
+			}
+		}
+		else
+		{
+			MoveToTargetPos();
+		}
+
+		break;
+	case STATUS::CONFRONT:
+		break;
+	case STATUS::ATTACK:
+		m_pRigid->SetVelocityX(0);
+		m_fStatusTimer -= DT;
+		if (m_fStatusTimer <= 0)
+		{
+			m_status = STATUS::IDLE;
+			m_fAttackACool = 2.5f;
+		}
+		break;
+	}
+	
+
+
+	
+	if (m_fAttackACool > 0)
+	{
+		m_fAttackACool -= DT;
+	}
+	AnimatorUpdate();
+}
+
+void CMonster01::AnimatorUpdate()
+{
+	if (m_vecMoveDir.Length() > 0)
+		m_vecLookDir = m_vecMoveDir;
+
+	m_pAnimator->SetFlip(m_vecLookDir.x == -1);			// 왼쪽을 바라보고 있다면 애니메이션 좌우 반전
+
+	wstring str = L"";
+
+
+	switch (m_status)
+	{
+	case STATUS::IDLE:
+		str += L"Idle";
+		break;
+	case STATUS::MOVE:
+		str += L"Move";
+		break;
+	case STATUS::ATTACK:
+		str += L"AttackA";
+		break;
+	}
+	m_pAnimator->Play(str, false);
 }
 
 void CMonster01::Render()

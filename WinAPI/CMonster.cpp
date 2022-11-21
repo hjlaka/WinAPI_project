@@ -3,15 +3,34 @@
 
 #include "CRenderManager.h"
 #include "CCollider.h"
+#include "CRigidBody.h"
 
 CMonster::CMonster()
 {
 	m_vecScale = Vector(100, 100);
 	m_layer = Layer::Monster;
+	m_status = STATUS::IDLE;
+	m_vecTargetPos = Vector(0, 0);
+	m_TargetObj = nullptr;
 }
 
 CMonster::~CMonster()
 {
+}
+
+void CMonster::MoveToTargetPos()
+{
+	if (m_TargetObj != nullptr)
+	{
+		m_vecMoveDir.x = (m_TargetObj->GetPos().x - m_vecPos.x > 0) ? 1 : -1;
+		m_pRigid->SetVelocityX(m_vecMoveDir.x * m_fSpeed);
+
+	}
+	else
+	{
+		m_vecMoveDir.x = (m_vecTargetPos.x - m_vecPos.x > 0) ? 1 : -1;
+		m_pRigid->SetVelocityX(m_vecMoveDir.x * m_fSpeed);
+	}
 }
 
 void CMonster::Init()
