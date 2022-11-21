@@ -98,12 +98,6 @@ void CSkulLittleBone::Update()
 {
 	CPlayer::Update();
 
-	//m_bHeadOn = m_pHead->GetHeadOn();
-	/*if (!(m_pHead->GetHeadOn()))
-	{
-		m_vecHeadPos = m_pHead->GetPos();
-	}*/
-
 	if (m_pHead->GetHeadOn())				// 적절할까?
 	{
 		skillHeadIsI.bCondition = false;
@@ -244,14 +238,13 @@ void CSkulLittleBone::SkillS()
 {
 	//if (m_skillS.state == SKILL_STATE::READY)
 	{
-		Logger::Debug(L"스킬 사용S " + to_wstring(m_vecLookDir.x));
 		// 머리가 플레이어에게 없을 경우만.
 		// 플레이어 순간 이동
 		// 순간 이동 애니메이션 재생
 		if (!(m_pHead->GetHeadOn()))
 		{
 			//m_vecPos = m_vecHeadPos - Vector(0, m_vecScale.y);
-			m_vecPos = m_pHead->GetPos();
+			m_vecPos = m_pHead->GetPos() - Vector(0, GetCollider()->GetScale().y * 0.2);
 			m_skillS->UseSkill();
 			m_pRigid->SetGravitySpeed(0);
 			ReturnHead();
@@ -259,10 +252,6 @@ void CSkulLittleBone::SkillS()
 		
 	}
 }
-
-//void CSkulLittleBone::SkillAction()
-//{
-//}
 
 
 

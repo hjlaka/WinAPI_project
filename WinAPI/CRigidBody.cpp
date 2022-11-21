@@ -241,17 +241,20 @@ bool CRigidBody::GroundCollisionEnter(CCollider* myCollider, CCollider* pOtherCo
 	Vector ground = Vector(pOtherCollider->GetPos().x, pOtherCollider->GetPos().y);
 	Vector groundToMe = ground - myCollider->GetPos();
 
-	if (myCollider->GetPos().y + myCollider->GetScale().y/2 < pOtherCollider->GetPos().y - pOtherCollider->GetScale().y/2 + 2.f && GetGravitySpeed() >= 0)
-		//캐릭터가 장애물 위에 있고, 아래로 떨어지는 속도가 0 이상일 때
+	if (myCollider->GetPos().y + myCollider->GetScale().y/2 < pOtherCollider->GetPos().y - pOtherCollider->GetScale().y/2 + 2.f)
+		//캐릭터의 바닥이 장애물의 꼭대기보다 위에 있다면
 	{
 		isUpDownCol = true;
+		CGameObject* pOwner = GetOwner();
+		Vector ownerPos = pOwner->GetPos();
+		Vector otherColPos = pOtherCollider->GetPos();
+		Vector ownerColScale = myCollider->GetScale();
+		Vector otherColScale = pOtherCollider->GetScale();
 
-		GetOwner()->SetPos(GetOwner()->GetPos().x, pOtherCollider->GetPos().y - pOtherCollider->GetScale().y/2 - myCollider->GetScale().y/2 + 0.1f) ;
+		pOwner->SetPos(ownerPos.x, otherColPos.y - otherColScale.y * 0.5f - ownerColScale.y * 0.5f + 0.1f);		// 캐릭터의 y위치를 조정한다.
 
 
 		SetGravitySpeed(0);
-
-
 		SetCollisionConunt(Dir::DOWN, +1);
 
 		return true;		// 상하충돌 여부
@@ -292,6 +295,7 @@ void CRigidBody::GroundCollisionExit(CCollider* myCollider, CCollider* pOtherCol
 	}
 	else
 	{
+		Logger::Debug(L"바닥 충돌 1만큼 탈출");
 		SetCollisionConunt(Dir::DOWN, -1);
 		isUpDownCol = false;
 	}
