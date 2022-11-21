@@ -9,6 +9,7 @@
 
 CSceneTitle::CSceneTitle()
 {
+	m_pBGImg = nullptr;
 }
 
 CSceneTitle::~CSceneTitle()
@@ -17,6 +18,9 @@ CSceneTitle::~CSceneTitle()
 
 void CSceneTitle::Init()
 {
+	m_pBGImg = RESOURCE->LoadImg(L"TitileBackGround", L"Image\\Title_Art.png");
+	m_pLogoImg = RESOURCE->LoadImg(L"TitileLogo", L"Image\\Title_Logo.png");
+	m_pTextImg = RESOURCE->LoadImg(L"TitileText", L"Image\\title_text.png");
 }
 
 void CSceneTitle::Enter()
@@ -39,6 +43,26 @@ void CSceneTitle::Update()
 
 void CSceneTitle::Render()
 {
+	RENDER->Image(m_pBGImg,
+		0,
+		0,
+		WINSIZEX,
+		WINSIZEY);
+
+	RENDER->Image(
+		m_pLogoImg,
+		WINSIZEX * 0.5f - m_pLogoImg->GetWidth() * 0.5f,
+		WINSIZEY * 0.5f - m_pLogoImg->GetHeight() * 0.5f,
+		WINSIZEX * 0.5f + m_pLogoImg->GetWidth() * 0.5f,
+		WINSIZEY * 0.5f + m_pLogoImg->GetHeight() * 0.5f );
+
+	RENDER->Image(
+		m_pTextImg,
+		WINSIZEX * 0.5f - m_pTextImg->GetWidth() * 0.5f,
+		WINSIZEY * 0.7f - m_pTextImg->GetHeight() * 0.5f,
+		WINSIZEX * 0.5f + m_pTextImg->GetWidth() * 0.5f,
+		WINSIZEY * 0.7f + m_pTextImg->GetHeight() * 0.5f);
+
 	RENDER->Text(L"press space to start",
 		WINSIZEX * 0.5f - 100,
 		WINSIZEY * 0.5f - 10,
