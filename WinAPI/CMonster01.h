@@ -20,6 +20,7 @@ private:
 	CImage* m_pMoveImage;
 	CImage* m_pAttackImage;
 	CImage* m_pAttackBImage;
+	CImage* m_pDieImage;
 
 	float m_fAttackAPlayTime;
 	float m_fStatusTimer;

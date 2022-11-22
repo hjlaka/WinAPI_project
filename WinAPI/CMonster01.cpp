@@ -18,6 +18,7 @@ CMonster01::CMonster01()
 
 	m_pIdleImage = nullptr;
 	m_pMoveImage = nullptr;
+	m_pDieImage = nullptr;
 
 	m_fAttackAPlayTime = 0;
 	m_fStatusTimer = 0;
@@ -48,12 +49,14 @@ void CMonster01::Init()
 	m_pMoveImage = RESOURCE->LoadImg(L"BigKnightMove", L"Image\\big_knight_move.png");
 	m_pAttackImage = RESOURCE->LoadImg(L"BigKnightAttack", L"Image\\big_knight_attackA.png");
 	m_pAttackBImage = RESOURCE->LoadImg(L"BigKnightAttackB", L"Image\\big_knight_attackB.png");
+	m_pDieImage = RESOURCE->LoadImg(L"BigKnightDie", L"Image\\big_knight_die.png");
 
 	m_pAnimator = new CAnimator;
-	m_pAnimator->CreateAnimation(L"Idle", m_pIdleImage, Vector(0.f, 0.f), Vector(150.f, 145.f), Vector(160.f, 0.f), 0.5f, 4);
-	m_pAnimator->CreateAnimation(L"Move", m_pMoveImage, Vector(0.f, 0.f), Vector(150.f, 145.f), Vector(160.f, 0.f), 0.2f, 8);
-	m_pAnimator->CreateAnimation(L"AttackA", m_pAttackImage, Vector(0.f, 0.f), Vector(150.f, 145.f), Vector(160.f, 0.f), 0.1f, 20);
-	m_pAnimator->CreateAnimation(L"AttackB", m_pAttackBImage, Vector(0.f, 0.f), Vector(150.f, 145.f), Vector(160.f, 0.f), 0.1f, 2);
+	m_pAnimator->CreateAnimation(L"Idle", m_pIdleImage, Vector(0.f, 20.f), Vector(150.f, 145.f), Vector(160.f, 0.f), 0.5f, 4);
+	m_pAnimator->CreateAnimation(L"Move", m_pMoveImage, Vector(0.f, 20.f), Vector(150.f, 145.f), Vector(160.f, 0.f), 0.2f, 8);
+	m_pAnimator->CreateAnimation(L"AttackA", m_pAttackImage, Vector(0.f, 20.f), Vector(150.f, 145.f), Vector(160.f, 0.f), 0.1f, 20);
+	m_pAnimator->CreateAnimation(L"AttackB", m_pAttackBImage, Vector(0.f, 20.f), Vector(150.f, 145.f), Vector(160.f, 0.f), 0.1f, 2);
+	m_pAnimator->CreateAnimation(L"Die", m_pDieImage, Vector(0.f, 20.f), Vector(150.f, 145.f), Vector(160.f, 0.f), 0.1f, 1, false);
 
 	m_fAttackAPlayTime = m_pAnimator->FindAnimation(L"AttackA")->GetFullTime();
 	
@@ -77,15 +80,8 @@ void CMonster01::Update()
 
 	Vector distance = m_TargetObj->GetPos() - m_vecPos;
 
-	//m_fThinkTime += DT;
-	//if (m_fThinkTime >= 2.f)		// 일정 시간마다 플레이어와의 거리를 가늠
-	//{
-	//	m_vecTargetPos = pPlayer->GetPos();
-	//	//distance = m_TargetObj->GetPos() - m_vecPos;
-	//	distance = m_vecTargetPos - m_vecPos;
-	//	m_fThinkTime = 0;
-	//}
 
+	if (m_iCurHp <= 0) m_status = STATUS::DIE;			// 우선순위
 
 	switch (m_status)
 	{
@@ -127,9 +123,8 @@ void CMonster01::Update()
 	case STATUS::ATTACK:
 		m_pRigid->SetVelocityX(0);
 		m_fStatusTimer -= DT;
-		if (m_fStatusTimer <= 1.f && !m_bMakeAttack)
+		if (m_fStatusTimer <= 1.f && !m_bMakeAttack)			// 상태 변경된 후 1초가 지나고 공격 콜라이더 생성 
 		{
-			Logger::Debug(L"공격 콜라이더");
 			// 공격 범위 생성
 			CMonsterAttack* pAttack = new CMonsterAttack;
 			pAttack->SetPos(m_vecPos);
@@ -137,7 +132,7 @@ void CMonster01::Update()
 			pAttack->SetOwner(this);
 			pAttack->SetAttackDuration(0.1f);
 			pAttack->SetAttack(m_iAtt);
-			//pAttack->SetDir(m_vecLookDir);
+			pAttack->SetDir(m_vecLookDir);
 			ADDOBJECT(pAttack);
 			m_bMakeAttack = true;
 		}
@@ -147,9 +142,10 @@ void CMonster01::Update()
 			m_fAttackACool = 2.5f;
 		}
 		break;
+	case STATUS::DIE:
+		break;
 	}
 	
-
 
 	
 	if (m_fAttackACool > 0)
@@ -180,6 +176,9 @@ void CMonster01::AnimatorUpdate()
 	case STATUS::ATTACK:
 		str += L"AttackA";
 		break;
+	case STATUS::DIE:
+		str += L"Die";
+		break;
 	}
 	m_pAnimator->Play(str, false);
 }
@@ -198,7 +197,6 @@ void CMonster01::OnCollisionEnter(CCollider* pOtherCollider)
 
 	if (pOtherCollider->GetObjName() == L"PlayerAttack" && !m_bGetHit)
 	{
-		Logger::Debug(L"몬스터 피격");
 
 		CAttack* pAttack = (CAttack*)(pOtherCollider->GetOwner());
 		pAttack->MakeEffect();
