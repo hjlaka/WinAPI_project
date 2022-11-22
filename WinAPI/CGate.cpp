@@ -3,15 +3,25 @@
 #include "CAnimator.h"
 #include "CCollider.h"
 
-CGate::CGate()
+
+
+CGate::CGate(GroupScene dstScene)
 {
 	m_layer = Layer::Object;
+	m_strName = L"Gate";
 	m_pAnimator = nullptr;
 	m_bIsOpen = false;
+	m_dstScene = dstScene;
 }
 
 CGate::~CGate()
 {
+}
+
+void CGate::GoToNext()
+{
+	CAMERA->FadeOut(0.25f);
+	DELAYCHANGESCENE(m_dstScene, 0.25f);
 }
 
 void CGate::Init()

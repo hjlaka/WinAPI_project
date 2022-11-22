@@ -119,25 +119,12 @@ void CSceneStage01::Enter()
 	//pMonster->SetImgRate(1.2f);
 	AddGameObject(pMonster);
 
-	CGate* pGate = new CGate;
+	CGate* pGate = new CGate(GroupScene::Stage02);
 	pGate->SetPos(2100, 1250);
 	//pGate->SetImgRate(1.2f);
 	AddGameObject(pGate);
 
-	
 
-	/*CUIFrame* pPlayerUI = new CUIFrame;
-	CImage* pPlayerFrameImg = RESOURCE->LoadImg(L"PlayerFrame", L"Image\\Player_Normal_Frame.png");
-	pPlayerFrameImg->SetImageRate(2.f);
-	pPlayerUI->SetImage(pPlayerFrameImg);
-	pPlayerUI->SetPos(180.f, 650.f);
-	pPlayerUI->SetScale(Vector(300.f, 100.f));
-	AddGameObject(pPlayerUI);*/
-
-	/*CUIHpMonster* pMonsterUI = new CUIHpMonster;
-	pMonsterUI->SetOwner(pMonster);
-	pMonsterUI->SetScale(Vector(80.f, 10.f));
-	AddGameObject(pMonsterUI);*/
 
 	
 
