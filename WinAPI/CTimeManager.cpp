@@ -57,6 +57,11 @@ UINT CTimeManager::GetFPS()
 
 float CTimeManager::GetDT()
 {
+	return m_fDT;
+}
+
+float CTimeManager::GetScaledDT()
+{
 	return m_fDT * m_fTimeScale;
 }
 

@@ -38,6 +38,7 @@ public:
 
 	void FadeIn(float duration);		// ¾À ÁøÀÔ È¿°ú
 	void FadeOut(float duration);		// ¾À Å»Ãâ È¿°ú
+	void HalfFadeOut(float duration, float targetBright);
 
 private:
 	void Init();

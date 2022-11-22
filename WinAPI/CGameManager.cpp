@@ -136,6 +136,8 @@ void CGameManager::AddToMainUI(CUI* pUI)
 void CGameManager::PauseGame()
 {
 	m_gameStatus = GAME_STATUS::PAUSE;
+	CAMERA->FadeOut(2.f);
+	CAMERA->HalfFadeOut(0.f, 1.f);
 	TIME->SetTimeScale(0);
 }
 

@@ -84,6 +84,12 @@ void CCameraManager::FadeOut(float duration)
 	m_fTimeToBright = duration;
 }
 
+void CCameraManager::HalfFadeOut(float duration, float targetBright)
+{
+	m_fTargetBright = targetBright;
+	m_fTimeToBright = duration;
+}
+
 void CCameraManager::Init()
 {
 }
@@ -154,7 +160,7 @@ void CCameraManager::MoveToTarget()
 
 void CCameraManager::RenderEffect()
 {
-	m_fTimeToBright -= DT;
+	m_fTimeToBright -= NONSCALED_DT;
 
 	if (m_fTimeToBright <= 0)
 	{
@@ -163,6 +169,6 @@ void CCameraManager::RenderEffect()
 	}
 	else
 	{
-		m_fCurBright += (m_fTargetBright - m_fCurBright) / m_fTimeToBright * DT;
+		m_fCurBright += (m_fTargetBright - m_fCurBright) / m_fTimeToBright * NONSCALED_DT;
 	}
 }

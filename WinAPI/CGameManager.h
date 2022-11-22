@@ -46,9 +46,6 @@ private:
 
 	float		m_fBGEndX;
 	CMainUI*	m_pMainUI;
-	//CUIHp*		pPlayerHpUI;
-	//CUISkill*	pPlayerSkillAUI;
-	//CUISkill*	pPlayerSkillSUI;
 
 
 public:

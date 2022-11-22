@@ -27,10 +27,11 @@ private:
 public:
 	UINT GetFPS();
 	float GetDT();
+	float GetScaledDT();
 	void SetTimeScale(float scale);
 };
 
-#define	TIME	CTimeManager::GetInstance()
-#define FPS		CTimeManager::GetInstance()->GetFPS()
-#define DT		CTimeManager::GetInstance()->GetDT()
-
+#define	TIME		CTimeManager::GetInstance()
+#define FPS			CTimeManager::GetInstance()->GetFPS()
+#define DT			CTimeManager::GetInstance()->GetScaledDT()
+#define NONSCALED_DT CTimeManager::GetInstance()->GetDT()
