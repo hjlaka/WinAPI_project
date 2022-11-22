@@ -16,7 +16,7 @@ CGameObject::CGameObject()
 	m_pCollider = nullptr;
 	m_bIsRigidBody = false;
 
-	m_fImgRate = 1.f;
+	m_fImgRate = 1.4f;
 }
 
 CGameObject::~CGameObject()

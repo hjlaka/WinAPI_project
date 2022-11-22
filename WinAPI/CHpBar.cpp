@@ -31,9 +31,14 @@ void CHpBar::Update()
 	m_vecPos.y = GetOwner()->GetPos().y + GetOwner()->GetScale().y * 0.5f + 10.f;
 
 	CUnit* pUnit = static_cast<CUnit*>(GetOwner());
-	if (pUnit != nullptr)
+	if (pUnit != nullptr && m_bIsVisible)
 	{
 		m_fHpRate = (float)pUnit->GetCurHp() / pUnit->GetHp();
+		if (m_fHpRate <= 0)
+		{
+			m_fHpRate = 0;
+			m_bIsVisible = false;
+		}
 	}
 	
 }

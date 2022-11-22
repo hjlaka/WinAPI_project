@@ -102,9 +102,10 @@ protected:
 
 	float m_fDashCoolTime;
 
-	float m_fJumpPower = 100.f;
+	float m_fJumpPower;
 
 	float m_fDashClock;
+
 	
 
 public:
@@ -147,6 +148,7 @@ protected:
 	void CreateMissile();
 	void Jump(float fJumpPower);
 	virtual void Attack();
+	virtual void JumpAttack();
 
 	virtual void Enter() = 0;
 	virtual void Exit() = 0;

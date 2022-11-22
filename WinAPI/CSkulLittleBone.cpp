@@ -23,6 +23,8 @@ CSkulLittleBone::CSkulLittleBone()
 	m_pFallRepeatHeadlessImage = nullptr;
 	m_pDashHeadlessImage = nullptr;
 	m_pJumpAttackHeadlessImage = nullptr;
+
+	m_fJumpPower = -600.f;
 }
 
 CSkulLittleBone::~CSkulLittleBone()
@@ -45,7 +47,7 @@ void CSkulLittleBone::Init()
 	m_pFallRepeatImage = RESOURCE->LoadImg(L"PlayerFallRepeat", L"Image\\fallrepeat_skul.png");
 	m_pDashImage = RESOURCE->LoadImg(L"PlayerDash", L"Image\\dash_skul.png");
 	m_pJumpAttackImage = RESOURCE->LoadImg(L"PlayerJumpAttack", L"Image\\jumpattack_skul.png");
-	m_pDieImage = RESOURCE->LoadImg(L"PlayerSkillB", L"Image\\skul_die.png");
+	m_pDieImage = RESOURCE->LoadImg(L"PlayerDie", L"Image\\skul_die.png");
 
 	m_pShootHead = RESOURCE->LoadImg(L"PlayerSkillA", L"Image\\skillA_skul.png");
 	m_pHeadIsI = RESOURCE->LoadImg(L"PlayerSkillB", L"Image\\skillB_skul.png");

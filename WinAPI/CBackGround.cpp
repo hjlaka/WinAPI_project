@@ -56,10 +56,7 @@ void CBackGround::Update()
 void CBackGround::Render()
 {
 
-	
-	/*if(m_fZPos == 0)
-		return;*/
-	// 배경이미지 표현 갱신
+
 	if (nullptr != m_pBGImg)
 	{
 		Vector pos = m_vecPos;	// 배경이 그려질 위치 확인

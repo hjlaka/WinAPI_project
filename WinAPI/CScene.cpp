@@ -218,6 +218,15 @@ void CScene::LoadTile(const wstring& strPath)
 
 			AddGameObject(newTile);
 		}
+		else if (TypeTile::Platform == loadTile.GetType())
+		{
+			CGroundTile* newTile = new CGroundTile;
+			newTile->SetTilePos(loadTile.GetTilePosX(), loadTile.GetTilePosY());
+			newTile->SetTileIndex(loadTile.GetTileIndex());
+			newTile->SetType(TypeTile::Platform);
+
+			AddGameObject(newTile);
+		}
 	}
 
 	fclose(pFile);

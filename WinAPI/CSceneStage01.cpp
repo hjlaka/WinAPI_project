@@ -40,16 +40,6 @@ CSceneStage01::~CSceneStage01()
 
 void CSceneStage01::Init()
 {
-
-	
-
-
-
-	
-
-
-
-	
 	
 }
 
@@ -57,10 +47,6 @@ void CSceneStage01::Enter()
 {
 	CAMERA->FadeIn(0.25f);
 	LoadTile(GETPATH + L"Tile\\Stage01.tile");
-	//LoadBackGroundImage(GETPATH + L"Stage01_map.png");
-
-
-	//CAMERA->SetTargetObj(pPlayer);
 	
 	// 게임 초기 설정
 	CBackGround* pBG1 = new CBackGround;
@@ -115,7 +101,7 @@ void CSceneStage01::Enter()
 	pPlayer2->SetIsActive(false);
 
 	CMonster01* pMonster = new CMonster01;
-	pMonster->SetPos(900, 700);
+	pMonster->SetPos(900, 600);
 	//pMonster->SetImgRate(1.2f);
 	AddGameObject(pMonster);
 
@@ -123,14 +109,6 @@ void CSceneStage01::Enter()
 	pGate->SetPos(2100, 1250);
 	//pGate->SetImgRate(1.2f);
 	AddGameObject(pGate);
-
-
-
-	
-
-	
-
-
 	
 
 }
@@ -169,25 +147,7 @@ void CSceneStage01::Update()
 
 void CSceneStage01::Render()
 {
-	//// 배경이미지 표현 갱신
-	//if (nullptr != m_pBGImg)
-	//{
-	//	Logger::Debug(L"배경이미지 그리기 진입");
-	//	Vector pos = CAMERA->WorldToScreenPoint(Vector(0, 0));	// 배경이 그려질 위치 확인
 
-	//	// 배경 이미지 그리기
-	//	RENDER->FrameImage(
-	//		m_pBGImg,
-	//		pos.x,
-	//		pos.y,
-	//		pos.x + m_pBGImg->GetWidth(),
-	//		pos.y + m_pBGImg->GetHeight(),
-	//		0,
-	//		0,
-	//		m_pBGImg->GetWidth(),
-	//		m_pBGImg->GetHeight()
-	//	);
-	//}
 }
 
 void CSceneStage01::Exit()
