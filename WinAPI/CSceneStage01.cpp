@@ -99,7 +99,7 @@ void CSceneStage01::Enter()
 
 	// 씬에 필요한 오브젝트 생성
 	pPlayer = new CSkulLittleBone;
-	pPlayer->SetPos(200, WINSIZEY * 0.5f);
+	pPlayer->SetPos(200, 700);
 	pPlayer->SetImgRate(1.2f);
 	AddGameObject(pPlayer);
 	GAME->SetPlayer(pPlayer);
@@ -115,7 +115,7 @@ void CSceneStage01::Enter()
 	pPlayer2->SetIsActive(false);
 
 	CMonster01* pMonster = new CMonster01;
-	pMonster->SetPos(900, WINSIZEY * 0.2f);
+	pMonster->SetPos(900, 700);
 	pMonster->SetImgRate(1.2f);
 	AddGameObject(pMonster);
 

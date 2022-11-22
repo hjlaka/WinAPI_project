@@ -27,18 +27,25 @@ void CUIHp::Init()
 
 void CUIHp::Update()
 {
-
+	if (m_pOwner != nullptr)
+	{
+		m_fHpRate = (float)m_pOwner->GetCurHp() / m_pOwner->GetHp();
+		if (m_fHpRate < 0) m_fHpRate = 0.f;
+	}
 }
 
 void CUIHp::Render()
 {
+	int curHp = m_pOwner->GetCurHp();
+	if (curHp < 0) curHp = 0;
+
 	if (nullptr != m_pImg)
 	{
 		RENDER->Image(
 			m_pImg,
 			m_vecRenderPos.x,
 			m_vecRenderPos.y,
-			m_vecRenderPos.x + m_vecScale.x,
+			m_vecRenderPos.x + (m_vecScale.x * m_fHpRate),
 			m_vecRenderPos.y + m_vecScale.y
 		);
 	}
@@ -47,13 +54,15 @@ void CUIHp::Render()
 		RENDER->FillRect(
 			m_vecRenderPos.x,
 			m_vecRenderPos.y,
-			m_vecRenderPos.x + m_vecScale.x,
+			m_vecRenderPos.x + (m_vecScale.x * m_fHpRate),
 			m_vecRenderPos.y + m_vecScale.y,
 			Color(0, 255, 0, 1)
 		);	
 	}
 
-	RENDER->Text(to_wstring(m_pOwner->GetCurHp()) + L"/" + to_wstring(m_pOwner->GetHp()),
+	
+
+	RENDER->Text(to_wstring(curHp) + L"/" + to_wstring(m_pOwner->GetHp()),
 		m_vecRenderPos.x,
 		m_vecRenderPos.y,
 		m_vecRenderPos.x + m_vecScale.x,
