@@ -92,7 +92,7 @@ CPlayer::CPlayer()
 
 
 	m_iHp = 100;
-	m_iCurHp = 100;
+	m_iCurHp = 10;
 	m_iAtt = 10;
 
 	m_fSpeed = 300.f;
@@ -317,6 +317,13 @@ void CPlayer::OnCollisionStay(CCollider* pOtherCollider)
 	if (pOtherCollider->GetObjName() == L"Ground")
 	{
 		m_pRigid->WallCollisionStay(GetCollider(), pOtherCollider);
+	}
+	else if (pOtherCollider->GetObjName() == L"Gate")
+	{
+		if (BUTTONDOWN('F'))
+		{
+
+		}
 	}
 	
 

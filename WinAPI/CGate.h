@@ -13,6 +13,9 @@ public:
 private:
 	CAnimator* m_pAnimator;
 	bool m_bIsOpen;
+	
+public:
+
 
 private:
 	void Init() override;

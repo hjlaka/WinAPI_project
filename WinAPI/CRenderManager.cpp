@@ -5,6 +5,7 @@
 
 #include "WinAPI.h"
 #include "CImage.h"
+#include "CGameManager.h"
 
 int CRenderManager::m_iMessageCount = 1;
 
@@ -515,7 +516,16 @@ void CRenderManager::Image(CImage* pImg, float startX, float startY, float endX,
 	endX = end.x;
 	endY = end.y;
 
-	Vector scale = { start - end };
+	/*Vector point = { start + end * 0.5f };
+	Vector diff = { point - start};
+	Vector newStart = { point.x - (diff.x * GAME->GetRenderRate()), point.y - (diff.x * GAME->GetRenderRate()) };
+	Vector newEnd = { point.x + (diff.x * GAME->GetRenderRate()), point.y + (diff.x * GAME->GetRenderRate()) };
+	newStart = CAMERA->WorldToScreenPoint(newStart);
+	newEnd = CAMERA->WorldToScreenPoint(newEnd);
+	startX = newStart.x;
+	startY = newStart.y;
+	endX = newStart.x;
+	endY = newStart.y;*/
 
 	D2D1_RECT_F imgRect = { startX, startY, endX, endY};
 	m_pRenderTarget->DrawBitmap(pImg->GetImage(), imgRect);
@@ -529,6 +539,21 @@ void CRenderManager::FrameImage(CImage* pImg, float dstX, float dstY, float dstW
 	Vector dstEnd = CAMERA->WorldToScreenPoint(Vector(dstW, dstH));
 	dstW = dstEnd.x;
 	dstH = dstEnd.y;
+
+	/*Vector dstStart = Vector(dstX, dstY);
+	Vector dstEnd = Vector(dstW, dstH);
+	Vector point = { dstStart + dstEnd * 0.5f};
+	Vector diff = { point - dstStart };
+	Vector newStart = { point.x - (diff.x * GAME->GetRenderRate()), point.y - (diff.x * GAME->GetRenderRate()) };
+	Vector newEnd = { point.x + (diff.x * GAME->GetRenderRate()), point.y + (diff.x * GAME->GetRenderRate()) };
+	newStart = CAMERA->WorldToScreenPoint(newStart);
+	newEnd = CAMERA->WorldToScreenPoint(newEnd);
+	dstX = newStart.x;
+	dstY = newStart.y;
+	dstW = newStart.x;
+	dstH = newStart.y;*/
+
+
 
 	D2D1_RECT_F imgRect = { dstX, dstY, dstW, dstH };
 	D2D1_RECT_F srcRect = { srcX, srcY, srcW, srcH };

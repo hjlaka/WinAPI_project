@@ -43,7 +43,7 @@ private:
 
 	PlayerInfo m_playerInfo;
 
-	//float		m_fRenderRate;
+	float		m_fRenderRate;
 	float		m_fBGEndX;
 	CMainUI*	m_pMainUI;
 
@@ -53,7 +53,7 @@ public:
 	float GetBGEndX();
 	CMainUI* GetMainUI();
 	GAME_STATUS GetGameStatue();
-	//float GetRenderRate();
+	float GetRenderRate();
 
 	void SavePlayerInfo();
 	PlayerInfo& LoadPlayerInfo();

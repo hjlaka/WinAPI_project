@@ -19,7 +19,7 @@ CGameManager::CGameManager()
 
 	m_gameStatus = GAME_STATUS::ACT;
 
-	//m_fRenderRate = 2.f;
+	m_fRenderRate = 1.f;
 
 	/*pPlayerHpUI = nullptr;
 	pPlayerSkillAUI = nullptr;
@@ -57,10 +57,10 @@ GAME_STATUS CGameManager::GetGameStatue()
 	return m_gameStatus;
 }
 
-//float CGameManager::GetRenderRate()
-//{
-//	return m_fRenderRate;
-//}
+float CGameManager::GetRenderRate()
+{
+	return m_fRenderRate;
+}
 
 void CGameManager::SavePlayerInfo()
 {

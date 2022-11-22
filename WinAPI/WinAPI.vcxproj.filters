@@ -273,12 +273,6 @@
     <ClInclude Include="CPlayerSkillA.h">
       <Filter>헤더 파일\PlayerState</Filter>
     </ClInclude>
-    <ClInclude Include="CPlayerAttackA.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="CPlayerSkillS.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="CSceneStage02.h">
       <Filter>Scene</Filter>
     </ClInclude>
@@ -299,6 +293,15 @@
     </ClInclude>
     <ClInclude Include="CHpBar.h">
       <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="CPlayerDie.h">
+      <Filter>헤더 파일\PlayerState</Filter>
+    </ClInclude>
+    <ClInclude Include="CPlayerSkillS.h">
+      <Filter>헤더 파일\PlayerState</Filter>
+    </ClInclude>
+    <ClInclude Include="CPlayerAttackA.h">
+      <Filter>헤더 파일\PlayerState</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -476,14 +479,8 @@
     <ClCompile Include="CPlayerIdle.cpp">
       <Filter>헤더 파일\PlayerState</Filter>
     </ClCompile>
-    <ClCompile Include="CPlayerSkillA.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="CPlayerAttackA.cpp">
       <Filter>헤더 파일\PlayerState</Filter>
-    </ClCompile>
-    <ClCompile Include="CPlayerSkillS.cpp">
-      <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="CSceneStage02.cpp">
       <Filter>Scene</Filter>
@@ -517,6 +514,15 @@
     </ClCompile>
     <ClCompile Include="CHpBar.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="CPlayerSkillA.cpp">
+      <Filter>헤더 파일\PlayerState</Filter>
+    </ClCompile>
+    <ClCompile Include="CPlayerSkillS.cpp">
+      <Filter>헤더 파일\PlayerState</Filter>
+    </ClCompile>
+    <ClCompile Include="CPlayerDie.cpp">
+      <Filter>헤더 파일\PlayerState</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

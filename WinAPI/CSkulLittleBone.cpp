@@ -45,8 +45,11 @@ void CSkulLittleBone::Init()
 	m_pFallRepeatImage = RESOURCE->LoadImg(L"PlayerFallRepeat", L"Image\\fallrepeat_skul.png");
 	m_pDashImage = RESOURCE->LoadImg(L"PlayerDash", L"Image\\dash_skul.png");
 	m_pJumpAttackImage = RESOURCE->LoadImg(L"PlayerJumpAttack", L"Image\\jumpattack_skul.png");
+	m_pDieImage = RESOURCE->LoadImg(L"PlayerSkillB", L"Image\\skul_die.png");
+
 	m_pShootHead = RESOURCE->LoadImg(L"PlayerSkillA", L"Image\\skillA_skul.png");
 	m_pHeadIsI = RESOURCE->LoadImg(L"PlayerSkillB", L"Image\\skillB_skul.png");
+
 
 	m_pIdleHeadlessImage = RESOURCE->LoadImg(L"PlayerIdle_Headless", L"Image\\idle_headless_skul.png");
 	m_pMoveHeadlessImage = RESOURCE->LoadImg(L"PlayerMove_Headless", L"Image\\move_headless_skul.png");
@@ -58,19 +61,20 @@ void CSkulLittleBone::Init()
 	m_pDashHeadlessImage = RESOURCE->LoadImg(L"PlayerDash_Headless", L"Image\\dash_headless_skul.png");
 	m_pJumpAttackHeadlessImage = RESOURCE->LoadImg(L"PlayerJumpAttack_Headless", L"Image\\jumpattack_headless_skul.png");
 
-	m_pAnimator->CreateAnimation(L"IdleRight", m_pIdleImage, Vector(0.f, 20.f), Vector(85.f, 75.f), Vector(96.f, 0.f), 0.5f, 4);
-	m_pAnimator->CreateAnimation(L"IdleLeft", m_pIdleImage, Vector(0.f, 20.f), Vector(85.f, 75.f), Vector(96.f, 0.f), 0.5f, 4);
-	m_pAnimator->CreateAnimation(L"MoveRight", m_pMoveImage, Vector(0.f, 20.f), Vector(80.f, 75.f), Vector(96.f, 0.f), 0.05f, 8);
-	m_pAnimator->CreateAnimation(L"MoveLeft", m_pMoveImage, Vector(0.f, 20.f), Vector(80.f, 75.f), Vector(96.f, 0.f), 0.05f, 8);
-	m_pAnimator->CreateAnimation(L"AttackA", m_pAttackImage, Vector(0.f, 20.f), Vector(100.f, 75.f), Vector(96.f, 0.f), 0.1f, 5);
-	m_pAnimator->CreateAnimation(L"AttackB", m_pAttackBImage, Vector(0.f, 20.f), Vector(100.f, 75.f), Vector(96.f, 0.f), 0.1f, 4);
-	m_pAnimator->CreateAnimation(L"Jump", m_pJumpImage, Vector(20.f, 25.f), Vector(50.f, 50.f), Vector(96.f, 0.f), 0.15f, 2);
-	m_pAnimator->CreateAnimation(L"Fall", m_pFallImage, Vector(20.f, 25.f), Vector(50.f, 50.f), Vector(96.f, 0.f), 0.15f, 2);
-	m_pAnimator->CreateAnimation(L"FallRepeat", m_pFallRepeatImage, Vector(20.f, 25.f), Vector(50.f, 50.f), Vector(96.f, 0.f), 0.15f, 3);
-	m_pAnimator->CreateAnimation(L"Dash", m_pDashImage, Vector(0.f, 25.f), Vector(75.f, 50.f), Vector(96.f, 0.f), 0.15f, 1);
-	m_pAnimator->CreateAnimation(L"JumpAttack", m_pJumpAttackImage, Vector(0.f, 20.f), Vector(100.f, 75.f), Vector(96.f, 0.f), 0.1f, 4);
-	m_pAnimator->CreateAnimation(L"ShootHead", m_pShootHead, Vector(0.f, 20.f), Vector(100.f, 75.f), Vector(96.f, 0.f), 0.1f, 4);
-	m_pAnimator->CreateAnimation(L"HeadIsI", m_pHeadIsI, Vector(0.f, 20.f), Vector(100.f, 75.f), Vector(96.f, 0.f), 0.05f, 9);
+	m_pAnimator->CreateAnimation(L"IdleRight", m_pIdleImage, Vector(0.f, 10.f), Vector(85.f, 75.f), Vector(96.f, 0.f), 0.5f, 4);
+	m_pAnimator->CreateAnimation(L"IdleLeft", m_pIdleImage, Vector(0.f, 10.f), Vector(85.f, 75.f), Vector(96.f, 0.f), 0.5f, 4);
+	m_pAnimator->CreateAnimation(L"MoveRight", m_pMoveImage, Vector(0.f, 10.f), Vector(80.f, 75.f), Vector(96.f, 0.f), 0.05f, 8);
+	m_pAnimator->CreateAnimation(L"MoveLeft", m_pMoveImage, Vector(0.f, 10.f), Vector(80.f, 75.f), Vector(96.f, 0.f), 0.05f, 8);
+	m_pAnimator->CreateAnimation(L"AttackA", m_pAttackImage, Vector(0.f, 10.f), Vector(100.f, 75.f), Vector(96.f, 0.f), 0.1f, 5);
+	m_pAnimator->CreateAnimation(L"AttackB", m_pAttackBImage, Vector(0.f, 10.f), Vector(100.f, 75.f), Vector(96.f, 0.f), 0.1f, 4);
+	m_pAnimator->CreateAnimation(L"Jump", m_pJumpImage, Vector(20.f, 15.f), Vector(50.f, 50.f), Vector(96.f, 0.f), 0.15f, 2, false);
+	m_pAnimator->CreateAnimation(L"Fall", m_pFallImage, Vector(20.f, 15.f), Vector(50.f, 50.f), Vector(96.f, 0.f), 0.15f, 2);
+	m_pAnimator->CreateAnimation(L"FallRepeat", m_pFallRepeatImage, Vector(20.f, 15.f), Vector(50.f, 50.f), Vector(96.f, 0.f), 0.15f, 3);
+	m_pAnimator->CreateAnimation(L"Dash", m_pDashImage, Vector(0.f, 15.f), Vector(75.f, 50.f), Vector(96.f, 0.f), 0.15f, 1);
+	m_pAnimator->CreateAnimation(L"JumpAttack", m_pJumpAttackImage, Vector(0.f, 10.f), Vector(100.f, 75.f), Vector(96.f, 0.f), 0.1f, 4);
+	m_pAnimator->CreateAnimation(L"Die", m_pDieImage, Vector(0.f, 0.f), Vector(115.f, 120.f), Vector(112.f, 0.f), 0.1f, 23, false);
+	m_pAnimator->CreateAnimation(L"ShootHead", m_pShootHead, Vector(0.f, 10.f), Vector(100.f, 75.f), Vector(96.f, 0.f), 0.1f, 4);
+	m_pAnimator->CreateAnimation(L"HeadIsI", m_pHeadIsI, Vector(0.f, 10.f), Vector(100.f, 75.f), Vector(96.f, 0.f), 0.05f, 9);
 
 	m_pAnimator->CreateAnimation(L"IdleRight_Headless", m_pIdleHeadlessImage, Vector(0.f, 20.f), Vector(85.f, 75.f), Vector(96.f, 0.f), 0.5f, 4);
 	m_pAnimator->CreateAnimation(L"IdleLeft_Headless", m_pIdleHeadlessImage, Vector(0.f, 20.f), Vector(85.f, 75.f), Vector(96.f, 0.f), 0.5f, 4);
@@ -198,6 +202,10 @@ void CSkulLittleBone::AnimatorUpdate()
 		return;
 	case STATE::SKILLS:
 		str += m_skillS->strAniName;
+		m_pAnimator->Play(str, false);
+		return;
+	case STATE::DIE:
+		str += L"Die";
 		m_pAnimator->Play(str, false);
 		return;
 

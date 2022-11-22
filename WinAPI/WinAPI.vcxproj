@@ -171,6 +171,7 @@
     <ClInclude Include="CPlayerAttackA.h" />
     <ClInclude Include="CPlayerAttackB.h" />
     <ClInclude Include="CPlayerDashing.h" />
+    <ClInclude Include="CPlayerDie.h" />
     <ClInclude Include="CPlayerFalling.h" />
     <ClInclude Include="CPlayerIdle.h" />
     <ClInclude Include="CPlayerJumpAttack.h" />
@@ -253,6 +254,7 @@
     <ClCompile Include="CPlayerAttackA.cpp" />
     <ClCompile Include="CPlayerAttackB.cpp" />
     <ClCompile Include="CPlayerDashing.cpp" />
+    <ClCompile Include="CPlayerDie.cpp" />
     <ClCompile Include="CPlayerFalling.cpp" />
     <ClCompile Include="CPlayerIdle.cpp" />
     <ClCompile Include="CPlayerJumpAttack.cpp" />

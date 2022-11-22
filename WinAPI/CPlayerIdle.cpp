@@ -7,6 +7,7 @@
 #include "CPlayerFalling.h"
 #include "CPlayerSkillA.h"
 #include "CPlayerSkillS.h"
+#include "CPlayerDie.h"
 
 
 
@@ -24,6 +25,12 @@ CPlayerIdle::~CPlayerIdle()
 
 CStatePlayer* CPlayerIdle::HandleInput(CPlayer* pPlayer)
 {
+	// 죽음
+	if (pPlayer->GetCurHp() <= 0)
+	{
+		return new CPlayerDie;
+	}
+
 	// 방향 전환
 
 	if (BUTTONSTAY(VK_LEFT))
