@@ -50,6 +50,7 @@ enum class Layer
 	Missile,
 	MonsterAttack,
 	PlayerAttack,
+	Effect,
 
 
 	Ui,

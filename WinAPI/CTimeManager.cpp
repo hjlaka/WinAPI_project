@@ -22,6 +22,8 @@ CTimeManager::~CTimeManager()
 void CTimeManager::Init()
 {
 	prevTime = chrono::high_resolution_clock::now();
+
+	srand(time(NULL));
 }
 
 void CTimeManager::Update()

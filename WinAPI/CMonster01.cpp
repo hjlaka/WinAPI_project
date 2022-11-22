@@ -132,7 +132,8 @@ void CMonster01::Update()
 			Logger::Debug(L"공격 콜라이더");
 			// 공격 범위 생성
 			CMonsterAttack* pAttack = new CMonsterAttack;
-			pAttack->SetPos(m_vecPos + Vector(m_vecLookDir.x * 100, 0));
+			pAttack->SetPos(m_vecPos);
+			pAttack->SetOffset(Vector(m_vecLookDir.x * 100, 0));
 			pAttack->SetOwner(this);
 			pAttack->SetAttackDuration(0.1f);
 			pAttack->SetAttack(m_iAtt);
@@ -200,6 +201,7 @@ void CMonster01::OnCollisionEnter(CCollider* pOtherCollider)
 		Logger::Debug(L"몬스터 피격");
 
 		CAttack* pAttack = (CAttack*)(pOtherCollider->GetOwner());
+		pAttack->MakeEffect();
 
 		if (pAttack->GetAttackType() == ATTACK_TYPE::RANGED)
 		{

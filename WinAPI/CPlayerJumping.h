@@ -7,7 +7,6 @@ public:
 	virtual ~CPlayerJumping();
 
 public:
-	//static CStatePlayer* Instance();
 
 	virtual CStatePlayer* HandleInput(CPlayer* player);
 	virtual void Update(CPlayer* player);

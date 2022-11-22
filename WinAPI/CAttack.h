@@ -36,7 +36,7 @@ protected:
 
 public:
 
-	
+	void MakeEffect();
 
 	ATTACK_TYPE GetAttackType();
 	CUnit* GetOwner();

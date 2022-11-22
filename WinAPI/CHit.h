@@ -1,10 +1,10 @@
 #pragma once
 #include "CEffect.h"
-class CSmoke : public CEffect
+class CHit : public CEffect
 {
 public:
-	CSmoke();
-	virtual ~CSmoke();
+	CHit();
+	virtual ~CHit();
 
 private:
 	virtual void Init() override;

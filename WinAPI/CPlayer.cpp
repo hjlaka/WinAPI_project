@@ -274,7 +274,7 @@ void CPlayer::Attack()
 	pAttack->SetOffset(Vector(m_vecLookDir.x * 30, -10));
 	pAttack->SetOwner(this);
 	pAttack->SetAttackDuration(0.4f);
-	//pAttack->SetDir(m_vecLookDir);
+	pAttack->SetDir(m_vecLookDir);
 	ADDOBJECT(pAttack);
 }
 

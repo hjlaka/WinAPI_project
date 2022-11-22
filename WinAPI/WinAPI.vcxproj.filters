@@ -201,7 +201,7 @@
     <ClInclude Include="CPlayerAttack.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="CSmoke.h">
+    <ClInclude Include="CEffect.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="CUIHp.h">
@@ -286,6 +286,12 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="CMonsterAttack.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="CSmoke.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="CHit.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
@@ -416,7 +422,7 @@
     <ClCompile Include="CPlayerAttack.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="CSmoke.cpp">
+    <ClCompile Include="CEffect.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="CUIHp.cpp">
@@ -495,6 +501,12 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="CMonsterAttack.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="CSmoke.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="CHit.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

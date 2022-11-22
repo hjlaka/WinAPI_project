@@ -1,7 +1,9 @@
 #include "framework.h"
 #include "CAttack.h"
 
+
 #include "CUnit.h"
+#include "CHit.h"
 
 CAttack::CAttack()
 {
@@ -17,6 +19,17 @@ CAttack::CAttack()
 
 CAttack::~CAttack()
 {
+}
+
+
+void CAttack::MakeEffect()
+{
+	CHit* pHit = new CHit();
+	int xOffset = rand() % 20;
+	int yOffset = rand() % 15;
+	pHit->SetPos(m_vecPos + Vector(m_vecDir.x * xOffset, -10 + yOffset));
+	pHit->SetDir(m_vecDir);
+	ADDOBJECT(pHit);
 }
 
 ATTACK_TYPE CAttack::GetAttackType()
@@ -76,7 +89,8 @@ void CAttack::Init()
 
 void CAttack::Update()
 {
-	//m_vecPos = m_pOwner->GetPos() + m_vecOffset;
+	if(ATTACK_TYPE::MELEE == m_type)
+		m_vecPos = m_pOwner->GetPos() + m_vecOffset;
 
 	if (m_fDuration > 0)
 	{
