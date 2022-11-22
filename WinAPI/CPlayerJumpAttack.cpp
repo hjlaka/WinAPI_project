@@ -25,15 +25,7 @@ CStatePlayer* CPlayerJumpAttack::HandleInput(CPlayer* pPlayer)
 	if (pPlayer->m_fAttackJTime <= 0)
 	{
 		return ActionFromIdle(pPlayer);
-		/*CPlayerIdle* idle = new CPlayerIdle;
-		CStatePlayer* next = idle->HandleInput(pPlayer);
-		if (next == nullptr)
-			return idle;
-		else
-		{
-			delete idle;
-			return next;
-		}*/
+
 	}
     return nullptr;
 }
@@ -46,8 +38,7 @@ void CPlayerJumpAttack::Update(CPlayer* pPlayer)
 void CPlayerJumpAttack::Enter(CPlayer* pPlayer)
 {
 	pPlayer->m_state = STATE::JUMPATTACK;
-	//pPlayer->m_bIsAttack = true;
-	pPlayer->Attack();
+	pPlayer->JumpAttack();
 	pPlayer->m_fAttackJTime = 0.5f;
 }
 

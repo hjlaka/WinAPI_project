@@ -69,6 +69,12 @@ CPlayer::CPlayer()
 
 	m_fDashClock = 0;
 
+
+	m_fJumpPower = -600.f;
+
+
+
+
 	m_pPlayerState = nullptr;
 	m_state = STATE::IDLE;
 
@@ -269,11 +275,20 @@ void CPlayer::Jump(float fJumpPower)
 
 void CPlayer::Attack()
 {
-	Logger::Debug(L"공격 생성");
-
 	CPlayerAttack* pAttack = new CPlayerAttack();
 	pAttack->SetPos(m_vecPos);
 	pAttack->SetOffset(Vector(m_vecLookDir.x * 30, -10));
+	pAttack->SetOwner(this);
+	pAttack->SetAttackDuration(0.4f);
+	pAttack->SetDir(m_vecLookDir);
+	ADDOBJECT(pAttack);
+}
+
+void CPlayer::JumpAttack()
+{
+	CPlayerAttack* pAttack = new CPlayerAttack();
+	pAttack->SetPos(m_vecPos);
+	pAttack->SetOffset(Vector(m_vecLookDir.x * 30, 20));
 	pAttack->SetOwner(this);
 	pAttack->SetAttackDuration(0.4f);
 	pAttack->SetDir(m_vecLookDir);
@@ -291,7 +306,6 @@ void CPlayer::OnCollisionEnter(CCollider* pOtherCollider)
 		if (isUpDownCollision)
 		{
 			m_iJumpCount = 0;
-			m_fJumpPower = 0;
 			m_fFallTime = 0;
 		}
 

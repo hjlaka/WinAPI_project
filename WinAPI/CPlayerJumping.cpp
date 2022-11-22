@@ -87,7 +87,7 @@ void CPlayerJumping::Enter(CPlayer* pPlayer)
 
 
 	pPlayer->m_bOverPeak = false;
-	pPlayer->m_pRigid->PowerToY(-550.f);
+	pPlayer->m_pRigid->PowerToY(pPlayer->m_fJumpPower);
 	pPlayer->m_iJumpCount++;
 
 	Logger::Debug(L"Jump!");
