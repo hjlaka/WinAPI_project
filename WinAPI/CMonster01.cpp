@@ -13,7 +13,7 @@ CMonster01::CMonster01()
 	m_vecPos = Vector(0, 0);
 	m_vecScale = Vector(100, 100);
 	m_layer = Layer::Monster;
-	m_strName = L"¸ó½ºÅÍ1";
+	m_strName = L"BigKnight";
 	m_status = STATUS::IDLE;
 
 	m_pIdleImage = nullptr;
@@ -42,6 +42,8 @@ CMonster01::~CMonster01()
 
 void CMonster01::Init()
 {
+	CMonster::Init();
+
 	m_pIdleImage = RESOURCE->LoadImg(L"BigKnightIdle", L"Image\\big_knight_idle.png");
 	m_pMoveImage = RESOURCE->LoadImg(L"BigKnightMove", L"Image\\big_knight_move.png");
 	m_pAttackImage = RESOURCE->LoadImg(L"BigKnightAttack", L"Image\\big_knight_attackA.png");
@@ -63,8 +65,6 @@ void CMonster01::Init()
 	m_pRigid = new CRigidBody;
 	AddComponent(m_pRigid);
 	m_bIsRigidBody = true;
-
-
 	
 }
 

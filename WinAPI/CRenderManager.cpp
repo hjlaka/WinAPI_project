@@ -515,7 +515,9 @@ void CRenderManager::Image(CImage* pImg, float startX, float startY, float endX,
 	endX = end.x;
 	endY = end.y;
 
-	D2D1_RECT_F imgRect = { startX, startY, endX, endY };
+	Vector scale = { start - end };
+
+	D2D1_RECT_F imgRect = { startX, startY, endX, endY};
 	m_pRenderTarget->DrawBitmap(pImg->GetImage(), imgRect);
 }
 

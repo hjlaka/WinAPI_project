@@ -55,6 +55,9 @@
     <Filter Include="헤더 파일\PlayerState">
       <UniqueIdentifier>{21949d90-fbe1-4257-8dae-63a11d1c11f4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameObject\Player">
+      <UniqueIdentifier>{57ceebdd-bf49-4dff-b729-f2da6673c081}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -294,6 +297,9 @@
     <ClInclude Include="CHit.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="CHpBar.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinAPI.cpp">
@@ -452,13 +458,7 @@
     <ClCompile Include="CShootedHead.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="CSkulLittleBone.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="CUISkill.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="CSkulHunter.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="CBackGround.cpp">
@@ -507,6 +507,15 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="CHit.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="CSkulHunter.cpp">
+      <Filter>GameObject\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="CSkulLittleBone.cpp">
+      <Filter>GameObject\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="CHpBar.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

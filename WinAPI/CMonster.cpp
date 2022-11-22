@@ -4,6 +4,7 @@
 #include "CRenderManager.h"
 #include "CCollider.h"
 #include "CRigidBody.h"
+#include "CHpBar.h"
 
 CMonster::CMonster()
 {
@@ -12,6 +13,7 @@ CMonster::CMonster()
 	m_status = STATUS::IDLE;
 	m_vecTargetPos = Vector(0, 0);
 	m_TargetObj = nullptr;
+	m_hpBar = nullptr;
 }
 
 CMonster::~CMonster()
@@ -31,7 +33,9 @@ void CMonster::MoveToTargetPos()
 
 void CMonster::Init()
 {
-	AddCollider(ColliderType::Rect, Vector(90, 90), Vector(0, 0));
+	m_hpBar = new CHpBar;
+	AddComponent(m_hpBar);
+
 }
 
 void CMonster::Update()

@@ -1,6 +1,8 @@
 #pragma once
 #include "CUnit.h"
 
+class CHpBar;
+
 enum class STATUS { IDLE, CONFRONT, MOVE, ATTACK, HIT, DIE };
 
 class CMonster : public CUnit
@@ -13,20 +15,21 @@ protected:
 	STATUS m_status;
 	Vector m_vecTargetPos;
 	CGameObject* m_TargetObj;
+	CHpBar* m_hpBar;
 
 protected:
 
 	virtual void MoveToTargetPos();
 	virtual void AnimatorUpdate() {};
 
-private:
-	void Init() override;
-	void Update() override;
-	void Render() override;
-	void Release() override;
+protected:
+	virtual void Init() override;
+	virtual void Update() override;
+	virtual void Render() override;
+	virtual void Release() override;
 
-	void OnCollisionEnter(CCollider* pOtherCollider) override;
-	void OnCollisionStay(CCollider* pOtherCollider) override;
-	void OnCollisionExit(CCollider* pOtherCollider) override;
+	virtual void OnCollisionEnter(CCollider* pOtherCollider) override;
+	virtual void OnCollisionStay(CCollider* pOtherCollider) override;
+	virtual void OnCollisionExit(CCollider* pOtherCollider) override;
 };
 
