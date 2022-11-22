@@ -48,7 +48,10 @@ CStatePlayer* CPlayerAttackB::HandleInput(CPlayer* pPlayer)
 
 void CPlayerAttackB::Update(CPlayer* pPlayer)
 {
-	
+	if (pPlayer->m_fAttackBTime < 0.4f)		// 첫 프레임 외에 적용
+	{
+		pPlayer->m_pRigid->SetVelocityX(0);
+	}
 	
 	pPlayer->m_fAttackBTime -= DT;
 
@@ -70,12 +73,12 @@ void CPlayerAttackB::Enter(CPlayer* pPlayer)
 	 //공격 진입 시점에 방향키가 눌리고 있다면 해당 방향으로 이동하며 공격한다. (한번만 누른 경우는 안 포함?)
 	if (BUTTONSTAY(VK_RIGHT))
 	{
-		pPlayer->m_pRigid->PowerToX(50.f);
+		pPlayer->m_pRigid->PowerToX(6500.f);
 		pPlayer->m_vecMoveDir.x = +1;
 	}
 	else if (BUTTONSTAY(VK_LEFT))
 	{
-		pPlayer->m_pRigid->PowerToX(-50.f);
+		pPlayer->m_pRigid->PowerToX(-6500.f);
 		pPlayer->m_vecMoveDir.x = -1;
 	}
 

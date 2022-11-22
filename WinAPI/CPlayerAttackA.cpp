@@ -40,6 +40,10 @@ CStatePlayer* CPlayerAttackA::HandleInput(CPlayer* pPlayer)
 void CPlayerAttackA::Update(CPlayer* pPlayer)
 {
 	
+	if (pPlayer->m_fAttackATime < 0.5f)		// 첫 프레임 외에 적용
+	{
+		pPlayer->m_pRigid->SetVelocityX(0);
+	}
 
 	pPlayer->m_fAttackATime -= DT;
 
@@ -57,12 +61,12 @@ void CPlayerAttackA::Enter(CPlayer* pPlayer)
 
 	if (BUTTONSTAY(VK_RIGHT))
 	{
-		pPlayer->m_pRigid->PowerToX(50.f);
+		pPlayer->m_pRigid->PowerToX(6500.f);
 		pPlayer->m_vecMoveDir.x = +1;
 	}
 	else if (BUTTONSTAY(VK_LEFT))
 	{
-		pPlayer->m_pRigid->PowerToX(-50.f);
+		pPlayer->m_pRigid->PowerToX(-6500.f);
 		pPlayer->m_vecMoveDir.x = -1;
 	}
 }
