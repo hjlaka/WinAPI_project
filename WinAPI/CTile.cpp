@@ -6,6 +6,8 @@
 #include "CComponent.h"
 #include "CImage.h"
 
+
+
 CTile::CTile()
 {
 	m_type = TypeTile::None;
@@ -60,7 +62,7 @@ void CTile::Render()
 				Color(255, 0, 0, 1), 5
 			);
 		}
-		if (m_type == TypeTile::Wall)
+		else if (m_type == TypeTile::Wall)
 		{
 			RENDER->FrameRect(
 				m_vecPos.x,
@@ -68,6 +70,16 @@ void CTile::Render()
 				m_vecPos.x + m_vecScale.x,
 				m_vecPos.y + m_vecScale.y,
 				Color(0, 0, 255, 1), 5
+			);
+		}
+		else if (m_type == TypeTile::Platform)
+		{
+			RENDER->FrameEllipse(
+				m_vecPos.x,
+				m_vecPos.y,
+				m_vecPos.x + m_vecScale.x,
+				m_vecPos.y + m_vecScale.y,
+				Color(0, 255, 0, 1), 5
 			);
 		}
 	}
