@@ -86,8 +86,9 @@ public:
 private:
 	CCollider* m_pCollider;
 
-protected:
+public:
 	CCollider* GetCollider();
+protected:
 	void AddCollider(ColliderType type, Vector scale, Vector offsetPos);
 	void RemoveCollider();
 

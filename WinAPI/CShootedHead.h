@@ -16,11 +16,15 @@ private:
 	CRigidBody* m_pRigid;
 	bool m_bHeadOn;
 	CImage* m_pImg;
+	float m_fSpeed;
 
 public:
 	CRigidBody* GetRigidBody();
 	void SetHeadOn(bool value);
 	bool GetHeadOn();
+	void SetDir(Vector dir);
+
+	void Shoot(Vector headPos, Vector lookDir);
 
 public:
 	void HeadInit();

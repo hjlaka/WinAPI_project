@@ -7,6 +7,7 @@ CShootedHead::CShootedHead()
 
 	m_fAttack = 15.f;
 	m_fDuration = 0.f;
+	m_vecDir = Vector(0, 0);
 
 	m_pRigid = new CRigidBody;
 	AddComponent(m_pRigid);
@@ -15,6 +16,8 @@ CShootedHead::CShootedHead()
 	m_type = ATTACK_TYPE::RANGED;
 
 	m_pImg = nullptr;
+
+	m_fSpeed = 400.f;
 	
 }
 
@@ -37,9 +40,20 @@ bool CShootedHead::GetHeadOn()
 	return m_bHeadOn;
 }
 
+void CShootedHead::SetDir(Vector dir)
+{
+	m_vecDir = dir;
+}
+
+void CShootedHead::Shoot(Vector headPos, Vector lookDir)
+{
+	SetPos(headPos);
+	SetDir(lookDir);
+	m_pRigid->SetVelocityX(m_vecDir.x * m_fSpeed);
+}
+
 void CShootedHead::HeadInit()
 {
-	Logger::Debug(L"머리 초기화");
 	
 	m_strName = L"PlayerAttack";
 	
@@ -83,6 +97,8 @@ void CShootedHead::Render()
 	if (nullptr == m_pImg)
 		return;
 
+	bool flip = (m_vecDir.x == -1);
+
 	RENDER->FrameImage(
 		m_pImg,
 		m_vecPos.x - m_pImg->GetWidth() * 0.5f,
@@ -92,7 +108,8 @@ void CShootedHead::Render()
 		0,
 		0,
 		m_pImg->GetWidth(),
-		m_pImg->GetHeight()
+		m_pImg->GetHeight(),
+		flip
 	);
 }
 

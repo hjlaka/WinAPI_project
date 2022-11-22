@@ -83,7 +83,7 @@ public:
 	void PowerToX(float x);
 	void Power(Vector force);
 
-	void InitWallCollision();
+	//void InitWallCollision();
 
 public:
 

@@ -218,14 +218,11 @@ void CSkulLittleBone::SkillA()
 	if (m_skillA->state == SKILL_STATE::READY)
 	{
 		Logger::Debug(L"스킬 사용. 바라보는 곳: " + to_wstring(m_vecLookDir.x));
-		//Logger::Debug(L"")
-		m_pHead->GetRigidBody()->InitWallCollision();
-		m_pHead->SetPos(GetPos() + Vector(m_vecLookDir.x * 10, -20));
-		//m_pHead->GetRigidBody()->PowerToX(m_vecLookDir.x * 400.f);
-		m_pHead->GetRigidBody()->SetVelocityX(m_vecLookDir.x * 400.f);
+		//m_pHead->GetRigidBody()->InitWallCollision();
+		
+		m_pHead->Shoot(GetPos() + Vector(m_vecLookDir.x * 10, -20), m_vecLookDir);
 		m_pHead->SetAttackDuration(6.f);
-		m_pRigid->SetGravitySpeed(0);
-		//m_pHead->GetRigidBody()->
+
 
 		m_pHead->SetHeadOn(false);
 		m_skillA->UseSkill();
@@ -238,21 +235,21 @@ void CSkulLittleBone::SkillA()
 
 void CSkulLittleBone::SkillS()
 {
-	//if (m_skillS.state == SKILL_STATE::READY)
+
+
+	// 머리가 플레이어에게 없을 경우만.
+	// 플레이어 순간 이동
+	// 순간 이동 애니메이션 재생
+	if (!(m_pHead->GetHeadOn()))
 	{
-		// 머리가 플레이어에게 없을 경우만.
-		// 플레이어 순간 이동
-		// 순간 이동 애니메이션 재생
-		if (!(m_pHead->GetHeadOn()))
-		{
-			//m_vecPos = m_vecHeadPos - Vector(0, m_vecScale.y);
-			m_vecPos = m_pHead->GetPos() - Vector(0, GetCollider()->GetScale().y * 0.2);
-			m_skillS->UseSkill();
-			m_pRigid->SetGravitySpeed(0);
-			ReturnHead();
-		}
-		
+		//m_vecPos = m_vecHeadPos - Vector(0, m_vecScale.y);
+		m_vecPos = m_pHead->GetCollider()->GetPos() - Vector(0, GetCollider()->GetScale().y * 0.5f - m_pHead->GetCollider()->GetScale().y * 0.5f);
+		m_skillS->UseSkill();
+		m_pRigid->SetGravitySpeed(0);
+		ReturnHead();
 	}
+		
+
 }
 
 
