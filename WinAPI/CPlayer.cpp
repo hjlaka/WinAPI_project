@@ -20,6 +20,7 @@
 
 #include "CStatePlayer.h"
 #include "CPlayerIdle.h"
+#include "CGate.h"
 
 
 
@@ -54,6 +55,7 @@ CPlayer::CPlayer()
 	m_iJumpCount = 0;
 	m_bOverPeak = false;
 	m_bIsDash = false;
+	m_bIsInvincible = false;
 	m_bAttackContinue = false;
 
 	m_fAttackContinue = 0;
@@ -302,11 +304,13 @@ void CPlayer::OnCollisionEnter(CCollider* pOtherCollider)
 	else if (pOtherCollider->GetObjName() == L"MonsterAttack")
 	{
 		// 플레이어가 무적 상태가 아니라면 맞음으로 처리
-
-		Logger::Debug(L"몬스터에게 맞음");
-		CAttack* pAttack = static_cast<CAttack*>(pOtherCollider->GetOwner());
-		int attackPoint = pAttack->GetAttack();
-		m_iCurHp -= attackPoint;
+		if (!m_bIsInvincible)
+		{
+			Logger::Debug(L"몬스터에게 맞음");
+			CAttack* pAttack = static_cast<CAttack*>(pOtherCollider->GetOwner());
+			int attackPoint = pAttack->GetAttack();
+			m_iCurHp -= attackPoint;
+		}
 	}
 
 	
@@ -322,7 +326,8 @@ void CPlayer::OnCollisionStay(CCollider* pOtherCollider)
 	{
 		if (BUTTONDOWN('F'))
 		{
-
+			CGate* gate = static_cast<CGate*>(pOtherCollider->GetOwner());
+			gate->GoToNext();
 		}
 	}
 	

@@ -48,10 +48,13 @@ void CPlayerDashing::Enter(CPlayer* pPlayer)
 	//pPlayer->m_bIsDash = true;
 	pPlayer->m_fDashClock = 0.3f;
 	pPlayer->m_pRigid->PowerToX(pPlayer->m_vecLookDir.x * 500.f);
+
+	pPlayer->m_bIsInvincible = true;
 }
 
 void CPlayerDashing::Exit(CPlayer* pPlayer)
 {
 	//pPlayer->m_bIsDash = false;
 	pPlayer->m_fDashCoolTime = 0.5f;
+	pPlayer->m_bIsInvincible = false;
 }

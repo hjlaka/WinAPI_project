@@ -89,6 +89,7 @@ protected:
 	int m_iAttackCount;
 	bool m_bOverPeak;
 	bool m_bIsDash;
+	bool m_bIsInvincible;			// 무적 상태
 	UINT m_iJumpCount;
 
 
@@ -104,6 +105,7 @@ protected:
 	float m_fJumpPower = 100.f;
 
 	float m_fDashClock;
+	
 
 public:
 
