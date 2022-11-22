@@ -299,6 +299,15 @@ void CPlayer::OnCollisionEnter(CCollider* pOtherCollider)
 		m_pRigid->WallCollisionEnter(GetCollider(), pOtherCollider);
 				
 	}
+	else if (pOtherCollider->GetObjName() == L"MonsterAttack")
+	{
+		// 플레이어가 무적 상태가 아니라면 맞음으로 처리
+
+		Logger::Debug(L"몬스터에게 맞음");
+		CAttack* pAttack = static_cast<CAttack*>(pOtherCollider->GetOwner());
+		int attackPoint = pAttack->GetAttack();
+		m_iCurHp -= attackPoint;
+	}
 
 	
 }

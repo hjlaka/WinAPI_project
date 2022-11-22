@@ -48,6 +48,7 @@ enum class Layer
 	Monster,
 	Player,
 	Missile,
+	MonsterAttack,
 	PlayerAttack,
 
 

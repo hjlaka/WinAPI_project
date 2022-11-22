@@ -4,6 +4,7 @@
 #include "CRigidBody.h"
 #include "CGameManager.h"
 #include "CPlayerAttack.h"
+#include "CMonsterAttack.h"
 
 
 
@@ -130,12 +131,11 @@ void CMonster01::Update()
 		{
 			Logger::Debug(L"공격 콜라이더");
 			// 공격 범위 생성
-			CAttack* pAttack = new CAttack;
-			pAttack->SetName(L"몬스터 어택");
-			pAttack->SetPos(m_vecPos + Vector(m_vecLookDir.x * 100, -5));
-			pAttack->SetScale(Vector(100, 100));
+			CMonsterAttack* pAttack = new CMonsterAttack;
+			pAttack->SetPos(m_vecPos + Vector(m_vecLookDir.x * 100, 0));
 			pAttack->SetOwner(this);
-			pAttack->SetAttackDuration(0.8f);
+			pAttack->SetAttackDuration(0.1f);
+			pAttack->SetAttack(m_iAtt);
 			//pAttack->SetDir(m_vecLookDir);
 			ADDOBJECT(pAttack);
 			m_bMakeAttack = true;
