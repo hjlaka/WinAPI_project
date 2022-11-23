@@ -82,31 +82,48 @@ void CSceneStage01::Enter()
 	CCameraController* pCamController = new CCameraController;
 	AddGameObject(pCamController);
 
+	CAMERA->SetLookAt(Vector(WINSIZEX * 0.5f, WINSIZEY * 0.5f));
 
 	// 씬에 필요한 오브젝트 생성
-	pPlayer = new CSkulLittleBone;
+
+	// 스컬 생성 - 게임 매니저가 저장된 값을 기반으로 스컬을 생성한 후 반환한다.
+
+	CPlayer* pPlayer = GAME->CreateSkul();
 	pPlayer->SetPos(200, 700);
-	//pPlayer->SetImgRate(1.2f);
+	CPlayer* pPlayer2 = GAME->CreateSecondSkul();
+
 	AddGameObject(pPlayer);
-	GAME->SetPlayer(pPlayer);
-	pPlayer->SetIsActive(true);
+
+	if (pPlayer2 != nullptr)
+	{
+		pPlayer2->SetIsActive(false);
+		AddGameObject(pPlayer2);
+	}
 
 	GAME->LinkSkulToUI();
+	//pPlayer = new CSkulLittleBone;
+	//pPlayer->SetPos(200, 700);
+	////pPlayer->SetImgRate(1.2f);
+	//AddGameObject(pPlayer);
+	//GAME->SetPlayer(pPlayer);
+	//pPlayer->SetIsActive(true);
 
-	CPlayer* pPlayer2 = new CSkulHunter;
-	pPlayer2->SetPos(400, WINSIZEY * 0.5f);
-	//pPlayer2->SetImgRate(1.2f);
-	GAME->SetPlayer(pPlayer, pPlayer2);
-	AddGameObject(pPlayer2);
-	pPlayer2->SetIsActive(false);
+	//GAME->LinkSkulToUI();
+
+	//CPlayer* pPlayer2 = new CSkulHunter;
+	//pPlayer2->SetPos(400, WINSIZEY * 0.5f);
+	////pPlayer2->SetImgRate(1.2f);
+	//GAME->SetPlayer(pPlayer, pPlayer2);
+	//AddGameObject(pPlayer2);
+	//pPlayer2->SetIsActive(false);
 
 	CMonster01* pMonster = new CMonster01;
-	pMonster->SetPos(900, 600);
+	pMonster->SetPos(900, 680);
 	//pMonster->SetImgRate(1.2f);
 	AddGameObject(pMonster);
 
-	CGate* pGate = new CGate(GroupScene::Stage02);
-	pGate->SetPos(2100, 1250);
+	CGate* pGate = new CGate(GroupScene::Lobby);
+	pGate->SetPos(2700, 1110 - 35);
 	//pGate->SetImgRate(1.2f);
 	AddGameObject(pGate);
 	

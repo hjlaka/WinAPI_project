@@ -37,7 +37,7 @@ void CSceneTitle::Update()
 	if (BUTTONDOWN(VK_SPACE))
 	{
 		CAMERA->FadeOut(0.25f);
-		DELAYCHANGESCENE(GroupScene::Stage01, 0.25f);
+		DELAYCHANGESCENE(GroupScene::Lobby, 0.25f);
 	}
 }
 
@@ -62,14 +62,6 @@ void CSceneTitle::Render()
 		WINSIZEY * 0.7f - m_pTextImg->GetHeight() * 0.5f,
 		WINSIZEX * 0.5f + m_pTextImg->GetWidth() * 0.5f,
 		WINSIZEY * 0.7f + m_pTextImg->GetHeight() * 0.5f);
-
-	RENDER->Text(L"press space to start",
-		WINSIZEX * 0.5f - 100,
-		WINSIZEY * 0.5f - 10,
-		WINSIZEX * 0.5f + 100,
-		WINSIZEY * 0.5f + 10,
-		Color(0, 0, 0, 1.f),
-		20.f);
 }
 
 void CSceneTitle::Exit()

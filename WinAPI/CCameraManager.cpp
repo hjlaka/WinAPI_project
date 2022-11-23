@@ -50,6 +50,11 @@ void CCameraManager::SetTargetObj(CGameObject* pTargetObj)
 	m_pTargetObj = pTargetObj;
 }
 
+void CCameraManager::SetLookAt(Vector targetPos)
+{
+	m_vecLookAt = targetPos;
+}
+
 Vector CCameraManager::WorldToScreenPoint(Vector worldPoint)
 {
 	return worldPoint - (m_vecLookAt - Vector(WINSIZEX * 0.5f, WINSIZEY * 0.5f));
@@ -118,6 +123,9 @@ void CCameraManager::Update()
 		m_vecTargetPos.x = WINSIZEX * 0.5f;
 	else if (m_vecTargetPos.x > GAME->GetBGEndX() - WINSIZEX * 0.5f)
 		m_vecTargetPos.x = GAME->GetBGEndX() - WINSIZEX * 0.5f;
+
+	if (m_vecTargetPos.y < WINSIZEY * 0.5f)
+		m_vecTargetPos.y = WINSIZEY * 0.5f;
 
 	// 목표 위치로 이동
 	MoveToTarget();

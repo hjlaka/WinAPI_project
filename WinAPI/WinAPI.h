@@ -29,6 +29,8 @@ enum class GroupScene
 
 	TileTool,
 
+	Lobby,
+
 	Stage01,
 
 	Stage02,

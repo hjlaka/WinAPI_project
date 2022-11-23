@@ -52,11 +52,11 @@
     <Filter Include="GameObject\Stage01">
       <UniqueIdentifier>{f2ad0501-d505-4b88-af0d-880a4673ef5b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="헤더 파일\PlayerState">
-      <UniqueIdentifier>{21949d90-fbe1-4257-8dae-63a11d1c11f4}</UniqueIdentifier>
-    </Filter>
     <Filter Include="GameObject\Player">
       <UniqueIdentifier>{57ceebdd-bf49-4dff-b729-f2da6673c081}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Player\PlayerState">
+      <UniqueIdentifier>{21949d90-fbe1-4257-8dae-63a11d1c11f4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -214,19 +214,19 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="CPlayerAttackB.h">
-      <Filter>헤더 파일\PlayerState</Filter>
+      <Filter>GameObject\Player\PlayerState</Filter>
     </ClInclude>
     <ClInclude Include="CPlayerDashing.h">
-      <Filter>헤더 파일\PlayerState</Filter>
+      <Filter>GameObject\Player\PlayerState</Filter>
     </ClInclude>
     <ClInclude Include="CPlayerJumping.h">
-      <Filter>헤더 파일\PlayerState</Filter>
+      <Filter>GameObject\Player\PlayerState</Filter>
     </ClInclude>
     <ClInclude Include="CPlayerMoving.h">
-      <Filter>헤더 파일\PlayerState</Filter>
+      <Filter>GameObject\Player\PlayerState</Filter>
     </ClInclude>
     <ClInclude Include="CStatePlayer.h">
-      <Filter>헤더 파일\PlayerState</Filter>
+      <Filter>GameObject\Player\PlayerState</Filter>
     </ClInclude>
     <ClInclude Include="CShootedHead.h">
       <Filter>헤더 파일</Filter>
@@ -259,16 +259,16 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="CPlayerIdle.h">
-      <Filter>헤더 파일\PlayerState</Filter>
+      <Filter>GameObject\Player\PlayerState</Filter>
     </ClInclude>
     <ClInclude Include="CPlayerJumpAttack.h">
-      <Filter>헤더 파일\PlayerState</Filter>
+      <Filter>GameObject\Player\PlayerState</Filter>
     </ClInclude>
     <ClInclude Include="CPlayerFalling.h">
-      <Filter>헤더 파일\PlayerState</Filter>
+      <Filter>GameObject\Player\PlayerState</Filter>
     </ClInclude>
     <ClInclude Include="CPlayerSkillA.h">
-      <Filter>헤더 파일\PlayerState</Filter>
+      <Filter>GameObject\Player\PlayerState</Filter>
     </ClInclude>
     <ClInclude Include="CSceneStage02.h">
       <Filter>Scene</Filter>
@@ -292,16 +292,19 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="CPlayerDie.h">
-      <Filter>헤더 파일\PlayerState</Filter>
+      <Filter>GameObject\Player\PlayerState</Filter>
     </ClInclude>
     <ClInclude Include="CPlayerSkillS.h">
-      <Filter>헤더 파일\PlayerState</Filter>
+      <Filter>GameObject\Player\PlayerState</Filter>
     </ClInclude>
     <ClInclude Include="CPlayerAttackA.h">
-      <Filter>헤더 파일\PlayerState</Filter>
+      <Filter>GameObject\Player\PlayerState</Filter>
     </ClInclude>
     <ClInclude Include="CPlayer.h">
       <Filter>GameObject\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="CSceneLobby.h">
+      <Filter>Scene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -441,19 +444,19 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="CPlayerAttackB.cpp">
-      <Filter>헤더 파일\PlayerState</Filter>
+      <Filter>GameObject\Player\PlayerState</Filter>
     </ClCompile>
     <ClCompile Include="CPlayerDashing.cpp">
-      <Filter>헤더 파일\PlayerState</Filter>
+      <Filter>GameObject\Player\PlayerState</Filter>
     </ClCompile>
     <ClCompile Include="CPlayerJumping.cpp">
-      <Filter>헤더 파일\PlayerState</Filter>
+      <Filter>GameObject\Player\PlayerState</Filter>
     </ClCompile>
     <ClCompile Include="CPlayerMoving.cpp">
-      <Filter>헤더 파일\PlayerState</Filter>
+      <Filter>GameObject\Player\PlayerState</Filter>
     </ClCompile>
     <ClCompile Include="CStatePlayer.cpp">
-      <Filter>헤더 파일\PlayerState</Filter>
+      <Filter>GameObject\Player\PlayerState</Filter>
     </ClCompile>
     <ClCompile Include="CShootedHead.cpp">
       <Filter>소스 파일</Filter>
@@ -474,22 +477,22 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="CPlayerIdle.cpp">
-      <Filter>헤더 파일\PlayerState</Filter>
+      <Filter>GameObject\Player\PlayerState</Filter>
     </ClCompile>
     <ClCompile Include="CPlayerAttackA.cpp">
-      <Filter>헤더 파일\PlayerState</Filter>
+      <Filter>GameObject\Player\PlayerState</Filter>
     </ClCompile>
     <ClCompile Include="CSceneStage02.cpp">
       <Filter>Scene</Filter>
     </ClCompile>
     <ClCompile Include="CPlayerFalling.cpp">
-      <Filter>헤더 파일\PlayerState</Filter>
+      <Filter>GameObject\Player\PlayerState</Filter>
     </ClCompile>
     <ClCompile Include="CUIImage.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="CPlayerJumpAttack.cpp">
-      <Filter>헤더 파일\PlayerState</Filter>
+      <Filter>GameObject\Player\PlayerState</Filter>
     </ClCompile>
     <ClCompile Include="CGate.cpp">
       <Filter>소스 파일</Filter>
@@ -513,16 +516,19 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="CPlayerSkillA.cpp">
-      <Filter>헤더 파일\PlayerState</Filter>
+      <Filter>GameObject\Player\PlayerState</Filter>
     </ClCompile>
     <ClCompile Include="CPlayerSkillS.cpp">
-      <Filter>헤더 파일\PlayerState</Filter>
+      <Filter>GameObject\Player\PlayerState</Filter>
     </ClCompile>
     <ClCompile Include="CPlayerDie.cpp">
-      <Filter>헤더 파일\PlayerState</Filter>
+      <Filter>GameObject\Player\PlayerState</Filter>
     </ClCompile>
     <ClCompile Include="CPlayer.cpp">
       <Filter>GameObject\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="CSceneLobby.cpp">
+      <Filter>Scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
