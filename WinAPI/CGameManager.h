@@ -77,7 +77,7 @@ public:
 
 
 	void SwitchSkul();
-	void EnterSkul();
+	void LinkSkulToUI();
 
 
 

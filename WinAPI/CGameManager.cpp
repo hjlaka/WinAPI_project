@@ -23,9 +23,6 @@ CGameManager::CGameManager()
 
 	m_bIsDebugMode = false;
 
-	/*pPlayerHpUI = nullptr;
-	pPlayerSkillAUI = nullptr;
-	pPlayerSkillSUI = nullptr;*/
 }
 
 CGameManager::~CGameManager()
@@ -109,6 +106,8 @@ CPlayer* CGameManager::CreateSkul()
 		break;
 	}
 
+	m_pPlayer->SetCurHp(m_playerInfo.m_iCurHp);
+
 	return m_pPlayer;
 }
 
@@ -182,6 +181,7 @@ void CGameManager::SwitchSkul()
 	//DELETEOBJECT(m_pPlayer);
 	//ADDOBJECT(m_pPlayer2);
 	m_pPlayer2->SetPos(playerPos);
+	m_pPlayer2->SetCurHp(m_pPlayer->GetCurHp());
 	m_pPlayer2->Enter();
 	m_pPlayer2->SetIsActive(true);
 
@@ -189,11 +189,11 @@ void CGameManager::SwitchSkul()
 	m_pPlayer = m_pPlayer2;
 	m_pPlayer2 = temp;
 
-	EnterSkul();
+	LinkSkulToUI();
 
 }
 
-void CGameManager::EnterSkul()
+void CGameManager::LinkSkulToUI()
 {
 	//UI를 현재 스컬과 연결시킨다.
 
@@ -204,9 +204,6 @@ void CGameManager::EnterSkul()
 	m_pMainUI->pPlayerHpUI->SetOwner(m_pPlayer);
 	m_pMainUI->pPlayerSkillAUI->SetLinkedSkill(m_pPlayer->GetSkillA());
 	m_pMainUI->pPlayerSkillSUI->SetLinkedSkill(m_pPlayer->GetSkillS());
-
-	//CAMERA->SetTargetPos(m_pPlayer->GetPos() + Vector(0, -100.f), .1f);
-
 	
 }
 

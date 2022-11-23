@@ -91,7 +91,7 @@ void CSceneStage01::Enter()
 	GAME->SetPlayer(pPlayer);
 	pPlayer->SetIsActive(true);
 
-	GAME->EnterSkul();
+	GAME->LinkSkulToUI();
 
 	CPlayer* pPlayer2 = new CSkulHunter;
 	pPlayer2->SetPos(400, WINSIZEY * 0.5f);

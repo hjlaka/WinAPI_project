@@ -69,7 +69,7 @@ void CSceneStage02::Enter()
 	AddGameObject(pPlayer2);
 		
 
-	GAME->EnterSkul();
+	GAME->LinkSkulToUI();
 }
 
 void CSceneStage02::Update()
