@@ -47,6 +47,8 @@ private:
 	float		m_fBGEndX;
 	CMainUI*	m_pMainUI;
 
+	bool		m_bIsDebugMode;
+
 
 public:
 	CPlayer* GetPlayer();
@@ -54,6 +56,7 @@ public:
 	CMainUI* GetMainUI();
 	GAME_STATUS GetGameStatue();
 	float GetRenderRate();
+	bool GetIsDebugMode();
 
 	void SavePlayerInfo();
 	PlayerInfo& LoadPlayerInfo();
@@ -80,6 +83,7 @@ public:
 
 private:
 	void Init();
+	void Update();
 	void Release();
 
 };

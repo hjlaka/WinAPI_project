@@ -21,6 +21,8 @@ CGameManager::CGameManager()
 
 	m_fRenderRate = 1.f;
 
+	m_bIsDebugMode = false;
+
 	/*pPlayerHpUI = nullptr;
 	pPlayerSkillAUI = nullptr;
 	pPlayerSkillSUI = nullptr;*/
@@ -35,6 +37,14 @@ void CGameManager::Init()
 	m_playerInfo.type1 = SKUL_TYPE::LITTLE_BONE;
 	m_playerInfo.type2 = SKUL_TYPE::NONE;
 
+}
+
+void CGameManager::Update()
+{
+	if (BUTTONDOWN('B'))
+	{
+		m_bIsDebugMode = !m_bIsDebugMode;
+	}
 }
 
 CPlayer* CGameManager::GetPlayer()
@@ -60,6 +70,11 @@ GAME_STATUS CGameManager::GetGameStatue()
 float CGameManager::GetRenderRate()
 {
 	return m_fRenderRate;
+}
+
+bool CGameManager::GetIsDebugMode()
+{
+	return m_bIsDebugMode;
 }
 
 void CGameManager::SavePlayerInfo()
