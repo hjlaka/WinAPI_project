@@ -59,6 +59,11 @@ struct SkillInfo
 			}
 				
 		}
+		if (SKILL_STATE::READY == state)
+		{
+			if (!bCondition)
+				state = SKILL_STATE::COOLING;
+		}
 		
 	}
 

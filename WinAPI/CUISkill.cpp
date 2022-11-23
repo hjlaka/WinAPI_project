@@ -51,12 +51,16 @@ void CUISkill::Render()
 			Color(0, 255, 0, 1)
 		);
 	}
-
-	RENDER->Text(to_wstring(m_pLinkedSkill->fCurCool),
+	float coolRate = 1.f;
+	if(m_pLinkedSkill->state == SKILL_STATE::COOLING) coolRate = (m_pLinkedSkill->fCool - m_pLinkedSkill->fCurCool) / m_pLinkedSkill->fCool;
+	if (m_pLinkedSkill->state == SKILL_STATE::COOLING && !m_pLinkedSkill->bCondition) coolRate = 0.f;
+	RENDER->FillRect(
 		m_vecRenderPos.x,
-		m_vecRenderPos.y,
+		m_vecRenderPos.y + (m_vecScale.y * coolRate),
 		m_vecRenderPos.x + m_vecScale.x,
-		m_vecRenderPos.y + m_vecScale.y);
+		m_vecRenderPos.y + m_vecScale.y,
+		Color(0, 0, 0, 0.5f)
+	);
 }
 
 
