@@ -23,8 +23,12 @@ CMonster01::CMonster01()
 	m_fAttackAPlayTime = 0;
 	m_fStatusTimer = 0;
 	m_fAttackACool = 0;
-	m_fThinkTime = 0;
+	m_fAttackBCool = 0;
+	//m_fThinkTime = 0;
 	m_bMakeAttack = false;
+
+	m_fRushSpeed = 550;
+	m_meleeAttack = nullptr;
 
 	m_vecMoveDir = Vector(0, 0);
 	m_vecLookDir = Vector(0, -1);
@@ -55,7 +59,7 @@ void CMonster01::Init()
 	m_pAnimator->CreateAnimation(L"Idle", m_pIdleImage, Vector(0.f, 20.f), Vector(150.f, 145.f), Vector(160.f, 0.f), 0.5f, 4);
 	m_pAnimator->CreateAnimation(L"Move", m_pMoveImage, Vector(0.f, 20.f), Vector(150.f, 145.f), Vector(160.f, 0.f), 0.2f, 8);
 	m_pAnimator->CreateAnimation(L"AttackA", m_pAttackImage, Vector(0.f, 20.f), Vector(150.f, 145.f), Vector(160.f, 0.f), 0.1f, 20);
-	m_pAnimator->CreateAnimation(L"AttackB", m_pAttackBImage, Vector(0.f, 20.f), Vector(150.f, 145.f), Vector(160.f, 0.f), 0.1f, 2);
+	m_pAnimator->CreateAnimation(L"AttackB", m_pAttackBImage, Vector(0.f, 20.f), Vector(150.f, 145.f), Vector(160.f, 0.f), 0.1f, 2, false);
 	m_pAnimator->CreateAnimation(L"Die", m_pDieImage, Vector(0.f, 20.f), Vector(150.f, 145.f), Vector(160.f, 0.f), 0.1f, 1, false);
 
 	m_fAttackAPlayTime = m_pAnimator->FindAnimation(L"AttackA")->GetFullTime();
@@ -103,11 +107,20 @@ void CMonster01::Update()
 		{
 			m_status = STATUS::IDLE;
 		}
+		else if (abs(distance.x) < 250.f && m_fAttackBCool <= 0)
+		{
+
+			m_status = STATUS::ATTACKB_READY;
+			m_fStatusTimer = 1.5f;			// 상태 유지 시간 설정
+			m_fRushTargetPosX = m_TargetObj->GetPos().x;		// 목표의 위치를 가져옴
+			m_bMakeAttack = false;
+
+		}
 		else if (abs(distance.x) < 100.f)
 		{
 			if (m_fAttackACool <= 0)			// 쿨타임 0이면
 			{
-				m_status = STATUS::ATTACK;
+				m_status = STATUS::ATTACKA;
 				m_fStatusTimer = m_fAttackAPlayTime;		// 상태 유지 시간 설정
 				m_bMakeAttack = false;
 			}
@@ -120,7 +133,7 @@ void CMonster01::Update()
 		break;
 	case STATUS::CONFRONT:
 		break;
-	case STATUS::ATTACK:
+	case STATUS::ATTACKA:
 		m_pRigid->SetVelocityX(0);
 		m_fStatusTimer -= DT;
 		if (m_fStatusTimer <= 1.f && !m_bMakeAttack)			// 상태 변경된 후 1초가 지나고 공격 콜라이더 생성 
@@ -142,6 +155,62 @@ void CMonster01::Update()
 			m_fAttackACool = 2.5f;
 		}
 		break;
+	case STATUS::ATTACKB_READY:
+		m_pRigid->SetVelocityX(0);
+		m_fStatusTimer -= DT;
+		//m_vecMoveDir.x = (m_TargetObj->GetPos().x - GetPos().x > 0) ? 1 : -1;		// 준비 중에는 방향 변경 가능
+		if (m_fStatusTimer <= 0)
+		{
+			m_status = STATUS::ATTACKB;
+			m_fStatusTimer = 1.5f;
+
+		}
+		break;
+	case STATUS::ATTACKB:
+		m_pRigid->SetVelocityX(0);
+		if (!m_bMakeAttack)
+		{
+			// 공격 범위 생성
+			m_meleeAttack = new CMonsterAttack;
+			m_meleeAttack->SetPos(m_vecPos);
+			m_meleeAttack->SetOffset(Vector(m_vecLookDir.x * 50, 0));
+			m_meleeAttack->SetOwner(this);
+			m_meleeAttack->SetAttackDuration(m_fStatusTimer * 0.6f);
+			m_meleeAttack->SetAttack(m_iAtt * 1.5f);
+			m_meleeAttack->SetDir(m_vecLookDir);
+			ADDOBJECT(m_meleeAttack);
+
+			m_bMakeAttack = true;
+		}
+
+		m_fStatusTimer -= DT;
+		if (m_fStatusTimer <= 0)
+		{
+			m_status = STATUS::IDLE;
+			m_fAttackBCool = 5.f;
+		}
+		else
+		{
+			float velocity = ((m_fRushTargetPosX - GetPos().x) / m_fStatusTimer) * 5;
+			if (velocity > m_fRushSpeed)
+			{
+				velocity = m_fRushSpeed;
+				m_fStatusTimer += DT;							// 속도가 최고 속도라면, 시간을 줄어들게 하지 않는다.
+				m_meleeAttack->SetAttackDuration(m_meleeAttack->GetAttackDuration() + DT);
+			}
+			else if (velocity < -1 * m_fRushSpeed)
+			{
+				velocity = -1 * m_fRushSpeed;
+				m_fStatusTimer += DT;
+				m_meleeAttack->SetAttackDuration(m_meleeAttack->GetAttackDuration() + DT);
+			}
+			m_pRigid->SetVelocityX(velocity);
+		}
+
+		
+		
+
+		break;
 	case STATUS::DIE:
 		break;
 	}
@@ -151,6 +220,10 @@ void CMonster01::Update()
 	if (m_fAttackACool > 0)
 	{
 		m_fAttackACool -= DT;
+	}
+	if (m_fAttackBCool > 0)
+	{
+		m_fAttackBCool -= DT;
 	}
 	AnimatorUpdate();
 }
@@ -173,8 +246,14 @@ void CMonster01::AnimatorUpdate()
 	case STATUS::MOVE:
 		str += L"Move";
 		break;
-	case STATUS::ATTACK:
+	case STATUS::ATTACKA:
 		str += L"AttackA";
+		break;
+	case STATUS::ATTACKB_READY:
+		str += L"AttackB";
+		break;
+	case STATUS::ATTACKB:
+		str += L"AttackB";
 		break;
 	case STATUS::DIE:
 		str += L"Die";

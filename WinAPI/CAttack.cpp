@@ -52,6 +52,11 @@ Vector CAttack::GetDir()
 	return m_vecDir;
 }
 
+float CAttack::GetAttackDuration()
+{
+	return m_fDuration;
+}
+
 void CAttack::SetOwner(CUnit* owner)
 {
 	m_pOwner = owner;

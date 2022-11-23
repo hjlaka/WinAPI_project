@@ -174,9 +174,6 @@
     <ClInclude Include="CMonster.h">
       <Filter>GameObject\Stage01</Filter>
     </ClInclude>
-    <ClInclude Include="CPlayer.h">
-      <Filter>GameObject\Stage01</Filter>
-    </ClInclude>
     <ClInclude Include="CTilePanel.h">
       <Filter>Engine\Asset\UI</Filter>
     </ClInclude>
@@ -303,6 +300,9 @@
     <ClInclude Include="CPlayerAttackA.h">
       <Filter>헤더 파일\PlayerState</Filter>
     </ClInclude>
+    <ClInclude Include="CPlayer.h">
+      <Filter>GameObject\Player</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinAPI.cpp">
@@ -399,9 +399,6 @@
       <Filter>GameObject\Stage01</Filter>
     </ClCompile>
     <ClCompile Include="CMonster.cpp">
-      <Filter>GameObject\Stage01</Filter>
-    </ClCompile>
-    <ClCompile Include="CPlayer.cpp">
       <Filter>GameObject\Stage01</Filter>
     </ClCompile>
     <ClCompile Include="CTileButton.cpp">
@@ -523,6 +520,9 @@
     </ClCompile>
     <ClCompile Include="CPlayerDie.cpp">
       <Filter>헤더 파일\PlayerState</Filter>
+    </ClCompile>
+    <ClCompile Include="CPlayer.cpp">
+      <Filter>GameObject\Player</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

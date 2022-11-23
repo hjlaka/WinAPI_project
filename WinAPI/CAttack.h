@@ -42,6 +42,7 @@ public:
 	CUnit* GetOwner();
 	int GetAttack();
 	Vector GetDir();
+	float GetAttackDuration();
 
 	void SetOwner(CUnit* owner);
 	void SetAttackDuration(float duration);

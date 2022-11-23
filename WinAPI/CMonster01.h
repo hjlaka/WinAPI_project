@@ -25,8 +25,14 @@ private:
 	float m_fAttackAPlayTime;
 	float m_fStatusTimer;
 	float m_fAttackACool;
-	float m_fThinkTime;
+	float m_fAttackBCool;
+	//float m_fThinkTime;
 	bool m_bMakeAttack;
+
+	CAttack* m_meleeAttack;
+
+	float m_fRushSpeed;
+	float m_fRushTargetPosX;
 
 private:
 

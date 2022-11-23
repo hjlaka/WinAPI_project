@@ -3,7 +3,7 @@
 
 class CHpBar;
 
-enum class STATUS { IDLE, CONFRONT, MOVE, ATTACK, HIT, DIE };
+enum class STATUS { IDLE, CONFRONT, MOVE, ATTACKA, ATTACKB, ATTACKB_READY, HIT, DIE };
 
 class CMonster : public CUnit
 {
