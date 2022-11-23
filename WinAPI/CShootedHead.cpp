@@ -86,7 +86,6 @@ void CShootedHead::Update()
 
 		if (m_fDuration <= 0)
 		{
-			Logger::Debug(L"머리 돌아감");
 			HeadInit();
 		}
 	}
@@ -126,7 +125,7 @@ void CShootedHead::OnCollisionEnter(CCollider* pOtherCollider)
 		m_pRigid->GroundCollisionEnter(GetCollider(), pOtherCollider);
 
 	}
-	else if (pOtherCollider->GetObjName() == L"Wall" || pOtherCollider->GetObjName() == L"몬스터1")			// 몬스터와 충돌도 벽타일처럼 반응
+	else if (pOtherCollider->GetObjName() == L"Wall" || pOtherCollider->GetOwner()->GetLayer() == Layer::Monster)			// 몬스터와 충돌도 벽타일처럼 반응
 	{
 		Logger::Debug(L"벽충돌");
 		m_pRigid->SetIsGravity(true);
@@ -154,7 +153,7 @@ void CShootedHead::OnCollisionExit(CCollider* pOtherCollider)
 		m_pRigid->GroundCollisionExit(GetCollider(), pOtherCollider);
 
 	}
-	else if (pOtherCollider->GetObjName() == L"Wall" || pOtherCollider->GetObjName() == L"몬스터1")
+	else if (pOtherCollider->GetObjName() == L"Wall" || pOtherCollider->GetOwner()->GetLayer() == Layer::Monster)
 	{
 		m_pRigid->WallCollisionExit(GetCollider(), pOtherCollider);
 

@@ -104,9 +104,10 @@ void CSkulLittleBone::Init()
 
 void CSkulLittleBone::Update()
 {
+	
 	CPlayer::Update();
 
-	if (m_pHead->GetHeadOn())				// 적절할까?
+	if (m_pHead->GetHeadOn())
 	{
 		skillHeadIsI.bCondition = false;
 	}
@@ -114,6 +115,8 @@ void CSkulLittleBone::Update()
 	{
 		skillHeadIsI.bCondition = true;
 	}
+	Logger::Debug(L"머리 상태: " + to_wstring(m_pHead->GetHeadOn()) + L", 조건 상태: " + to_wstring(skillHeadIsI.bCondition) + L", 준비 상태: " + to_wstring((int)skillHeadIsI.state));
+
 }
 
 void CSkulLittleBone::SkillSetUp()
@@ -124,8 +127,7 @@ void CSkulLittleBone::SkillSetUp()
 	skillShootHead.fCurCool = 0.f;
 	skillShootHead.state = SKILL_STATE::READY;
 	skillShootHead.strAniName = L"ShootHead";
-	skillShootHead.fMotionTime = m_pAnimator->FindAnimation(L"ShootHead")->GetFullTime();		// nullptr일 경우는?
-		/* m_pAnimator->FindAnimation(L"ShootHead"); 에서 duration과 count 를 가져온다.*/
+	skillShootHead.fMotionTime = m_pAnimator->FindAnimation(L"ShootHead")->GetFullTime();		// 애니메이션 재생 시간을 받아옴
 	skillShootHead.strDescription = L"자신의 머리를 던져 마법데미지를 입힙니다. \n던진 머리를 회수하면 쿨타임이 초기화됩니다.";
 	skillShootHead.bCondition = true;
 	skillShootHead.pImg = RESOURCE->LoadImg(L"SkillShootHead", L"Image\\SkullThrowing.png");
@@ -252,7 +254,6 @@ void CSkulLittleBone::SkillS()
 	// 순간 이동 애니메이션 재생
 	if (!(m_pHead->GetHeadOn()))
 	{
-		//m_vecPos = m_vecHeadPos - Vector(0, m_vecScale.y);
 		m_vecPos = m_pHead->GetCollider()->GetPos() - Vector(0, GetCollider()->GetScale().y * 0.5f - m_pHead->GetCollider()->GetScale().y * 0.5f);
 		m_skillS->UseSkill();
 		m_pRigid->SetGravitySpeed(0);
@@ -266,25 +267,7 @@ void CSkulLittleBone::SkillS()
 
 void CSkulLittleBone::Render()
 {
-	//RENDERMESSAGE(L" " + to_wstring(m_pRigid->m_arrCollisionCount[(int)Dir::Dow]));
-	RENDERMESSAGE(L"왼쪽 충돌 갯수: " + to_wstring(m_pHead->GetRigidBody()->m_arrCollisionCount[(int)Dir::LEFT]));
-	RENDERMESSAGE(L"오른쪽 충돌 갯수: " + to_wstring(m_pHead->GetRigidBody()->m_arrCollisionCount[(int)Dir::RIGHT]	));
-	RENDERMESSAGE(L"위쪽 충돌 갯수: " + to_wstring(m_pHead->GetRigidBody()->m_arrCollisionCount[(int)Dir::UP]));
-	RENDERMESSAGE(L"아래쪽 충돌 갯수: " + to_wstring(m_pHead->GetRigidBody()->m_arrCollisionCount[(int)Dir::DOWN]));
-	RENDERMESSAGE(L"왼쪽 속도: " + to_wstring(m_pHead->GetRigidBody()->m_arrDirSpeed[(int)Dir::LEFT]));
-	RENDERMESSAGE(L"오른쪽 속도: " + to_wstring(m_pHead->GetRigidBody()->m_arrDirSpeed[(int)Dir::RIGHT]));
-	RENDERMESSAGE(L"위쪽 속도: " + to_wstring(m_pHead->GetRigidBody()->m_arrDirSpeed[(int)Dir::UP]));
-	RENDERMESSAGE(L"아래쪽 속도: " + to_wstring(m_pHead->GetRigidBody()->m_arrDirSpeed[(int)Dir::DOWN]));
-	RENDERMESSAGE(L"머리 상태: " + to_wstring(m_pHead->GetHeadOn()));
 
-
-
-
-	CPlayer::Render();
-	RENDER->Text(L"플레이어 위치:" + to_wstring((int)GetPos().x) + L", " + to_wstring((int)GetPos().y), GetPos().x, GetPos().y + 90, GetPos().x + 200, GetPos().y + 190);
-	RENDER->Text(L"머리 상태:" + to_wstring((int)m_pHead->GetHeadOn()), GetPos().x, GetPos().y + 100, GetPos().x + 100, GetPos().y + 200);
-	RENDER->Text(L"머리 위치:" + to_wstring((int)m_pHead->GetPos().x) + L", " + to_wstring((int)m_pHead->GetPos().y), GetPos().x, GetPos().y + 110, GetPos().x + 200, GetPos().y + 210);
-	RENDER->Text(L"스킬A쿨:" + to_wstring((int)m_skillA->fCurCool), GetPos().x, GetPos().y + 120, GetPos().x + 100, GetPos().y + 220);
 }
 
 void CSkulLittleBone::Enter()

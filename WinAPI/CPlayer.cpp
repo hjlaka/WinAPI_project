@@ -1,16 +1,6 @@
 #include "framework.h"
 #include "CPlayer.h"
 
-#include "WinAPI.h"
-#include "CInputManager.h"
-#include "CTimeManager.h"
-#include "CRenderManager.h"
-#include "CEventManager.h"
-#include "CResourceManager.h"
-#include "CCollider.h"
-#include "CImage.h"
-#include "CAnimator.h"
-
 #include "CRigidBody.h"
 
 #include "CMissile.h"
@@ -65,7 +55,7 @@ CPlayer::CPlayer()
 	m_fAttackBTime = 0;
 	m_fAttackJTime = 0;
 
-	m_fDashCoolTime - 0;
+	m_fDashCoolTime = 0.8f;
 
 	m_fDashClock = 0;
 
@@ -78,13 +68,7 @@ CPlayer::CPlayer()
 	m_pPlayerState = nullptr;
 	m_state = STATE::IDLE;
 
-	//m_curSkulType = SKUL_TYPE::LITTLE_BONE;
-	//m_subSkulType = SKUL_TYPE::HUNTER;
 
-	//
-
-	/*SkillInfo skillEmpty;
-	skillEmpty.state = SKILL_STATE::NONE;*/
 
 	m_skillA = nullptr;
 	m_skillS = nullptr;
@@ -93,10 +77,7 @@ CPlayer::CPlayer()
 	m_fSkillACoolClock = 0;
 	m_fSkillSCoolClock = 0;
 
-	//
 
-
-	//
 
 
 	m_iHp = 100;
