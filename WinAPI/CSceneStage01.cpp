@@ -122,6 +122,23 @@ void CSceneStage01::Enter()
 	//pMonster->SetImgRate(1.2f);
 	AddGameObject(pMonster);
 
+	pMonster = new CMonster01;
+	pMonster->SetPos(2000, 1110);
+	AddGameObject(pMonster);
+
+	pMonster = new CMonster01;
+	pMonster->SetPos(1500, 1110);
+	AddGameObject(pMonster);
+
+	pMonster = new CMonster01;
+	pMonster->SetPos(1700, 1110);
+	AddGameObject(pMonster);
+
+	pMonster = new CMonster01;
+	pMonster->SetPos(1300, 1110);
+	AddGameObject(pMonster);
+
+
 	CGate* pGate = new CGate(GroupScene::Lobby);
 	pGate->SetPos(2700, 1110 - 35);
 	//pGate->SetImgRate(1.2f);
@@ -141,7 +158,7 @@ void CSceneStage01::Update()
 	if (BUTTONDOWN('2'))
 	{
 		CAMERA->FadeOut(0.25f);
-		DELAYCHANGESCENE(GroupScene::Stage02, 0.25f);
+		DELAYCHANGESCENE(GroupScene::Lobby, 0.25f);
 	}
 
 	if (BUTTONDOWN(VK_ESCAPE))

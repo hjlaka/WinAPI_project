@@ -6,7 +6,7 @@
 
 CRigidBody::CRigidBody()
 {
-	m_fGravity = 1180.f;
+	m_fGravity = 1280.f;
 	m_bIsGravity = true;
 	m_bIsFrictional = true;
 	m_fSpeed = 200.f;
@@ -194,11 +194,7 @@ void CRigidBody::InitWallCollision()
 
 void CRigidBody::Render()
 {
-	if (isUpDownCol)
-		RENDER->Text(L"상하충돌중", GetOwner()->GetPos().x, GetOwner()->GetPos().y - 20 , GetOwner()->GetPos().x + 100, GetOwner()->GetPos().y + 80);
-	RENDER->Text(L"좌우 속도:" + to_wstring(m_vecVelocity.x), GetOwner()->GetPos().x, GetOwner()->GetPos().y + 0, GetOwner()->GetPos().x + 100, GetOwner()->GetPos().y + 100);
-	RENDER->Text(L"중력값:" + to_wstring(m_vecVelocity.y), GetOwner()->GetPos().x, GetOwner()->GetPos().y + 20, GetOwner()->GetPos().x + 100, GetOwner()->GetPos().y + 120);
-	RENDER->Text(L"힘 값:" + to_wstring(m_vecForce.x) + L", " + to_wstring(m_vecForce.y), GetOwner()->GetPos().x, GetOwner()->GetPos().y + 40, GetOwner()->GetPos().x + 100, GetOwner()->GetPos().y + 140);
+	
 }
 
 void CRigidBody::Release()

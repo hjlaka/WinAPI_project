@@ -114,6 +114,10 @@ void CMainUI::Init()
 	pPlayer2SkillSUI->SetScale(Vector(50.f, 50.f));
 	pPlayerUI->AddChildUI(pPlayer2SkillSUI);
 	//AddGameObject(pPlayerSkillSUI);
+
+	pPlayer2SkillAUI->SetIsActive(false);
+	pPlayer2SkillSUI->SetIsActive(false);
+
 }
 
 void CMainUI::Render()

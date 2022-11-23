@@ -63,12 +63,12 @@ void CPlayerAttackA::Enter(CPlayer* pPlayer)
 
 	if (BUTTONSTAY(VK_RIGHT))
 	{
-		pPlayer->m_pRigid->Power(Vector(3000.f, 0));
+		pPlayer->m_pRigid->Power(Vector(2000.f, 0));
 		pPlayer->m_vecMoveDir.x = +1;
 	}
 	else if (BUTTONSTAY(VK_LEFT))
 	{
-		pPlayer->m_pRigid->Power(Vector(-3000.f, 0));
+		pPlayer->m_pRigid->Power(Vector(-2000.f, 0));
 		pPlayer->m_vecMoveDir.x = -1;
 	}
 }

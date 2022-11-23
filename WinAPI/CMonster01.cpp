@@ -264,7 +264,6 @@ void CMonster01::AnimatorUpdate()
 
 void CMonster01::Render()
 {
-	RENDERMESSAGE(L"몬스터 체력: " + to_wstring(m_iCurHp));
 }
 
 void CMonster01::Release()

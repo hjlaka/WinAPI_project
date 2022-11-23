@@ -79,6 +79,11 @@ void CSceneStage02::Update()
 		CAMERA->FadeOut(0.25f);
 		DELAYCHANGESCENE(GroupScene::Title, 0.25f);
 	}
+	if (BUTTONDOWN('2'))
+	{
+		CAMERA->FadeOut(0.25f);
+		DELAYCHANGESCENE(GroupScene::Stage01, 0.25f);
+	}
 	if (BUTTONDOWN('W'))
 	{
 		GAME->SwitchSkul();
