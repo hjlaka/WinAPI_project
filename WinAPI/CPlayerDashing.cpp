@@ -1,6 +1,7 @@
 #include "framework.h"
 #include "CPlayerDashing.h"
 #include "CPlayerIdle.h"
+#include "CDashSmoke.h"
 
 
 
@@ -50,11 +51,16 @@ void CPlayerDashing::Enter(CPlayer* pPlayer)
 	pPlayer->m_pRigid->PowerToX(pPlayer->m_vecLookDir.x * 500.f);
 
 	pPlayer->m_bIsInvincible = true;
+
+	// ÀÌÆåÆ®
+	CDashSmoke* smoke = new CDashSmoke;
+	smoke->SetPos(pPlayer->GetPos());
+	ADDOBJECT(smoke);
 }
 
 void CPlayerDashing::Exit(CPlayer* pPlayer)
 {
 	//pPlayer->m_bIsDash = false;
-	pPlayer->m_fDashCoolTime = 0.5f;
+	pPlayer->m_fDashCoolTime = pPlayer->m_fDashCoolTime;
 	pPlayer->m_bIsInvincible = false;
 }

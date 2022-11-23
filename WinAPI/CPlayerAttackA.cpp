@@ -14,6 +14,8 @@ CPlayerAttackA::~CPlayerAttackA()
 
 CStatePlayer* CPlayerAttackA::HandleInput(CPlayer* pPlayer)
 {
+
+
 	if (BUTTONDOWN('Z') && pPlayer->m_fDashCoolTime <= 0)		// 대쉬를 입력 받으면 행동을 캔슬한다.
 	{
 		return new CPlayerDashing;
@@ -56,17 +58,17 @@ void CPlayerAttackA::Enter(CPlayer* pPlayer)
 	pPlayer->m_bIsCanMove = false;
 	pPlayer->m_bAttackContinue = false;
 
-	pPlayer->Attack();
+	pPlayer->Attack(Vector(pPlayer->m_vecLookDir.x * 30, -10));
 	pPlayer->m_fAttackATime = 0.5f;
 
 	if (BUTTONSTAY(VK_RIGHT))
 	{
-		pPlayer->m_pRigid->PowerToX(6500.f);
+		pPlayer->m_pRigid->Power(Vector(3000.f, 0));
 		pPlayer->m_vecMoveDir.x = +1;
 	}
 	else if (BUTTONSTAY(VK_LEFT))
 	{
-		pPlayer->m_pRigid->PowerToX(-6500.f);
+		pPlayer->m_pRigid->Power(Vector(-3000.f, 0));
 		pPlayer->m_vecMoveDir.x = -1;
 	}
 }

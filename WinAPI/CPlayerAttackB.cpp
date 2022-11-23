@@ -66,19 +66,19 @@ void CPlayerAttackB::Enter(CPlayer* pPlayer)
 	pPlayer->m_bIsCanMove = false;
 	pPlayer->m_bAttackContinue = false;
 
-	pPlayer->Attack();
+	pPlayer->Attack(Vector(pPlayer->m_vecLookDir.x * 25, 10));
 	pPlayer->m_fAttackBTime = 0.4f;
 
 
 	 //공격 진입 시점에 방향키가 눌리고 있다면 해당 방향으로 이동하며 공격한다. (한번만 누른 경우는 안 포함?)
 	if (BUTTONSTAY(VK_RIGHT))
 	{
-		pPlayer->m_pRigid->PowerToX(6500.f);
+		pPlayer->m_pRigid->Power(Vector(3000.f, 0));
 		pPlayer->m_vecMoveDir.x = +1;
 	}
 	else if (BUTTONSTAY(VK_LEFT))
 	{
-		pPlayer->m_pRigid->PowerToX(-6500.f);
+		pPlayer->m_pRigid->Power(Vector(-3000.f, 0));
 		pPlayer->m_vecMoveDir.x = -1;
 	}
 

@@ -1,5 +1,6 @@
 #include "framework.h"
 #include "CPlayerDie.h"
+#include "CPlayerIdle.h"
 
 CPlayerDie::CPlayerDie()
 {
@@ -11,14 +12,18 @@ CPlayerDie::~CPlayerDie()
 
 CStatePlayer* CPlayerDie::HandleInput(CPlayer* pPlayer)
 {
+    if (m_fPlayTime <= -3.f)
+    {
+        pPlayer->SetCurHp(pPlayer->GetHp());
+        return new CPlayerIdle;         // 임시 부활
+    }
     return nullptr;
 }
 
 void CPlayerDie::Update(CPlayer* pPlayer)
 {
     m_fPlayTime -= DT;
-    if (m_fPlayTime <= 0)
-        pPlayer->SetIsActive(false);
+    
 }
 
 void CPlayerDie::Enter(CPlayer* pPlayer)

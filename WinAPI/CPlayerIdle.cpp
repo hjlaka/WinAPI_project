@@ -31,6 +31,8 @@ CStatePlayer* CPlayerIdle::HandleInput(CPlayer* pPlayer)
 		return new CPlayerDie;
 	}
 
+
+
 	// 방향 전환
 
 	if (BUTTONSTAY(VK_LEFT))
