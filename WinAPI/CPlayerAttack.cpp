@@ -13,15 +13,6 @@ CPlayerAttack::~CPlayerAttack()
 {
 }
 
-float CPlayerAttack::GetAttack()
-{
-	return m_fAttack;
-}
-
-void CPlayerAttack::SetAttack(float attack)
-{
-	m_fAttack = attack;
-}
 
 void CPlayerAttack::Init()
 {

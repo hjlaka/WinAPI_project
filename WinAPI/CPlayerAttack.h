@@ -6,14 +6,6 @@ public:
 	CPlayerAttack();
 	virtual ~CPlayerAttack();
 
-protected:
-	float m_fAttack;
-
-public:
-	float GetAttack();
-	void SetAttack(float attack);
-
-
 
 protected:
 	virtual void Init() override;

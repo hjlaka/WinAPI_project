@@ -17,8 +17,11 @@ void CSkulHunter::Init()
 	m_pPortrait = RESOURCE->LoadImg(L"HunterPortrait", L"Image\\Hunter.png");
 
 	m_pIdleImage = RESOURCE->LoadImg(L"HunterIdle", L"Image\\hunter_idle.png");
-	m_pAnimator->CreateAnimation(L"HunterIdleRight", m_pIdleImage, Vector(0.f, 20.f), Vector(85.f, 75.f), Vector(96.f, 0.f), 0.5f, 7);
-	m_pAnimator->Play(L"HunterIdleRight", false);
+	m_pMoveImage = RESOURCE->LoadImg(L"HunterMove", L"Image\\hunter_move.png");
+
+	m_pAnimator->CreateAnimation(L"Idle", m_pIdleImage, Vector(0.f, 10.f), Vector(85.f, 75.f), Vector(96.f, 0.f), 0.5f, 7);
+	m_pAnimator->CreateAnimation(L"Move", m_pMoveImage, Vector(0.f, 10.f), Vector(85.f, 75.f), Vector(96.f, 0.f), 0.05f, 7);
+	m_pAnimator->Play(L"Idle", false);
 
 	SkillSetUp();
 }
@@ -26,6 +29,64 @@ void CSkulHunter::Init()
 void CSkulHunter::Update()
 {
 	CPlayer::Update();
+}
+
+void CSkulHunter::AnimatorUpdate()
+{
+
+	m_pAnimator->SetFlip(m_vecLookDir.x == -1);			// 왼쪽을 바라보고 있다면 애니메이션 좌우 반전
+
+	wstring str = L"";
+
+
+	switch (m_state)
+	{
+	/*case STATE::JUMPATTACK:
+		str += L"JumpAttack";
+		break;
+	case STATE::ATTACKA:
+		str += L"AttackA";
+		break;
+	case STATE::ATTACKB:
+		str += L"AttackB";
+		break;
+	case STATE::DASH:
+		str += L"Dash";
+		break;*/
+	case STATE::IDLE:
+		str += L"Idle";
+		break;
+	/*case STATE::JUMP:
+		str += L"Jump";
+		break;*/
+	case STATE::MOVE:
+		str += L"Move";
+		break;
+	/*case STATE::FALL:
+		if (m_fFallTime <= 0.3f)
+			str += L"Fall";
+		else
+			str += L"FallRepeat";
+		break;
+	case STATE::SKILLA:
+		str += m_skillA->strAniName;
+		m_pAnimator->Play(str, false);
+		return;
+	case STATE::SKILLS:
+		str += m_skillS->strAniName;
+		m_pAnimator->Play(str, false);
+		return;
+	case STATE::DIE:
+		str += L"Die";
+		m_pAnimator->Play(str, false);
+		return;*/
+	default:
+		str += L"Idle";
+		break;
+
+	}
+
+	m_pAnimator->Play(str, false);
 }
 
 void CSkulHunter::SkillSetUp()
@@ -80,6 +141,7 @@ void CSkulHunter::Enter()
 
 void CSkulHunter::Exit()
 {
+	CPlayer::Exit();
 }
 
 

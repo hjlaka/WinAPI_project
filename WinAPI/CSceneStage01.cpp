@@ -154,7 +154,8 @@ void CSceneStage01::Update()
 
 	CAMERA->SetTargetPos(GAME->GetPlayer()->GetPos() + Vector(0, -100.f), .1f);
 
-	if (BUTTONDOWN('W'))
+	// 스컬 변경
+	if (BUTTONDOWN(VK_SPACE))
 	{
 		GAME->SwitchSkul();
 	}

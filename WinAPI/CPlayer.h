@@ -145,13 +145,12 @@ protected:
 	void Release() override;
 
 	virtual void AnimatorUpdate();
-	void CreateMissile();
 	void Jump(float fJumpPower);
-	virtual void Attack();
+	virtual void Attack(Vector offset);
 	virtual void JumpAttack();
 
 	virtual void Enter() = 0;
-	virtual void Exit() = 0;
+	virtual void Exit();
 
 
 	virtual void OnCollisionEnter(CCollider* pOtherCollider) override;

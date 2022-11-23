@@ -23,6 +23,8 @@ CGameManager::CGameManager()
 
 	m_bIsDebugMode = false;
 
+	m_playerInfo = { SKUL_TYPE::LITTLE_BONE, SKUL_TYPE::NONE, 100, 100 };
+	
 }
 
 CGameManager::~CGameManager()
@@ -32,7 +34,7 @@ CGameManager::~CGameManager()
 void CGameManager::Init()
 {
 	m_playerInfo.type1 = SKUL_TYPE::LITTLE_BONE;
-	m_playerInfo.type2 = SKUL_TYPE::NONE;
+	m_playerInfo.type2 = SKUL_TYPE::HUNTER;
 
 }
 
@@ -78,7 +80,10 @@ void CGameManager::SavePlayerInfo()
 {
 	// 스컬 타입 저장
 	m_playerInfo.type1 = m_pPlayer->m_skulType;
-	m_playerInfo.type2 = m_pPlayer2->m_skulType;
+	if (m_pPlayer2 != nullptr)
+		m_playerInfo.type2 = m_pPlayer2->m_skulType;
+	else
+		m_playerInfo.type2 = SKUL_TYPE::NONE;
 
 	// 체력 저장
 	m_playerInfo.m_iHp = m_pPlayer->m_iHp;
@@ -96,6 +101,7 @@ CPlayer* CGameManager::CreateSkul()
 	switch (m_playerInfo.type1)
 	{
 	case SKUL_TYPE::NONE:
+		assert(0 && L"Player1 cant be none type");
 		break;
 	case SKUL_TYPE::LITTLE_BONE:
 		m_pPlayer = new CSkulLittleBone;
@@ -116,6 +122,7 @@ CPlayer* CGameManager::CreateSecondSkul()
 	switch (m_playerInfo.type2)
 	{
 	case SKUL_TYPE::NONE:
+		m_pPlayer2 = nullptr;
 		break;
 	case SKUL_TYPE::LITTLE_BONE:
 		m_pPlayer2 = new CSkulLittleBone;
@@ -204,7 +211,17 @@ void CGameManager::LinkSkulToUI()
 	m_pMainUI->pPlayerHpUI->SetOwner(m_pPlayer);
 	m_pMainUI->pPlayerSkillAUI->SetLinkedSkill(m_pPlayer->GetSkillA());
 	m_pMainUI->pPlayerSkillSUI->SetLinkedSkill(m_pPlayer->GetSkillS());
+
+	if (m_pPlayer->GetSkillS() == nullptr)
+		m_pMainUI->pPlayerSkill2Frame->SetIsActive(false);
+	else
+		m_pMainUI->pPlayerSkill2Frame->SetIsActive(true);
 	
+
+	if (nullptr != m_pPlayer2)
+	{
+		m_pMainUI->pPlayer2Portrait->SetImage(m_pPlayer2->m_pPortrait);
+	}
 }
 
 

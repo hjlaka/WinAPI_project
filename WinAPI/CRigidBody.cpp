@@ -17,8 +17,10 @@ CRigidBody::CRigidBody()
 
 	m_fForceX = 0;
 	m_fFriction = 50.f;
+	m_fCurFriction = m_fFriction;
 
 	m_vecForce = Vector(0, 0);
+	m_fForceTime = 0;
 
 	m_vecVelocity = Vector(0, 0);
 
@@ -80,28 +82,54 @@ void CRigidBody::Init()
 
 void CRigidBody::Update()
 {
+	if (m_fForceTime > 0)
+	{
+		m_fForceTime -= DT;
 
+		if (m_fForceTime <= 0)
+			m_vecForce = Vector(0, 0);
+	}
 	if (m_bIsFrictional)
 	{
-		if (m_vecForce.Magnitude() > 0.f)
+		/*if (m_vecForce.Magnitude() > 0.f)
 		{
 			m_vecForce += m_vecForce.Normalized() * -1 * m_fFriction * DT;
 			if(m_vecForce.Magnitude() < 1.f)
 				m_vecForce = Vector(0, 0);
-		}
+		}*/
 
 
 
 
-		if (m_vecVelocity.x > 0)
+		if (m_vecVelocity.x > 0)		// 양의 속도가 있을 때
 		{
-			m_vecVelocity.x -= m_fFriction * DT;			// 항시 작용한다?
+			if (m_vecForce.x > 0)		// 힘의 방향이 같다면
+			{
+				m_fCurFriction -= (m_fCurFriction * 0.2f) * DT;			// 현재 마찰력은 줄어든다.
+			}
+			else
+			{
+				m_fCurFriction = m_fFriction;	// 마찰력은 초기화 된다.
+			}
+
+
+			m_vecVelocity.x -= m_fCurFriction * DT;
 			if (m_vecVelocity.x < 1.f)
 				m_vecVelocity.x = 0;
 		}
 		else if (m_vecVelocity.x < 0)
 		{
-			m_vecVelocity.x += m_fFriction * DT;
+
+			if (m_vecForce.x < 0)		// 힘의 방향이 같다면
+			{
+				m_fCurFriction -= (m_fCurFriction * 0.2f) * DT;			// 현재 마찰력은 줄어든다.
+			}
+			else
+			{
+				m_fCurFriction = m_fFriction;	// 마찰력은 초기화 된다.
+			}
+
+			m_vecVelocity.x += m_fCurFriction * DT;
 			if (m_vecVelocity.x > -1.f)
 				m_vecVelocity.x = 0;
 		}
@@ -122,7 +150,7 @@ void CRigidBody::Update()
 		}
 		
 	}
-
+	
 	m_vecVelocity += m_vecForce * 500 * DT;
 	UpdateVelocityX();
 	UpdateVelocityY();
@@ -145,21 +173,22 @@ void CRigidBody::PowerToX(float x)
 	m_vecVelocity.x = x;
 }
 
-void CRigidBody::Power(Vector force)
+void CRigidBody::Power(Vector force, float time)
 {
 	m_vecForce = force;
+	m_fForceTime = time;
 	//m_vecVelocity += force;
 }
 
-//void CRigidBody::InitWallCollision()
-//{
-//
-//	SetCollisionConunt(Dir::LEFT, m_arrCollisionCount[(int)Dir::LEFT] * -1);
-//	SetCollisionConunt(Dir::RIGHT, m_arrCollisionCount[(int)Dir::RIGHT] * -1);
-//	/*m_arrCollisionCount[(int)Dir::LEFT] = 0;
-//	m_arrCollisionCount[(int)Dir::RIGHT] = 0;*/
-//
-//}
+void CRigidBody::InitWallCollision()
+{
+
+	SetCollisionConunt(Dir::LEFT, m_arrCollisionCount[(int)Dir::LEFT] * -1);
+	SetCollisionConunt(Dir::RIGHT, m_arrCollisionCount[(int)Dir::RIGHT] * -1);
+	/*m_arrCollisionCount[(int)Dir::LEFT] = 0;
+	m_arrCollisionCount[(int)Dir::RIGHT] = 0;*/
+
+}
 
 
 

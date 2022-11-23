@@ -81,7 +81,7 @@ CPlayer::CPlayer()
 
 
 	m_iHp = 100;
-	m_iCurHp = 10;
+	m_iCurHp = 100;
 	m_iAtt = 10;
 
 	m_fSpeed = 300.f;
@@ -130,6 +130,7 @@ void CPlayer::Init()
 
 void CPlayer::Update()
 {
+	//Logger::Debug(to_wstring(m_vecPos.x) + L", " + to_wstring(m_vecPos.y));
 	if (GAME->GetGameStatue() == GAME_STATUS::PAUSE)
 		return;
 	
@@ -215,37 +216,13 @@ void CPlayer::AnimatorUpdate()
 
 }
 
-
-
-void CPlayer::CreateMissile()
+void CPlayer::Exit()
 {
-	Logger::Debug(L"미사일 생성");
-
-	CMissile* pMissile = new CMissile();
-	pMissile->SetPos(m_vecPos);
-	pMissile->SetDir(Vector(1, 0));
-	ADDOBJECT(pMissile);
-
-	CMissile* pMissile1 = new CMissile();
-	pMissile1->SetPos(m_vecPos);
-	pMissile1->SetDir(Vector(1, -1));
-	ADDOBJECT(pMissile1);
-
-	CMissile* pMissile2 = new CMissile();
-	pMissile2->SetPos(m_vecPos);
-	pMissile2->SetDir(Vector(1, 1));
-	ADDOBJECT(pMissile2);
-
-	CMissile* pMissile3 = new CMissile();
-	pMissile3->SetPos(m_vecPos);
-	pMissile3->SetDir(Vector(3, 1));
-	ADDOBJECT(pMissile3);
-
-	CMissile* pMissile4 = new CMissile();
-	pMissile4->SetPos(m_vecPos);
-	pMissile4->SetDir(Vector(3, -1));
-	ADDOBJECT(pMissile4);
+	delete m_pPlayerState;
+	m_pPlayerState = new CPlayerIdle;
+	m_pPlayerState->Enter(this);
 }
+
 
 void CPlayer::Jump(float fJumpPower)
 {
@@ -254,12 +231,13 @@ void CPlayer::Jump(float fJumpPower)
 }
 
 
-void CPlayer::Attack()
+void CPlayer::Attack(Vector offset)
 {
 	CPlayerAttack* pAttack = new CPlayerAttack();
 	pAttack->SetPos(m_vecPos);
-	pAttack->SetOffset(Vector(m_vecLookDir.x * 30, -10));
+	pAttack->SetOffset(offset);
 	pAttack->SetOwner(this);
+	pAttack->SetAttack(m_iAtt);
 	pAttack->SetAttackDuration(0.4f);
 	pAttack->SetDir(m_vecLookDir);
 	ADDOBJECT(pAttack);
@@ -271,6 +249,7 @@ void CPlayer::JumpAttack()
 	pAttack->SetPos(m_vecPos);
 	pAttack->SetOffset(Vector(m_vecLookDir.x * 30, 20));
 	pAttack->SetOwner(this);
+	pAttack->SetAttack(m_iAtt);
 	pAttack->SetAttackDuration(0.4f);
 	pAttack->SetDir(m_vecLookDir);
 	ADDOBJECT(pAttack);
@@ -301,10 +280,11 @@ void CPlayer::OnCollisionEnter(CCollider* pOtherCollider)
 		// 플레이어가 무적 상태가 아니라면 맞음으로 처리
 		if (!m_bIsInvincible)
 		{
-			Logger::Debug(L"몬스터에게 맞음");
 			CAttack* pAttack = static_cast<CAttack*>(pOtherCollider->GetOwner());
 			int attackPoint = pAttack->GetAttack();
 			m_iCurHp -= attackPoint;
+
+			m_pRigid->Power(Vector(pAttack->GetOwner()->GetLookDir().x * 10, 5));
 		}
 	}
 

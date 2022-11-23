@@ -115,13 +115,12 @@ void CSkulLittleBone::Update()
 	{
 		skillHeadIsI.bCondition = true;
 	}
-	Logger::Debug(L"머리 상태: " + to_wstring(m_pHead->GetHeadOn()) + L", 조건 상태: " + to_wstring(skillHeadIsI.bCondition) + L", 준비 상태: " + to_wstring((int)skillHeadIsI.state));
 
 }
 
 void CSkulLittleBone::SkillSetUp()
 {
-	//SkillInfo skillShootHead;
+
 	skillShootHead.strName = L"두개골 투척";
 	skillShootHead.fCool = 6.f;
 	skillShootHead.fCurCool = 0.f;
@@ -133,7 +132,6 @@ void CSkulLittleBone::SkillSetUp()
 	skillShootHead.pImg = RESOURCE->LoadImg(L"SkillShootHead", L"Image\\SkullThrowing.png");
 
 
-	//SkillInfo skillHeadIsI;
 	skillHeadIsI.strName = L"머리가 본체";
 	skillHeadIsI.fCool = 3.f;
 	skillHeadIsI.fCurCool = 0.f;
@@ -159,8 +157,6 @@ void CSkulLittleBone::ReturnHead()
 
 void CSkulLittleBone::AnimatorUpdate()
 {
-	/*if (m_vecMoveDir.Length() > 0)
-		m_vecLookDir = m_vecMoveDir;*/
 
 	m_pAnimator->SetFlip(m_vecLookDir.x == -1);			// 왼쪽을 바라보고 있다면 애니메이션 좌우 반전
 
@@ -230,10 +226,11 @@ void CSkulLittleBone::SkillA()
 	if (m_skillA->state == SKILL_STATE::READY)
 	{
 		Logger::Debug(L"스킬 사용. 바라보는 곳: " + to_wstring(m_vecLookDir.x));
-		//m_pHead->GetRigidBody()->InitWallCollision();
+		m_pHead->GetRigidBody()->InitWallCollision();				// 충돌 버그가 나서 추가한 코드
 		
 		m_pHead->Shoot(GetPos() + Vector(m_vecLookDir.x * 10, -20), m_vecLookDir);
 		m_pHead->SetAttackDuration(6.f);
+		m_pHead->SetAttack(m_iAtt * 2);
 
 
 		m_pHead->SetHeadOn(false);
@@ -276,10 +273,14 @@ void CSkulLittleBone::Enter()
 
 void CSkulLittleBone::Exit()
 {
+	CPlayer::Exit();
+
 	ReturnHead();
 	// 쿨타임도 초기화 되어야 할까?
 	m_skillA->ReadySkill();
 	m_skillS->ReadySkill();
+
+	
 	
 }
 

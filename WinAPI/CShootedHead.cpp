@@ -4,8 +4,6 @@
 
 CShootedHead::CShootedHead()
 {
-
-	m_fAttack = 15.f;
 	m_fDuration = 0.f;
 	m_vecDir = Vector(0, 0);
 

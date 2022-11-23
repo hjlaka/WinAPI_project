@@ -93,7 +93,8 @@ void CSceneLobby::Update()
 		CAMERA->FadeOut(0.25f);
 		DELAYCHANGESCENE(GroupScene::Title, 0.25f);
 	}
-	if (BUTTONDOWN('W'))
+	// 스컬 변경
+	if (BUTTONDOWN(VK_SPACE))
 	{
 		GAME->SwitchSkul();
 	}

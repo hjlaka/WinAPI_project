@@ -163,7 +163,7 @@ void CMonster01::Update()
 		{
 			m_status = STATUS::ATTACKB;
 			m_fStatusTimer = 1.5f;
-
+			//m_fRushTargetPosX = m_TargetObj->GetPos().x;		// 준비시간 끝에 목표의 위치를 가져옴
 		}
 		break;
 	case STATUS::ATTACKB:
@@ -175,7 +175,7 @@ void CMonster01::Update()
 			m_meleeAttack->SetPos(m_vecPos);
 			m_meleeAttack->SetOffset(Vector(m_vecLookDir.x * 50, 0));
 			m_meleeAttack->SetOwner(this);
-			m_meleeAttack->SetAttackDuration(m_fStatusTimer * 0.6f);
+			m_meleeAttack->SetAttackDuration(m_fStatusTimer * 0.52f);
 			m_meleeAttack->SetAttack(m_iAtt * 1.5f);
 			m_meleeAttack->SetDir(m_vecLookDir);
 			ADDOBJECT(m_meleeAttack);
@@ -273,8 +273,7 @@ void CMonster01::Release()
 
 void CMonster01::OnCollisionEnter(CCollider* pOtherCollider)
 {
-
-	if (pOtherCollider->GetObjName() == L"PlayerAttack" && !m_bGetHit)
+	if (pOtherCollider->GetObjName() == L"PlayerAttack" && !m_bGetHit && m_status != STATUS::DIE)
 	{
 
 		CAttack* pAttack = (CAttack*)(pOtherCollider->GetOwner());
@@ -291,7 +290,8 @@ void CMonster01::OnCollisionEnter(CCollider* pOtherCollider)
 		}
 		
 
-		m_iCurHp -= 10;
+		int attackPoint = pAttack->GetAttack();
+		m_iCurHp -= attackPoint;
 
 		m_bGetHit = true;
 	}

@@ -24,6 +24,8 @@ private:
 	void SkillS() override;
 	//void SkillAction(SkillInfo skill) override;
 
+	void AnimatorUpdate() override;
+
 private:
 
 	void Enter() override;

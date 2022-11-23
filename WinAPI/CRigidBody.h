@@ -38,7 +38,9 @@ private:
 
 	float m_fForceX;
 	float m_fFriction;
+	float m_fCurFriction;
 	Vector m_vecForce;
+	float m_fForceTime;
 	
 	Vector m_vecVelocity;
 	Vector m_vecDir;				// 유닛에도 존재한다.
@@ -81,9 +83,9 @@ public:
 
 	void PowerToY(float y);
 	void PowerToX(float x);
-	void Power(Vector force);
+	void Power(Vector force, float time = 0.01f);
 
-	//void InitWallCollision();
+	void InitWallCollision();
 
 public:
 
