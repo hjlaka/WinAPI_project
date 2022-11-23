@@ -3,6 +3,7 @@
 
 class CUIHp;
 class CUISkill;
+class CUIFrame;
 class CImage;
 class CUIImage;
 
@@ -16,10 +17,19 @@ public:
 
 	CUIImage* pPlayerPortrait;
 
+	CUIFrame* pPlayerSkill2Frame;
 
-	CUIHp* pPlayerHpUI;
+	CUIHp*	  pPlayerHpUI;
 	CUISkill* pPlayerSkillAUI;
 	CUISkill* pPlayerSkillSUI;
+
+	CUIFrame* pPlayer2PortraitFrame;
+	CUIFrame* pPlayer2SkillAUIFrame;
+	CUIFrame* pPlayer2SkillSUIFrame;
+
+	CUIImage* pPlayer2Portrait;
+	CUISkill* pPlayer2SkillAUI;
+	CUISkill* pPlayer2SkillSUI;
 
 private:
 	void Init() override;
