@@ -254,6 +254,8 @@ void CScene::DeleteLayerObject(Layer layer)
 {
 	for (CGameObject* pObj : m_listObj[(int)layer])
 	{
+		
+		pObj->GameObjectRelease();
 		delete pObj;
 		//DELETEOBJECT(pObj);
 	}
