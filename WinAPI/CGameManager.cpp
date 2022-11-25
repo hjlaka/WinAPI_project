@@ -79,15 +79,20 @@ bool CGameManager::GetIsDebugMode()
 void CGameManager::SavePlayerInfo()
 {
 	// 스컬 타입 저장
-	m_playerInfo.type1 = m_pPlayer->m_skulType;
+	if (m_pPlayer != nullptr)
+	{
+		m_playerInfo.type1 = m_pPlayer->m_skulType;
+		// 체력 저장
+		m_playerInfo.m_iHp = m_pPlayer->m_iHp;
+		m_playerInfo.m_iCurHp = m_pPlayer->m_iCurHp;
+	}
+		
 	if (m_pPlayer2 != nullptr)
 		m_playerInfo.type2 = m_pPlayer2->m_skulType;
 	else
 		m_playerInfo.type2 = SKUL_TYPE::NONE;
 
-	// 체력 저장
-	m_playerInfo.m_iHp = m_pPlayer->m_iHp;
-	m_playerInfo.m_iCurHp = m_pPlayer->m_iCurHp;
+	
 }
 
 PlayerInfo& CGameManager::LoadPlayerInfo()

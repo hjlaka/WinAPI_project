@@ -10,6 +10,8 @@
 CSceneTitle::CSceneTitle()
 {
 	m_pBGImg = nullptr;
+	m_pLogoImg = nullptr;
+	m_pTextImg = nullptr;
 }
 
 CSceneTitle::~CSceneTitle()

@@ -41,9 +41,6 @@ void CGroundTile::Render()
 
 	ComponentRender();
 
-
-	if(m_bIsUpDownCollision)
-		RENDER->Text(to_wstring(diffY), m_vecPos.x, m_vecPos.y + 10, m_vecPos.x + 30, m_vecPos.y + 30);
 }
 
 void CGroundTile::Release()
