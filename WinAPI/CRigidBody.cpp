@@ -320,7 +320,6 @@ void CRigidBody::GroundCollisionExit(CCollider* myCollider, CCollider* pOtherCol
 	}
 	else
 	{
-		Logger::Debug(L"¹Ù´Ú Ãæµ¹ 1¸¸Å­ Å»Ãâ");
 		SetCollisionConunt(Dir::DOWN, -1);
 		isUpDownCol = false;
 	}
