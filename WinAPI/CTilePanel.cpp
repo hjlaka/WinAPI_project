@@ -85,8 +85,8 @@ void CTilePanel::CreateTileTypeButton()
 {
 	auto click = [](DWORD_PTR tileTool, DWORD_PTR tileType)
 	{
-		CSceneTileTool* pTileTool = (CSceneTileTool*)tileTool;
-		pTileTool->ClickTileType((TypeTile)tileType);
+		CSceneTileTool* pTileTool = (CSceneTileTool*)tileTool;								// 타일툴씬을 가져온다.
+		pTileTool->ClickTileType((TypeTile)tileType);										// 타일툴씬의 함수를 타일 타입에 맞게 부른다.
 	};
 
 	CScene* pScene = SCENE->GetCurScene();
@@ -105,6 +105,20 @@ void CTilePanel::CreateTileTypeButton()
 	pGroundTypeButton->SetText(L"Ground");
 	pGroundTypeButton->SetClickedCallback(click, (DWORD_PTR)pTileToolScene, (DWORD_PTR)TypeTile::Ground);
 	AddChildUI(pGroundTypeButton);
+
+	CButton* pWallTypeButton = new CButton;
+	pWallTypeButton->SetScale(100.f, 50.f);
+	pWallTypeButton->SetPos(Vector(290.f, m_vecScale.y - 100.f));
+	pWallTypeButton->SetText(L"Wall");
+	pWallTypeButton->SetClickedCallback(click, (DWORD_PTR)pTileToolScene, (DWORD_PTR)TypeTile::Wall);
+	AddChildUI(pWallTypeButton);
+
+	CButton* pPlatformTypeButton = new CButton;
+	pPlatformTypeButton->SetScale(100.f, 50.f);
+	pPlatformTypeButton->SetPos(Vector(10.f, m_vecScale.y - 200.f));
+	pPlatformTypeButton->SetText(L"Platform");
+	pPlatformTypeButton->SetClickedCallback(click, (DWORD_PTR)pTileToolScene, (DWORD_PTR)TypeTile::Platform);
+	AddChildUI(pPlatformTypeButton);
 }
 
 void CTilePanel::SetPage(UINT page)

@@ -8,6 +8,12 @@ public:
 	virtual ~CSceneTitle();
 
 private:
+
+	CImage* m_pBGImg;
+	CImage* m_pLogoImg;
+	CImage* m_pTextImg;
+
+private:
 	void Init()		override;
 	void Enter()	override;
 	void Update()	override;

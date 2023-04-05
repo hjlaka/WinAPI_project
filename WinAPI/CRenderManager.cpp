@@ -5,6 +5,9 @@
 
 #include "WinAPI.h"
 #include "CImage.h"
+#include "CGameManager.h"
+
+int CRenderManager::m_iMessageCount = 1;
 
 CRenderManager::CRenderManager()
 {
@@ -107,6 +110,8 @@ void CRenderManager::BeginDraw()
 	m_pRenderTarget->BeginDraw();
 	Vector screenPos = CAMERA->ScreenToWorldPoint(Vector(0, 0));
 	FillRect(screenPos.x, screenPos.y, screenPos.x + WINSIZEX, screenPos.y + WINSIZEY, Color(255, 255, 255, 1.f));
+
+	m_iMessageCount = 1;		// 다시 초기화
 }
 
 void CRenderManager::EndDraw()
@@ -511,11 +516,22 @@ void CRenderManager::Image(CImage* pImg, float startX, float startY, float endX,
 	endX = end.x;
 	endY = end.y;
 
-	D2D1_RECT_F imgRect = { startX, startY, endX, endY };
+	/*Vector point = { start + end * 0.5f };
+	Vector diff = { point - start};
+	Vector newStart = { point.x - (diff.x * GAME->GetRenderRate()), point.y - (diff.x * GAME->GetRenderRate()) };
+	Vector newEnd = { point.x + (diff.x * GAME->GetRenderRate()), point.y + (diff.x * GAME->GetRenderRate()) };
+	newStart = CAMERA->WorldToScreenPoint(newStart);
+	newEnd = CAMERA->WorldToScreenPoint(newEnd);
+	startX = newStart.x;
+	startY = newStart.y;
+	endX = newStart.x;
+	endY = newStart.y;*/
+
+	D2D1_RECT_F imgRect = { startX, startY, endX, endY};
 	m_pRenderTarget->DrawBitmap(pImg->GetImage(), imgRect);
 }
 
-void CRenderManager::FrameImage(CImage* pImg, float dstX, float dstY, float dstW, float dstH, float srcX, float srcY, float srcW, float srcH, float alpha)
+void CRenderManager::FrameImage(CImage* pImg, float dstX, float dstY, float dstW, float dstH, float srcX, float srcY, float srcW, float srcH, bool flip, float alpha)
 {
 	Vector dstStart = CAMERA->WorldToScreenPoint(Vector(dstX, dstY));
 	dstX = dstStart.x;
@@ -524,10 +540,45 @@ void CRenderManager::FrameImage(CImage* pImg, float dstX, float dstY, float dstW
 	dstW = dstEnd.x;
 	dstH = dstEnd.y;
 
+	/*Vector dstStart = Vector(dstX, dstY);
+	Vector dstEnd = Vector(dstW, dstH);
+	Vector point = { dstStart + dstEnd * 0.5f};
+	Vector diff = { point - dstStart };
+	Vector newStart = { point.x - (diff.x * GAME->GetRenderRate()), point.y - (diff.x * GAME->GetRenderRate()) };
+	Vector newEnd = { point.x + (diff.x * GAME->GetRenderRate()), point.y + (diff.x * GAME->GetRenderRate()) };
+	newStart = CAMERA->WorldToScreenPoint(newStart);
+	newEnd = CAMERA->WorldToScreenPoint(newEnd);
+	dstX = newStart.x;
+	dstY = newStart.y;
+	dstW = newStart.x;
+	dstH = newStart.y;*/
+
+
+
 	D2D1_RECT_F imgRect = { dstX, dstY, dstW, dstH };
 	D2D1_RECT_F srcRect = { srcX, srcY, srcW, srcH };
 
+	if (flip)		// 좌우 반전
+	{
+		m_pRenderTarget->SetTransform(D2D1::Matrix3x2F::Scale(-1.f, 1.f,
+			D2D1_POINT_2F{ (dstX + dstW) / 2.f, (dstY + dstH) / 2.f }));		// 중심점이 있는 크기 조정 변환
+	}
+
 	m_pRenderTarget->DrawBitmap(pImg->GetImage(), imgRect, 1.0f, D2D1_BITMAP_INTERPOLATION_MODE_NEAREST_NEIGHBOR, srcRect);
+
+	if (flip)		// 좌우 반전 원복
+	{
+		m_pRenderTarget->SetTransform(D2D1::Matrix3x2F::Scale(1.f, 1.f,
+			D2D1_POINT_2F{ (dstX + dstW) / 2.f, (dstY + dstH) / 2.f }));
+	}
+}
+
+void CRenderManager::PrintSystemMessage(const wstring& str)
+{
+	float yPos = (m_iMessageCount++) * 20.f;
+	Vector messagePos = CAMERA->ScreenToWorldPoint(Vector(WINSIZEX - 200, yPos));
+	wstring message = str;
+	Text(message, messagePos.x - 100, messagePos.y - 10, messagePos.x + 100, messagePos.y + 10, Color(0, 0, 0, 1.f), 15);
 }
 
 IWICImagingFactory* CRenderManager::GetImageFactory()

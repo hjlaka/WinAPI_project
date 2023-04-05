@@ -6,6 +6,7 @@
 
 CGameObject::CGameObject()
 {
+	m_bIsActive = true;
 	m_vecPos = Vector(0, 0);
 	m_vecScale = Vector(0, 0);
 	m_layer = Layer::Default;
@@ -13,10 +14,23 @@ CGameObject::CGameObject()
 	m_bSafeToDelete = false;
 
 	m_pCollider = nullptr;
+	m_bIsRigidBody = false;
+
+	m_fImgRate = 1.4f;
 }
 
 CGameObject::~CGameObject()
 {
+}
+
+bool CGameObject::GetIsActive()
+{
+	return m_bIsActive;
+}
+
+void CGameObject::SetIsActive(bool value)
+{
+	m_bIsActive = value;
 }
 
 Vector CGameObject::GetPos()
@@ -98,6 +112,21 @@ void CGameObject::ComponentRender()
 	}
 }
 
+void CGameObject::SetImgRate(float rate)
+{
+	m_fImgRate = rate;
+}
+
+float CGameObject::GetImgRate()
+{
+	return m_fImgRate;
+}
+
+bool CGameObject::GetIsRigidBody()
+{
+	return m_bIsRigidBody;
+}
+
 CCollider* CGameObject::GetCollider()
 {
 	return m_pCollider;
@@ -153,6 +182,9 @@ void CGameObject::GameObjectInit()
 
 void CGameObject::GameObjectUpdate()
 {
+	if (!m_bIsActive)
+		return;
+
 	// 상속한 자식 로직갱신
 	Update();
 
@@ -174,6 +206,9 @@ void CGameObject::GameObjectPhysicsUpdate()
 
 void CGameObject::GameObjectRender()
 {
+	if (!m_bIsActive)
+		return;
+
 	// 상속한 자식 표현갱신
 	Render();
 

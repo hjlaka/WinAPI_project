@@ -15,6 +15,17 @@ CAnimation::CAnimation()
 	m_iCurFrame = 0;
 	m_fAccTime = 0;
 	m_bRepeat = true;
+
+	m_pCallback = nullptr;
+	m_pParam1 = 0;
+	m_pParam2 = 0;
+
+	m_fRate = 1.f;
+	m_fduration = 0;
+	m_uiFrameCount = 0;
+
+	m_bFlip = false;
+
 }
 
 CAnimation::~CAnimation()
@@ -26,6 +37,28 @@ const wstring& CAnimation::GetName()
 	return m_strName;
 }
 
+void CAnimation::SetLastCallback(CallbackFunc pCallback, DWORD_PTR pParam1, DWORD_PTR pParam2)
+{
+	m_pCallback = pCallback;
+	m_pParam1 = pParam1;
+	m_pParam2 = pParam2;
+}
+
+void CAnimation::RunCallback()
+{
+	m_pCallback(m_pParam1, m_pParam2);
+}
+
+float CAnimation::GetFullTime()
+{
+	return m_fduration * (float)m_uiFrameCount;
+}
+
+void CAnimation::SetFlip(bool flip)
+{
+	m_bFlip = flip;
+}
+
 void CAnimation::SetName(const wstring& name)
 {
 	m_strName = name;
@@ -33,6 +66,9 @@ void CAnimation::SetName(const wstring& name)
 
 void CAnimation::Create(CImage* pImg, Vector lt, Vector slice, Vector step, float duration, UINT count, bool repeat)
 {
+	m_fduration = duration;	//프레임 공통 지속시간
+	m_uiFrameCount = count;	//프레임 개수
+
 	m_pImage = pImg;	// 프레임 이미지가 모여있는 이미지 파일
 	m_bRepeat = repeat;	// 반복여부
 
@@ -50,6 +86,7 @@ void CAnimation::Create(CImage* pImg, Vector lt, Vector slice, Vector step, floa
 
 		m_vecFrame.push_back(frame);
 	}
+
 }
 
 void CAnimation::Replay()
@@ -61,6 +98,7 @@ void CAnimation::Replay()
 
 void CAnimation::Init()
 {
+	
 }
 
 void CAnimation::Update()
@@ -81,6 +119,10 @@ void CAnimation::Update()
 			// 반복 애니메이션이라면 처음부터, 아니라면 마지막을 다시 재생
 			if (m_bRepeat)	m_iCurFrame = 0;
 			else			m_iCurFrame--;
+
+			// 마지막 프레임에 재생할 콜백 함수가 있다면 실행
+			if (nullptr != m_pCallback)
+				m_pCallback(m_pParam1, m_pParam2);
 		}
 	}
 }
@@ -90,17 +132,20 @@ void CAnimation::Render()
 	Vector pos = m_pAnimator->GetOwner()->GetPos();	// 애니메이션이 그려질 위치 확인
 	AniFrame frame = m_vecFrame[m_iCurFrame];		// 애니메이션이 그려질 프레임 확인
 
+	m_fRate = m_pAnimator->GetOwner()->GetImgRate();		// 이미지 리소스 배율
+
 	// 프레임 이미지 그리기
 	RENDER->FrameImage(
 		m_pImage,
-		pos.x - frame.slice.x * 0.5f,
-		pos.y - frame.slice.y * 0.5f,
-		pos.x + frame.slice.x * 0.5f,
-		pos.y + frame.slice.y * 0.5f,
+		pos.x - frame.slice.x * 0.5f * m_fRate,
+		pos.y - frame.slice.y * 0.5f * m_fRate,
+		pos.x + frame.slice.x * 0.5f * m_fRate,
+		pos.y + frame.slice.y * 0.5f * m_fRate,
 		frame.lt.x,
 		frame.lt.y,
 		frame.lt.x + frame.slice.x,
-		frame.lt.y + frame.slice.y
+		frame.lt.y + frame.slice.y,
+		m_bFlip
 	);
 }
 

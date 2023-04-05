@@ -19,8 +19,12 @@ public:
 	int GetWidth();
 	int GetHeight();
 
+	float m_fImgRate;
+
 public:
 	ID2D1Bitmap* GetImage();
 	void Load(const wstring& filePath);
+
+	void SetImageRate(float fRate);
 };
 

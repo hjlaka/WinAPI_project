@@ -4,6 +4,9 @@
 #include "CInputManager.h"
 #include "CCameraManager.h"
 
+#include "CGameManager.h"
+#include "CPlayer.h"
+
 CCameraController::CCameraController()
 {
 }
@@ -20,8 +23,10 @@ void CCameraController::Update()
 {
 	if (LMOUSEDOWN(false))
 	{
-		CAMERA->SetTargetPos(MOUSEWORLDPOS, 1);
+		CAMERA->SetTargetPos(MOUSEWORLDPOS, m_fMouseTime);
 	}
+
+	
 
 	Vector dir;
 	if (BUTTONSTAY('A'))

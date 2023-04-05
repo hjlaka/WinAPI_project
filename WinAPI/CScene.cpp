@@ -5,11 +5,13 @@
 #include "CGameObject.h"
 #include "CTile.h"
 #include "CGroundTile.h"
+#include "CWallTile.h"
 
 CScene::CScene()
 {
 	m_iTileSizeX = 0;
 	m_iTileSizeY = 0;
+	m_pBGImg = nullptr;
 }
 
 CScene::~CScene()
@@ -88,6 +90,26 @@ void CScene::ScenePhysicsUpdate()
 
 void CScene::SceneRender()
 {
+	// 배경이미지 표현 갱신 (화면에 가득찰 예정, 좌표값 움직이지 않음)
+	if (nullptr != m_pBGImg)
+	{
+		Vector pos = CAMERA->ScreenToWorldPoint(Vector(0, 0));	// 배경이 그려질 위치 확인
+
+		// 배경 이미지 그리기
+		RENDER->FrameImage(
+			m_pBGImg,
+			pos.x,
+			pos.y,
+			pos.x + m_pBGImg->GetWidth(),
+			pos.y + m_pBGImg->GetHeight(),
+			0,
+			0,
+			m_pBGImg->GetWidth(),
+			m_pBGImg->GetHeight()
+		);
+	}
+
+
 	// 씬 내에 모든 게임오브젝트 표현갱신
 	for (int layer = 0; layer < (int)Layer::Size; layer++)
 	{
@@ -113,6 +135,7 @@ void CScene::SceneExit()
 
 void CScene::SceneRelease()
 {
+
 	// 씬 내에 모든 게임오브젝트 마무리
 	for (int layer = 0; layer < (int)Layer::Size; layer++)
 	{
@@ -187,9 +210,32 @@ void CScene::LoadTile(const wstring& strPath)
 
 			AddGameObject(newTile);
 		}
+		else if (TypeTile::Wall == loadTile.GetType())
+		{
+			CWallTile* newTile = new CWallTile;
+			newTile->SetTilePos(loadTile.GetTilePosX(), loadTile.GetTilePosY());
+			newTile->SetTileIndex(loadTile.GetTileIndex());
+
+			AddGameObject(newTile);
+		}
+		else if (TypeTile::Platform == loadTile.GetType())
+		{
+			CGroundTile* newTile = new CGroundTile;
+			newTile->SetTilePos(loadTile.GetTilePosX(), loadTile.GetTilePosY());
+			newTile->SetTileIndex(loadTile.GetTileIndex());
+			newTile->SetType(TypeTile::Platform);
+
+			AddGameObject(newTile);
+		}
 	}
 
 	fclose(pFile);
+}
+
+void CScene::LoadBackGroundImage(const wstring& strPath)
+{
+	m_pBGImg = RESOURCE->LoadImg(L"BackGround", strPath);	// 수정 필요
+
 }
 
 list<CGameObject*>& CScene::GetLayerObject(Layer layer)
@@ -208,7 +254,10 @@ void CScene::DeleteLayerObject(Layer layer)
 {
 	for (CGameObject* pObj : m_listObj[(int)layer])
 	{
+		
+		pObj->GameObjectRelease();
 		delete pObj;
+		//DELETEOBJECT(pObj);
 	}
 	m_listObj[(int)layer].clear();
 }

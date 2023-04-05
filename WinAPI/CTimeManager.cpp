@@ -5,6 +5,9 @@ CTimeManager::CTimeManager()
 {
 	m_uiFPS = 1;
 	m_fDT = 1;
+
+	m_fTimeScale = 1.f;
+
 	updateCount = 0;
 	updateOneSecond = 0;
 
@@ -19,6 +22,8 @@ CTimeManager::~CTimeManager()
 void CTimeManager::Init()
 {
 	prevTime = chrono::high_resolution_clock::now();
+
+	srand(time(NULL));
 }
 
 void CTimeManager::Update()
@@ -55,4 +60,14 @@ UINT CTimeManager::GetFPS()
 float CTimeManager::GetDT()
 {
 	return m_fDT;
+}
+
+float CTimeManager::GetScaledDT()
+{
+	return m_fDT * m_fTimeScale;
+}
+
+void CTimeManager::SetTimeScale(float scale)
+{
+	m_fTimeScale = scale;
 }

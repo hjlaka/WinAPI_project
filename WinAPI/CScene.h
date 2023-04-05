@@ -6,6 +6,7 @@ class CEventManager;
 class CCollisionManager;
 class CUIManager;
 class CGameObject;
+class CImage;
 
 class CScene
 {
@@ -23,6 +24,7 @@ public:
 protected:
 	UINT m_iTileSizeX;
 	UINT m_iTileSizeY;
+	CImage* m_pBGImg;
 
 private:
 	// 씬 부모 전용 함수들 :
@@ -49,6 +51,7 @@ private:
 
 public:
 	void LoadTile(const wstring& strPath);
+	void LoadBackGroundImage(const wstring& strPath);
 
 protected:
 	list<CGameObject*>& GetLayerObject(Layer layer);

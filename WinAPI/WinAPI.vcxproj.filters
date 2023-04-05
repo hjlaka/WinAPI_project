@@ -52,6 +52,15 @@
     <Filter Include="GameObject\Stage01">
       <UniqueIdentifier>{f2ad0501-d505-4b88-af0d-880a4673ef5b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameObject\Player">
+      <UniqueIdentifier>{57ceebdd-bf49-4dff-b729-f2da6673c081}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Player\PlayerState">
+      <UniqueIdentifier>{21949d90-fbe1-4257-8dae-63a11d1c11f4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="리소스 파일\Effect">
+      <UniqueIdentifier>{c859aea5-a99e-40c7-8ad6-a30e67afd2ff}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -168,9 +177,6 @@
     <ClInclude Include="CMonster.h">
       <Filter>GameObject\Stage01</Filter>
     </ClInclude>
-    <ClInclude Include="CPlayer.h">
-      <Filter>GameObject\Stage01</Filter>
-    </ClInclude>
     <ClInclude Include="CTilePanel.h">
       <Filter>Engine\Asset\UI</Filter>
     </ClInclude>
@@ -182,6 +188,132 @@
     </ClInclude>
     <ClInclude Include="CSoundManager.h">
       <Filter>Engine\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="CMonster01.h">
+      <Filter>GameObject\Stage01</Filter>
+    </ClInclude>
+    <ClInclude Include="CAttack.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="CPlayerAttack.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="CPlayerAttackB.h">
+      <Filter>GameObject\Player\PlayerState</Filter>
+    </ClInclude>
+    <ClInclude Include="CPlayerDashing.h">
+      <Filter>GameObject\Player\PlayerState</Filter>
+    </ClInclude>
+    <ClInclude Include="CPlayerJumping.h">
+      <Filter>GameObject\Player\PlayerState</Filter>
+    </ClInclude>
+    <ClInclude Include="CPlayerMoving.h">
+      <Filter>GameObject\Player\PlayerState</Filter>
+    </ClInclude>
+    <ClInclude Include="CStatePlayer.h">
+      <Filter>GameObject\Player\PlayerState</Filter>
+    </ClInclude>
+    <ClInclude Include="CShootedHead.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Skill.h">
+      <Filter>Util</Filter>
+    </ClInclude>
+    <ClInclude Include="CBackGround.h">
+      <Filter>GameObject\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="CGameManager.h">
+      <Filter>Engine\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="CRigidBody.h">
+      <Filter>Engine\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Item.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="CPlayerIdle.h">
+      <Filter>GameObject\Player\PlayerState</Filter>
+    </ClInclude>
+    <ClInclude Include="CPlayerJumpAttack.h">
+      <Filter>GameObject\Player\PlayerState</Filter>
+    </ClInclude>
+    <ClInclude Include="CPlayerFalling.h">
+      <Filter>GameObject\Player\PlayerState</Filter>
+    </ClInclude>
+    <ClInclude Include="CPlayerSkillA.h">
+      <Filter>GameObject\Player\PlayerState</Filter>
+    </ClInclude>
+    <ClInclude Include="CSceneStage02.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="CGate.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="CMonsterAttack.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="CHpBar.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="CPlayerDie.h">
+      <Filter>GameObject\Player\PlayerState</Filter>
+    </ClInclude>
+    <ClInclude Include="CPlayerSkillS.h">
+      <Filter>GameObject\Player\PlayerState</Filter>
+    </ClInclude>
+    <ClInclude Include="CPlayerAttackA.h">
+      <Filter>GameObject\Player\PlayerState</Filter>
+    </ClInclude>
+    <ClInclude Include="CPlayer.h">
+      <Filter>GameObject\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="CSceneLobby.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="CUISkill.h">
+      <Filter>Engine\Asset\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="CUIImage.h">
+      <Filter>Engine\Asset\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="CUIHp.h">
+      <Filter>Engine\Asset\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="CUIHpMonster.h">
+      <Filter>Engine\Asset\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="CUIFrame.h">
+      <Filter>Engine\Asset\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="CBigKnightSmoke.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="CWallTile.h">
+      <Filter>Engine\Asset\Tile</Filter>
+    </ClInclude>
+    <ClInclude Include="CUnit.h">
+      <Filter>GameObject\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="CMainUI.h">
+      <Filter>Engine\Asset\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="CSkulLittleBone.h">
+      <Filter>GameObject\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="CSkulHunter.h">
+      <Filter>GameObject\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="CEffect.h">
+      <Filter>리소스 파일\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="CHit.h">
+      <Filter>리소스 파일\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="CSmoke.h">
+      <Filter>리소스 파일\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="CDashSmoke.h">
+      <Filter>리소스 파일\Effect</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -281,9 +413,6 @@
     <ClCompile Include="CMonster.cpp">
       <Filter>GameObject\Stage01</Filter>
     </ClCompile>
-    <ClCompile Include="CPlayer.cpp">
-      <Filter>GameObject\Stage01</Filter>
-    </ClCompile>
     <ClCompile Include="CTileButton.cpp">
       <Filter>Engine\Asset\UI</Filter>
     </ClCompile>
@@ -295,6 +424,123 @@
     </ClCompile>
     <ClCompile Include="CSoundManager.cpp">
       <Filter>Engine\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="CMonster01.cpp">
+      <Filter>GameObject\Stage01</Filter>
+    </ClCompile>
+    <ClCompile Include="CAttack.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="CPlayerAttack.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="CPlayerAttackB.cpp">
+      <Filter>GameObject\Player\PlayerState</Filter>
+    </ClCompile>
+    <ClCompile Include="CPlayerDashing.cpp">
+      <Filter>GameObject\Player\PlayerState</Filter>
+    </ClCompile>
+    <ClCompile Include="CPlayerJumping.cpp">
+      <Filter>GameObject\Player\PlayerState</Filter>
+    </ClCompile>
+    <ClCompile Include="CPlayerMoving.cpp">
+      <Filter>GameObject\Player\PlayerState</Filter>
+    </ClCompile>
+    <ClCompile Include="CStatePlayer.cpp">
+      <Filter>GameObject\Player\PlayerState</Filter>
+    </ClCompile>
+    <ClCompile Include="CShootedHead.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="CBackGround.cpp">
+      <Filter>GameObject\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="CGameManager.cpp">
+      <Filter>Engine\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="CRigidBody.cpp">
+      <Filter>Engine\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="CPlayerIdle.cpp">
+      <Filter>GameObject\Player\PlayerState</Filter>
+    </ClCompile>
+    <ClCompile Include="CPlayerAttackA.cpp">
+      <Filter>GameObject\Player\PlayerState</Filter>
+    </ClCompile>
+    <ClCompile Include="CSceneStage02.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="CPlayerFalling.cpp">
+      <Filter>GameObject\Player\PlayerState</Filter>
+    </ClCompile>
+    <ClCompile Include="CPlayerJumpAttack.cpp">
+      <Filter>GameObject\Player\PlayerState</Filter>
+    </ClCompile>
+    <ClCompile Include="CGate.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="CMonsterAttack.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="CSmoke.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="CSkulHunter.cpp">
+      <Filter>GameObject\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="CSkulLittleBone.cpp">
+      <Filter>GameObject\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="CHpBar.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="CPlayerSkillA.cpp">
+      <Filter>GameObject\Player\PlayerState</Filter>
+    </ClCompile>
+    <ClCompile Include="CPlayerSkillS.cpp">
+      <Filter>GameObject\Player\PlayerState</Filter>
+    </ClCompile>
+    <ClCompile Include="CPlayerDie.cpp">
+      <Filter>GameObject\Player\PlayerState</Filter>
+    </ClCompile>
+    <ClCompile Include="CPlayer.cpp">
+      <Filter>GameObject\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="CSceneLobby.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="CHit.cpp">
+      <Filter>리소스 파일\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="CEffect.cpp">
+      <Filter>리소스 파일\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="CDashSmoke.cpp">
+      <Filter>리소스 파일\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="CWallTile.cpp">
+      <Filter>Engine\Asset\Tile</Filter>
+    </ClCompile>
+    <ClCompile Include="CUnit.cpp">
+      <Filter>GameObject\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="CUISkill.cpp">
+      <Filter>Engine\Asset\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="CUIImage.cpp">
+      <Filter>Engine\Asset\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="CUIHpMonster.cpp">
+      <Filter>Engine\Asset\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="CUIHp.cpp">
+      <Filter>Engine\Asset\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="CUIFrame.cpp">
+      <Filter>Engine\Asset\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="CMainUI.cpp">
+      <Filter>Engine\Asset\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

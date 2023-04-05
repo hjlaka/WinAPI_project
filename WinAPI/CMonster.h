@@ -1,19 +1,35 @@
 #pragma once
-#include "CGameObject.h"
-class CMonster : public CGameObject
+#include "CUnit.h"
+
+class CHpBar;
+
+enum class STATUS { IDLE, CONFRONT, MOVE, ATTACKA, ATTACKB, ATTACKB_READY, HIT, DIE };
+
+class CMonster : public CUnit
 {
 public:
 	CMonster();
 	virtual ~CMonster();
 
-private:
-	void Init() override;
-	void Update() override;
-	void Render() override;
-	void Release() override;
+protected:
+	STATUS m_status;
+	Vector m_vecTargetPos;
+	CGameObject* m_TargetObj;
+	CHpBar* m_hpBar;
 
-	void OnCollisionEnter(CCollider* pOtherCollider) override;
-	void OnCollisionStay(CCollider* pOtherCollider) override;
-	void OnCollisionExit(CCollider* pOtherCollider) override;
+protected:
+
+	virtual void MoveToTargetPos();
+	virtual void AnimatorUpdate() {};
+
+protected:
+	virtual void Init() override;
+	virtual void Update() override;
+	virtual void Render() override;
+	virtual void Release() override;
+
+	virtual void OnCollisionEnter(CCollider* pOtherCollider) override;
+	virtual void OnCollisionStay(CCollider* pOtherCollider) override;
+	virtual void OnCollisionExit(CCollider* pOtherCollider) override;
 };
 

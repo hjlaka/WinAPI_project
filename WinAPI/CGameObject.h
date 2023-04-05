@@ -23,12 +23,16 @@ public:
 	virtual ~CGameObject();
 
 protected:
+	bool m_bIsActive;	// 게임오브젝트 활성화 여부
 	Vector m_vecPos;	// 게임오브젝트의 위치
 	Vector m_vecScale;	// 게임오브젝트의 크기
 	Layer m_layer;		// 게임오브젝트의 레이어
 	wstring m_strName;	// 게임오브젝트의 이름
 
 public:
+
+	bool GetIsActive();
+	void SetIsActive(bool value);
 	Vector GetPos();
 	void SetPos(Vector pos);
 	void SetPos(float x, float y);
@@ -58,12 +62,33 @@ protected:
 
 	void ComponentRender();
 
+	// 리소스 배율
+
+protected:
+	float m_fImgRate;
+
+public:
+	float GetImgRate();
+	void SetImgRate(float rate);
+	
+	
+
+
+	// 중력 컴포넌트
+
+protected:
+	bool m_bIsRigidBody;
+
+public:
+	bool GetIsRigidBody();
+
 	// 충돌 컴포넌트
 private:
 	CCollider* m_pCollider;
 
-protected:
+public:
 	CCollider* GetCollider();
+protected:
 	void AddCollider(ColliderType type, Vector scale, Vector offsetPos);
 	void RemoveCollider();
 

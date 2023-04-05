@@ -10,6 +10,8 @@ struct AniFrame
 	float	duration;
 };
 
+typedef void(*CallbackFunc)(DWORD_PTR, DWORD_PTR);
+
 class CAnimation
 {
 	friend CAnimator;
@@ -27,8 +29,24 @@ private:
 	float				m_fAccTime;		// 현재 플레이중인 프레임의 축적시간
 	bool				m_bRepeat;		// 애니메이션의 반복 여부
 
+	CallbackFunc		m_pCallback;		// 애니메이션 마지막에 들어갈 함수
+	DWORD_PTR			m_pParam1;
+	DWORD_PTR			m_pParam2;
+
+	float				m_fRate;			// 이미지 배율
+	float				m_fduration;		// 공통 프레임 지속시간
+	UINT				m_uiFrameCount;		// 프레임 개수
+
+	float				m_bFlip;			// 이미지 좌우반전 여부
+
 public:
 	const wstring& GetName();
+
+	void SetLastCallback(CallbackFunc pCallback, DWORD_PTR pParam1, DWORD_PTR pParam2);
+	void RunCallback();
+
+	float GetFullTime();		// 애니메이션 총 재생시간
+	void SetFlip(bool flip);
 
 private:
 	void SetName(const wstring& name);

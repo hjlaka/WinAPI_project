@@ -6,10 +6,16 @@
 CAnimator::CAnimator()
 {
 	m_pCurAni = nullptr;
+	m_bFlip = false;
 }
 
 CAnimator::~CAnimator()
 {
+}
+
+void CAnimator::SetFlip(bool flip)
+{
+	m_bFlip = flip;
 }
 
 void CAnimator::Init()
@@ -19,7 +25,10 @@ void CAnimator::Init()
 void CAnimator::Update()
 {
 	if (nullptr != m_pCurAni)
+	{
+		m_pCurAni->SetFlip(m_bFlip);
 		m_pCurAni->Update();
+	}
 }
 
 void CAnimator::Render()
@@ -71,6 +80,14 @@ CAnimation* CAnimator::FindAnimation(const wstring& aniName)
 		return m_mapAni[aniName];
 }
 
+void CAnimator::SetAnimationCallBack(const wstring& aniName, CallbackFunc pCallback, DWORD_PTR pParam1, DWORD_PTR pParam2)
+{
+	CAnimation* pAni = FindAnimation(aniName);
+	assert(nullptr != pAni && L"Animation no exist");		// 애니메이션이 없을 경우 경고
+
+	pAni->SetLastCallback(pCallback, pParam1, pParam2);
+}
+
 void CAnimator::Play(const wstring& aniName, bool trigger)
 {
 	// 현재 애니메이션이 플레이하고자 하는 애니메이션이며
@@ -83,6 +100,19 @@ void CAnimator::Play(const wstring& aniName, bool trigger)
 	CAnimation* pAnimation = FindAnimation(aniName);
 	// 탐색한 결과 애니메이션이 없는 경우 프로그램 경고
 	assert(nullptr != pAnimation && L"Animation no exist");
+
+
+	//========================= 임시 사항 ==========================
+
+	// 현재 애니메이션의 콜백 함수 호출
+
+	if (nullptr != m_pCurAni && nullptr != m_pCurAni->m_pCallback)
+		m_pCurAni->RunCallback();
+
+	//=============================================================
+
+
+
 	// 트리거 타입일 경우이거나 애니메이션이 바뀌었을 경우 애니메이션을 처음부터 재생
 	if (trigger || m_pCurAni != pAnimation) pAnimation->Replay();
 	// 현재 애니메이션을 탐색한 애니메이션으로 교체

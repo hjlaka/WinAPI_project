@@ -5,6 +5,9 @@
 #include "CRenderManager.h"
 #include "CGameObject.h"
 
+#include "CGameManager.h"
+#include "CPlayer.h"
+
 CCameraManager::CCameraManager()
 {
 	m_vecLookAt		= Vector(0, 0);
@@ -47,6 +50,11 @@ void CCameraManager::SetTargetObj(CGameObject* pTargetObj)
 	m_pTargetObj = pTargetObj;
 }
 
+void CCameraManager::SetLookAt(Vector targetPos)
+{
+	m_vecLookAt = targetPos;
+}
+
 Vector CCameraManager::WorldToScreenPoint(Vector worldPoint)
 {
 	return worldPoint - (m_vecLookAt - Vector(WINSIZEX * 0.5f, WINSIZEY * 0.5f));
@@ -81,12 +89,20 @@ void CCameraManager::FadeOut(float duration)
 	m_fTimeToBright = duration;
 }
 
+void CCameraManager::HalfFadeOut(float duration, float targetBright)
+{
+	m_fTargetBright = targetBright;
+	m_fTimeToBright = duration;
+}
+
 void CCameraManager::Init()
 {
 }
 
 void CCameraManager::Update()
 {
+
+	
 	// 추적할 게임오브젝트가 있을 경우
 	if (nullptr != m_pTargetObj)
 	{
@@ -102,8 +118,20 @@ void CCameraManager::Update()
 		}
 	}
 
+	// 허용 범위 내에서
+	if (m_vecTargetPos.x < WINSIZEX * 0.5f)
+		m_vecTargetPos.x = WINSIZEX * 0.5f;
+	else if (m_vecTargetPos.x > GAME->GetBGEndX() - WINSIZEX * 0.5f)
+		m_vecTargetPos.x = GAME->GetBGEndX() - WINSIZEX * 0.5f;
+
+	if (m_vecTargetPos.y < WINSIZEY * 0.5f)
+		m_vecTargetPos.y = WINSIZEY * 0.5f;
+
 	// 목표 위치로 이동
 	MoveToTarget();
+
+
+	
 }
 
 void CCameraManager::Render()
@@ -140,7 +168,7 @@ void CCameraManager::MoveToTarget()
 
 void CCameraManager::RenderEffect()
 {
-	m_fTimeToBright -= DT;
+	m_fTimeToBright -= NONSCALED_DT;
 
 	if (m_fTimeToBright <= 0)
 	{
@@ -149,6 +177,6 @@ void CCameraManager::RenderEffect()
 	}
 	else
 	{
-		m_fCurBright += (m_fTargetBright - m_fCurBright) / m_fTimeToBright * DT;
+		m_fCurBright += (m_fTargetBright - m_fCurBright) / m_fTimeToBright * NONSCALED_DT;
 	}
 }

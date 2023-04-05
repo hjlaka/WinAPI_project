@@ -5,8 +5,16 @@
 #include "CRenderManager.h"
 #include "CCollider.h"
 
+
+#include "CUnit.h"
+#include "CGameObject.h"
+
 CGroundTile::CGroundTile()
 {
+	m_strName = L"Ground";
+	m_bIsUpDownCollision = false;
+	m_bIsLeftRightCollision = false;
+	diffY = 0;
 }
 
 CGroundTile::~CGroundTile()
@@ -32,6 +40,7 @@ void CGroundTile::Render()
 	CTile::Render();
 
 	ComponentRender();
+
 }
 
 void CGroundTile::Release()
@@ -41,15 +50,18 @@ void CGroundTile::Release()
 
 void CGroundTile::OnCollisionEnter(CCollider* pOther)
 {
-	// 땅타일과 충돌했을 경우 처리
+
+	
 }
 
 void CGroundTile::OnCollisionStay(CCollider* pOther)
 {
-	// 땅타일과 충돌했을 경우 처리
+
+	
 }
 
 void CGroundTile::OnCollisionExit(CCollider* pOther)
 {
-	// 땅타일과 충돌했을 경우 처리
+
+
 }
